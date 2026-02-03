@@ -15,11 +15,26 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useState } from 'react';
 import { InvoiceModal } from './InvoiceModal';
+import { InvoiceInfoDialog, InvoiceInfo } from './InvoiceInfoDialog';
 
 export function CartSheet() {
   const { items, removeFromCart, updateQuantity, getTotals, itemCount, clearCart } = useCart();
   const { subtotal, vat, total } = getTotals();
+  const [showInfoDialog, setShowInfoDialog] = useState(false);
   const [showInvoice, setShowInvoice] = useState(false);
+  const [invoiceInfo, setInvoiceInfo] = useState<InvoiceInfo>({
+    chemistName: '',
+    chemistCode: '',
+    address: '',
+    market: '',
+    fieldForce: '',
+    contactNo: '',
+  });
+
+  const handleInfoSubmit = (info: InvoiceInfo) => {
+    setInvoiceInfo(info);
+    setShowInvoice(true);
+  };
 
   return (
     <>
@@ -138,7 +153,7 @@ export function CartSheet() {
                 <Button variant="outline" onClick={clearCart} className="flex-1">
                   Clear Cart
                 </Button>
-                <Button onClick={() => setShowInvoice(true)} className="flex-1">
+                <Button onClick={() => setShowInfoDialog(true)} className="flex-1">
                   <FileText className="h-4 w-4 mr-2" />
                   Generate Invoice
                 </Button>
@@ -148,7 +163,17 @@ export function CartSheet() {
         </SheetContent>
       </Sheet>
 
-      <InvoiceModal open={showInvoice} onOpenChange={setShowInvoice} />
+      <InvoiceInfoDialog
+        open={showInfoDialog}
+        onOpenChange={setShowInfoDialog}
+        onSubmit={handleInfoSubmit}
+      />
+
+      <InvoiceModal
+        open={showInvoice}
+        onOpenChange={setShowInvoice}
+        invoiceInfo={invoiceInfo}
+      />
     </>
   );
 }
