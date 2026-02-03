@@ -1,20 +1,14 @@
 import { forwardRef } from 'react';
 import { CartItem } from '@/context/CartContext';
 import { InvoiceInfo } from './InvoiceInfoDialog';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 
 interface InvoicePreviewProps {
   items: CartItem[];
   invoiceInfo: InvoiceInfo;
   invoiceNumber: string;
   invoiceDate: string;
+  orderDate: string;
+  printDateTime: string;
   totals: { subtotal: number; vat: number; total: number };
 }
 
@@ -51,169 +45,248 @@ function numberToWords(num: number): string {
 }
 
 export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
-  ({ items, invoiceInfo, invoiceNumber, invoiceDate, totals }, ref) => {
-    const { subtotal, vat, total } = totals;
-    const discount = subtotal * 0.02; // 2% discount
-    const netPayable = total - discount;
+  ({ items, invoiceInfo, invoiceNumber, invoiceDate, orderDate, printDateTime, totals }, ref) => {
+    const { subtotal, vat } = totals;
+    
+    // Calculate line item discount (sum of individual discounts based on product bonus/discount)
+    const lineItemDiscount = 0; // Can be calculated from item.product.discount if available
+    
+    // Group discount (2% of subtotal)
+    const groupDiscountPercent = 2;
+    const groupDiscount = subtotal * (groupDiscountPercent / 100);
+    
+    // Gross TP after all discounts
+    const grossTPAfterDiscount = subtotal - lineItemDiscount - groupDiscount;
+    
+    // Net payable
+    const netPayable = grossTPAfterDiscount + vat;
 
     return (
-      <div ref={ref} className="bg-white text-black p-6 text-sm">
-        {/* Header */}
-        <div className="border-b-2 border-black pb-4 mb-4">
-          <div className="flex justify-between items-start">
-            <div className="text-xs">
-              <p>Corporate Office: Urban Stream Commercial Complex Level # 03,</p>
-              <p>18 New Eskaton (R.K. Menon Road) Dhaka-1000. Phone: 9336001</p>
+      <div ref={ref} className="bg-white text-black p-4 text-[11px] font-sans leading-tight" style={{ fontFamily: 'Arial, sans-serif' }}>
+        {/* Main Header with Logo */}
+        <div className="flex justify-between items-start mb-1">
+          {/* Corporate Office - Left */}
+          <div className="text-[9px] leading-tight">
+            <p className="font-bold">Corporate Office:</p>
+            <p>Urban Stream Commercial Complex</p>
+            <p>Level # 03, 18 New Eskaton</p>
+            <p>(R.K. Menon Road) Dhaka-1000.</p>
+            <p>Phone: 9336001</p>
+          </div>
+          
+          {/* Center - Company Name & Invoice Title */}
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <div className="border-2 border-blue-600 rounded-full w-10 h-10 flex items-center justify-center">
+                <span className="text-blue-600 font-bold text-xs">FnF</span>
+              </div>
+              <span className="text-xl font-bold">FnF Pharmaceuticals Ltd.</span>
             </div>
-            <div className="text-right">
-              <h1 className="text-2xl font-bold">INVOICE</h1>
-              <p className="text-xs">1 of 1</p>
+            <div className="border-2 border-black px-6 py-1 inline-block">
+              <span className="text-xl font-bold">INVOICE</span>
             </div>
           </div>
-          <div className="mt-2">
-            <p className="font-bold text-lg">F n F Pharmaceuticals Ltd.</p>
-            <p className="text-xs">Factory: Rautail, Nagarbathan, Jhenaidah, Bangladesh. Phone: 0451-63297</p>
+          
+          {/* Factory - Right */}
+          <div className="text-[9px] leading-tight text-right">
+            <p className="font-bold">Factory:</p>
+            <p>Rautail, Nagarbathan,</p>
+            <p>Jhenaidah, Bangladesh.</p>
+            <p>Phone: 0451-63297</p>
+          </div>
+        </div>
+        
+        {/* Print Date & Page */}
+        <div className="flex justify-between text-[9px] mb-2">
+          <span>Printed On: {printDateTime}</span>
+          <span>Page 1 of 1</span>
+        </div>
+
+        {/* MUSHAK Section */}
+        <div className="border-t border-black pt-2 mb-2">
+          <div className="flex justify-between items-center">
+            <div></div>
+            <div className="text-center">
+              <p className="font-semibold">FnF Pharmaceuticals Ltd.</p>
+              <p className="text-[9px]">[Clauses (c) and (f) of sub-Rule (1) of Rule 40]</p>
+            </div>
+            <div className="text-right font-semibold">MUSHAK-6.3</div>
           </div>
         </div>
 
-        {/* MUSHAK Info */}
-        <div className="text-center mb-4">
-          <p className="font-semibold">FnF Pharmaceuticals Ltd. MUSHAK-6.3</p>
-          <p className="text-xs">[Clauses (c) and (f) of sub-Rule (1) of Rule 40]</p>
+        {/* Depot */}
+        <div className="text-center mb-1">
+          <span className="font-semibold">Depot: CUMILLA</span>
         </div>
 
-        {/* Invoice Details Grid */}
-        <div className="grid grid-cols-2 gap-x-8 gap-y-1 mb-4 text-xs border p-3">
-          <div className="flex">
-            <span className="font-semibold w-24">Depot:</span>
-            <span>CUMILLA</span>
-          </div>
-          <div className="flex">
-            <span className="font-semibold w-24">Contact No:</span>
-            <span>{invoiceInfo.contactNo}</span>
-          </div>
-          
-          <div className="flex">
-            <span className="font-semibold w-24">Chemist Name:</span>
-            <span>{invoiceInfo.chemistName}</span>
-          </div>
-          <div className="flex">
-            <span className="font-semibold w-24">Invoice No:</span>
-            <span>{invoiceNumber}</span>
-          </div>
-          
-          <div className="flex">
-            <span className="font-semibold w-24">Chemist Code:</span>
-            <span>{invoiceInfo.chemistCode}</span>
-          </div>
-          <div className="flex">
-            <span className="font-semibold w-24">Invoice Date:</span>
-            <span>{invoiceDate}</span>
-          </div>
-          
-          <div className="flex">
-            <span className="font-semibold w-24">Address:</span>
-            <span>{invoiceInfo.address}</span>
-          </div>
-          <div className="flex">
-            <span className="font-semibold w-24">Order Date:</span>
-            <span>{invoiceDate}</span>
+        {/* Contact No & Invoice Title */}
+        <div className="text-center mb-3">
+          <p className="text-[10px]">Contact No: {invoiceInfo.contactNo}</p>
+          <p className="text-2xl font-semibold mt-1">Invoice</p>
+        </div>
+
+        {/* Customer & Invoice Info Grid */}
+        <div className="grid grid-cols-2 gap-x-8 mb-4 text-[10px]">
+          {/* Left Column - Customer Info */}
+          <div className="space-y-1">
+            <div className="flex">
+              <span className="font-semibold w-24">Chemist Code</span>
+              <span>: {invoiceInfo.chemistCode}</span>
+            </div>
+            <div className="flex">
+              <span className="font-semibold w-24">Chemist Name</span>
+              <span>: {invoiceInfo.chemistName}</span>
+            </div>
+            <div className="flex">
+              <span className="font-semibold w-24">BIN No</span>
+              <span>: {invoiceInfo.binNo}</span>
+            </div>
+            <div className="flex">
+              <span className="font-semibold w-24">Address</span>
+              <span>: {invoiceInfo.address}</span>
+            </div>
+            <div className="flex">
+              <span className="font-semibold w-24">Market</span>
+              <span>: {invoiceInfo.market}</span>
+            </div>
+            <div className="flex">
+              <span className="font-semibold w-24">Field Force</span>
+              <span>: {invoiceInfo.fieldForce}</span>
+            </div>
           </div>
           
-          <div className="flex">
-            <span className="font-semibold w-24">Market:</span>
-            <span>{invoiceInfo.market}</span>
-          </div>
-          <div className="flex">
-            <span className="font-semibold w-24">Payment Mode:</span>
-            <span>Cash</span>
-          </div>
-          
-          <div className="flex col-span-2">
-            <span className="font-semibold w-24">Field Force:</span>
-            <span>{invoiceInfo.fieldForce}</span>
+          {/* Right Column - Invoice Info */}
+          <div className="space-y-1">
+            <div className="flex">
+              <span className="font-semibold w-24">Invoice No</span>
+              <span>: {invoiceNumber}</span>
+            </div>
+            <div className="flex">
+              <span className="font-semibold w-24">Invoice Date</span>
+              <span>: {invoiceDate}</span>
+            </div>
+            <div className="flex">
+              <span className="font-semibold w-24">Order No</span>
+              <span>: {invoiceInfo.orderNo}</span>
+            </div>
+            <div className="flex">
+              <span className="font-semibold w-24">Order Date</span>
+              <span>: {orderDate}</span>
+            </div>
+            <div className="flex">
+              <span className="font-semibold w-24">Payment Mode</span>
+              <span>: {invoiceInfo.paymentMode}</span>
+            </div>
           </div>
         </div>
 
         {/* Products Table */}
-        <Table className="border text-xs">
-          <TableHeader>
-            <TableRow className="bg-muted/50">
-              <TableHead className="border text-black font-bold py-1">Products Name</TableHead>
-              <TableHead className="border text-black font-bold py-1">Pack Size</TableHead>
-              <TableHead className="border text-black font-bold py-1 text-right">Qty</TableHead>
-              <TableHead className="border text-black font-bold py-1 text-right">Unit TP</TableHead>
-              <TableHead className="border text-black font-bold py-1 text-right">Unit VAT</TableHead>
-              <TableHead className="border text-black font-bold py-1 text-right">TP+VAT</TableHead>
-              <TableHead className="border text-black font-bold py-1 text-right">Bonus</TableHead>
-              <TableHead className="border text-black font-bold py-1 text-right">Total</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {items.map((item) => (
-              <TableRow key={item.product.id}>
-                <TableCell className="border py-1">{item.product.name}</TableCell>
-                <TableCell className="border py-1">{item.product.packSize}</TableCell>
-                <TableCell className="border py-1 text-right">{item.quantity}</TableCell>
-                <TableCell className="border py-1 text-right">{item.product.tp.toFixed(2)}</TableCell>
-                <TableCell className="border py-1 text-right">{item.product.vat.toFixed(2)}</TableCell>
-                <TableCell className="border py-1 text-right">{item.product.tp_vat.toFixed(2)}</TableCell>
-                <TableCell className="border py-1 text-right">{item.product.bonus || 0}</TableCell>
-                <TableCell className="border py-1 text-right font-medium">
-                  {(item.product.tp_vat * item.quantity).toFixed(2)}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <table className="w-full border-collapse text-[9px] mb-2">
+          <thead>
+            <tr className="border-t border-b border-black">
+              <th className="text-left py-1 font-semibold">Products Name</th>
+              <th className="text-center py-1 font-semibold">Pack Size</th>
+              <th className="text-center py-1 font-semibold">Quantity</th>
+              <th className="text-right py-1 font-semibold">Unit Price<br/>TP/SP</th>
+              <th className="text-right py-1 font-semibold">Unit VAT</th>
+              <th className="text-right py-1 font-semibold">UnitPrice<br/>With VAT</th>
+              <th className="text-center py-1 font-semibold">Bonus</th>
+              <th className="text-center py-1 font-semibold">Total:<br/>VAT %</th>
+              <th className="text-center py-1 font-semibold">Dis.<br/>DisAmt:</th>
+              <th className="text-right py-1 font-semibold">Total<br/>TP/SP</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => {
+              const totalTP = item.product.tp * item.quantity;
+              return (
+                <tr key={item.product.id} className="border-b border-dotted border-gray-400">
+                  <td className="py-1">{item.product.name}</td>
+                  <td className="text-center py-1">{item.product.packSize}</td>
+                  <td className="text-center py-1">{item.quantity}</td>
+                  <td className="text-right py-1">{item.product.tp.toFixed(2)}</td>
+                  <td className="text-right py-1">{item.product.vat.toFixed(2)}</td>
+                  <td className="text-right py-1">{item.product.tp_vat.toFixed(2)}</td>
+                  <td className="text-center py-1">{item.product.bonus || '0'}</td>
+                  <td className="text-center py-1">0</td>
+                  <td className="text-center py-1">0</td>
+                  <td className="text-right py-1">{totalTP.toFixed(2)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
 
-        {/* Totals */}
-        <div className="mt-4 flex justify-between">
-          <div className="text-xs italic">
-            In Words: {numberToWords(Math.round(netPayable))} Taka Only
+        {/* Separator Line */}
+        <div className="border-t-2 border-dashed border-black mb-3"></div>
+
+        {/* Totals Section */}
+        <div className="flex justify-between mb-6">
+          {/* In Words - Left */}
+          <div className="text-[10px] max-w-[50%]">
+            <span className="font-semibold">In Words: </span>
+            <span>{numberToWords(Math.round(netPayable))} Taka Only</span>
           </div>
-          <div className="text-xs space-y-1 min-w-48">
+          
+          {/* Totals - Right */}
+          <div className="text-[10px] space-y-0.5 min-w-[180px]">
             <div className="flex justify-between">
-              <span>Gross TP:</span>
+              <span>Gross TP</span>
               <span>{subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
-              <span>Line Item Discount:</span>
-              <span>- 0.00</span>
+              <span>Line Item Discount</span>
+              <span>-{lineItemDiscount.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
-              <span>SubTotal + Group Discount:</span>
-              <span>- {discount.toFixed(2)}</span>
+              <span>SubTotal + Group Discount</span>
+              <span>-{groupDiscount.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
-              <span>Gross TP(After Discount):</span>
-              <span>{(subtotal - discount).toFixed(2)}</span>
+              <span>Gross TP(After Discount)</span>
+              <span>{grossTPAfterDiscount.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
-              <span>Add VAT on TP:</span>
+              <span>Add VAT on TP</span>
               <span>{vat.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between font-bold border-t pt-1">
-              <span>Net Payable:</span>
+            <div className="flex justify-between font-bold border-t border-black pt-1 mt-1">
+              <span>Net Payable</span>
               <span>{netPayable.toFixed(2)}</span>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="mt-8 pt-4 border-t">
-          <div className="flex justify-between text-xs">
+        <div className="mt-8">
+          {/* Depot Info - Right aligned */}
+          <div className="text-right mb-6 text-[10px]">
+            <p className="font-semibold">Cumilla Depot</p>
+            <p>For FnF Pharmaceuticals Ltd.</p>
+          </div>
+          
+          {/* Signature Lines */}
+          <div className="flex justify-between text-[9px] mb-6">
             <div className="text-center">
-              <div className="border-t border-black w-32 pt-1 mt-8">Chemist's Signature</div>
+              <div className="border-t border-black w-28 pt-1 mt-10">Chemist's Signature</div>
             </div>
             <div className="text-center">
-              <div className="border-t border-black w-32 pt-1 mt-8">Checked By</div>
+              <div className="border-t border-black w-28 pt-1 mt-10">Checked By</div>
             </div>
             <div className="text-center">
-              <div className="border-t border-black w-32 pt-1 mt-8">Authorized Signature</div>
+              <div className="border-t border-black w-28 pt-1 mt-10">Authorized Signature</div>
+            </div>
+            <div className="text-center text-[9px]">
+              <p className="font-semibold mt-10">For FnF Pharmaceuticals Ltd.</p>
             </div>
           </div>
-          <p className="text-center text-xs mt-4">For FnF Pharmaceuticals Ltd.</p>
+          
+          {/* Bottom Signature Row */}
+          <div className="flex justify-between text-[9px] border-t border-black pt-2 mt-4">
+            <span className="font-semibold">PREPARED BY</span>
+            <span className="font-semibold">CHECKED BY</span>
+            <span className="font-semibold">CUSTOMER'S SIGNATURE</span>
+          </div>
         </div>
       </div>
     );

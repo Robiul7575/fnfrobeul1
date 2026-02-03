@@ -25,10 +25,13 @@ export function CartSheet() {
   const [invoiceInfo, setInvoiceInfo] = useState<InvoiceInfo>({
     chemistName: '',
     chemistCode: '',
+    binNo: '',
     address: '',
     market: '',
     fieldForce: '',
     contactNo: '',
+    orderNo: '',
+    paymentMode: 'Cash',
   });
 
   const handleInfoSubmit = (info: InvoiceInfo) => {
