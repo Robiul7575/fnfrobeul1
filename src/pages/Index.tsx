@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { ALL_PRODUCTS } from '@/data/products';
 import { ProductCategory } from '@/types/product';
 import { ProductCard } from '@/components/ProductCard';
+import { CartSheet } from '@/components/CartSheet';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
@@ -28,9 +29,12 @@ const Index = () => {
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background border-b">
         <div className="container py-4">
-          <h1 className="text-2xl md:text-3xl font-bold text-primary mb-4">
-            Veterinary Products Catalog
-          </h1>
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-2xl md:text-3xl font-bold text-primary">
+              FnF Pharmaceuticals
+            </h1>
+            <CartSheet />
+          </div>
           
           {/* Search */}
           <div className="relative mb-4">
