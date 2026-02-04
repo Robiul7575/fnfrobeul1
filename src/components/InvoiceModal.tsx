@@ -18,7 +18,7 @@ interface InvoiceModalProps {
 }
 
 export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalProps) {
-  const { items, getTotals } = useCart();
+  const { items, getTotals, discountPercent, getItemTp } = useCart();
   const totals = getTotals();
   const printRef = useRef<HTMLDivElement>(null);
 
@@ -185,6 +185,8 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
           orderDate={orderDate}
           printDateTime={printDateTime}
           totals={totals}
+          discountPercent={discountPercent}
+          getItemTp={getItemTp}
         />
 
         <div className="flex justify-end gap-2 mt-4">

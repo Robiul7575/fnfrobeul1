@@ -4,6 +4,7 @@ import { Product } from '@/types/product';
 export interface CartItem {
   product: Product;
   quantity: number;
+  customTp?: number; // Custom TP override
 }
 
 interface CartContextType {
@@ -11,15 +12,20 @@ interface CartContextType {
   addToCart: (product: Product, quantity?: number) => void;
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
+  updateCustomTp: (productId: number, customTp: number | undefined) => void;
   clearCart: () => void;
   getTotals: () => { subtotal: number; vat: number; total: number };
   itemCount: number;
+  discountPercent: number;
+  setDiscountPercent: (percent: number) => void;
+  getItemTp: (item: CartItem) => number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [discountPercent, setDiscountPercent] = useState(2); // Default 2% cash discount
 
   const addToCart = (product: Product, quantity = 1) => {
     setItems((prev) => {
@@ -51,11 +57,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const updateCustomTp = (productId: number, customTp: number | undefined) => {
+    setItems((prev) =>
+      prev.map((item) =>
+        item.product.id === productId ? { ...item, customTp } : item
+      )
+    );
+  };
+
   const clearCart = () => setItems([]);
+
+  const getItemTp = (item: CartItem): number => {
+    return item.customTp !== undefined ? item.customTp : item.product.tp;
+  };
 
   const getTotals = () => {
     const subtotal = items.reduce(
-      (sum, item) => sum + item.product.tp * item.quantity,
+      (sum, item) => sum + getItemTp(item) * item.quantity,
       0
     );
     const vat = items.reduce(
@@ -75,9 +93,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
         addToCart,
         removeFromCart,
         updateQuantity,
+        updateCustomTp,
         clearCart,
         getTotals,
         itemCount,
+        discountPercent,
+        setDiscountPercent,
+        getItemTp,
       }}
     >
       {children}
