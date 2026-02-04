@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { CartItem } from '@/context/CartContext';
 import { InvoiceInfo } from './InvoiceInfoDialog';
+import fnfLogo from '@/assets/fnf-logo.svg';
 
 interface InvoicePreviewProps {
   items: CartItem[];
@@ -65,21 +66,26 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
       <div ref={ref} className="bg-white text-black p-4 text-[11px] font-sans leading-tight" style={{ fontFamily: 'Arial, sans-serif' }}>
         {/* Main Header with Logo */}
         <div className="flex justify-between items-start mb-1">
-          {/* Corporate Office - Left */}
-          <div className="text-[9px] leading-tight">
-            <p className="font-bold">Corporate Office:</p>
-            <p>Urban Stream Commercial Complex</p>
-            <p>Level # 03, 18 New Eskaton</p>
-            <p>(R.K. Menon Road) Dhaka-1000.</p>
-            <p>Phone: 9336001</p>
+          {/* Logo & Corporate Office - Left */}
+          <div className="flex items-start gap-3">
+            <img 
+              src={fnfLogo} 
+              alt="FnF Pharmaceuticals Ltd." 
+              className="h-[80px] w-auto object-contain"
+              style={{ filter: 'grayscale(100%) contrast(1.2)' }}
+            />
+            <div className="text-[9px] leading-tight">
+              <p className="font-bold">Corporate Office:</p>
+              <p>Urban Stream Commercial Complex</p>
+              <p>Level # 03, 18 New Eskaton</p>
+              <p>(R.K. Menon Road) Dhaka-1000.</p>
+              <p>Phone: 9336001</p>
+            </div>
           </div>
           
           {/* Center - Company Name & Invoice Title */}
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-1">
-              <div className="border-2 border-blue-600 rounded-full w-10 h-10 flex items-center justify-center">
-                <span className="text-blue-600 font-bold text-xs">FnF</span>
-              </div>
               <span className="text-xl font-bold">FnF Pharmaceuticals Ltd.</span>
             </div>
             <div className="border-2 border-black px-6 py-1 inline-block">
