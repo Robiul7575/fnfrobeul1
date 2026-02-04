@@ -12,6 +12,8 @@ interface InvoicePreviewProps {
   orderDate: string;
   printDateTime: string;
   totals: { subtotal: number; vat: number; total: number };
+  discountPercent: number;
+  getItemTp: (item: CartItem) => number;
 }
 
 function numberToWords(num: number): string {
@@ -47,15 +49,16 @@ function numberToWords(num: number): string {
 }
 
 export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
-  ({ items, invoiceInfo, invoiceNumber, invoiceDate, orderDate, printDateTime, totals }, ref) => {
-    const { subtotal, vat } = totals;
+  ({ items, invoiceInfo, invoiceNumber, invoiceDate, orderDate, printDateTime, totals, discountPercent, getItemTp }, ref) => {
+    // Calculate subtotal using custom TP values
+    const subtotal = items.reduce((sum, item) => sum + getItemTp(item) * item.quantity, 0);
+    const { vat } = totals;
     
     // Calculate line item discount (sum of individual discounts based on product bonus/discount)
     const lineItemDiscount = 0; // Can be calculated from item.product.discount if available
     
-    // Group discount (2% of subtotal)
-    const groupDiscountPercent = 2;
-    const groupDiscount = subtotal * (groupDiscountPercent / 100);
+    // Group discount (customizable percentage of subtotal)
+    const groupDiscount = subtotal * (discountPercent / 100);
     
     // Gross TP after all discounts
     const grossTPAfterDiscount = subtotal - lineItemDiscount - groupDiscount;
@@ -221,15 +224,17 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           </thead>
           <tbody>
             {items.map((item) => {
-              const totalTP = item.product.tp * item.quantity;
+              const itemTp = getItemTp(item);
+              const totalTP = itemTp * item.quantity;
+              const tpWithVat = itemTp + item.product.vat;
               return (
                 <tr key={item.product.id} className="border-b border-dotted border-gray-400">
                   <td className="py-1">{item.product.name}</td>
                   <td className="text-center py-1">{item.product.packSize}</td>
                   <td className="text-center py-1">{item.quantity}</td>
-                  <td className="text-right py-1">{item.product.tp.toFixed(2)}</td>
+                  <td className="text-right py-1">{itemTp.toFixed(2)}</td>
                   <td className="text-right py-1">{item.product.vat.toFixed(2)}</td>
-                  <td className="text-right py-1">{item.product.tp_vat.toFixed(2)}</td>
+                  <td className="text-right py-1">{tpWithVat.toFixed(2)}</td>
                   <td className="text-center py-1">{item.product.bonus || '0'}</td>
                   <td className="text-center py-1">0</td>
                   <td className="text-center py-1">0</td>
