@@ -85,11 +85,18 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
             /* Widths */
             .w-10 { width: 2.5rem; }
             .h-10 { height: 2.5rem; }
+            .h-\\[80px\\] { height: 80px; }
+            .w-auto { width: auto; }
+            .object-contain { object-fit: contain; }
+            .gap-3 { gap: 0.75rem; }
             .w-24 { width: 6rem; display: inline-block; }
             .w-28 { width: 7rem; }
             .w-full { width: 100%; }
             .min-w-\\[180px\\] { min-width: 180px; }
             .max-w-\\[50\\%\\] { max-width: 50%; }
+            
+            /* Logo print styles */
+            img { filter: grayscale(100%) contrast(1.2); }
             
             /* Text */
             .text-\\[9px\\] { font-size: 9px; }
