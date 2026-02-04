@@ -95,8 +95,13 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
             .min-w-\\[180px\\] { min-width: 180px; }
             .max-w-\\[50\\%\\] { max-width: 50%; }
             
-            /* Logo print styles */
-            img { filter: grayscale(100%) contrast(1.2); }
+            /* Logo print styles - keep colorful for header and watermark */
+            .relative { position: relative; }
+            .absolute { position: absolute; }
+            .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+            .pointer-events-none { pointer-events: none; }
+            .w-\\[400px\\] { width: 400px; }
+            .h-\\[45px\\] { height: 45px; }
             
             /* Text */
             .text-\\[9px\\] { font-size: 9px; }
