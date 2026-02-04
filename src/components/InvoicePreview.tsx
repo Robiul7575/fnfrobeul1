@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import { CartItem } from '@/context/CartContext';
 import { InvoiceInfo } from './InvoiceInfoDialog';
 import fnfLogo from '@/assets/fnf-logo.svg';
+import fnfLogoColor from '@/assets/fnf-logo-color.svg';
 
 interface InvoicePreviewProps {
   items: CartItem[];
@@ -63,17 +64,34 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
     const netPayable = grossTPAfterDiscount + vat;
 
     return (
-      <div ref={ref} className="bg-white text-black p-4 text-[11px] font-sans leading-tight" style={{ fontFamily: 'Arial, sans-serif' }}>
-        {/* Main Header with Logo */}
-        <div className="flex justify-between items-start mb-1">
-          {/* Logo & Corporate Office - Left */}
-          <div className="flex items-start gap-3">
+      <div ref={ref} className="bg-white text-black p-4 text-[11px] font-sans leading-tight relative" style={{ fontFamily: 'Arial, sans-serif' }}>
+        {/* Watermark Logo - Background */}
+        <div 
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          style={{ zIndex: 0 }}
+        >
+          <img 
+            src={fnfLogoColor} 
+            alt="" 
+            className="w-[400px] h-[400px] object-contain"
+            style={{ opacity: 0.15 }}
+          />
+        </div>
+        
+        {/* Content wrapper with higher z-index */}
+        <div className="relative" style={{ zIndex: 1 }}>
+          {/* Centered Header Logo */}
+          <div className="flex justify-center mb-2">
             <img 
-              src={fnfLogo} 
+              src={fnfLogoColor} 
               alt="FnF Pharmaceuticals Ltd." 
-              className="h-[80px] w-auto object-contain"
-              style={{ filter: 'grayscale(100%) contrast(1.2)' }}
+              className="h-[45px] w-auto object-contain"
             />
+          </div>
+          
+          {/* Main Header */}
+          <div className="flex justify-between items-start mb-1">
+            {/* Corporate Office - Left */}
             <div className="text-[9px] leading-tight">
               <p className="font-bold">Corporate Office:</p>
               <p>Urban Stream Commercial Complex</p>
@@ -81,26 +99,25 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               <p>(R.K. Menon Road) Dhaka-1000.</p>
               <p>Phone: 9336001</p>
             </div>
-          </div>
-          
-          {/* Center - Company Name & Invoice Title */}
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-1">
-              <span className="text-xl font-bold">FnF Pharmaceuticals Ltd.</span>
+            
+            {/* Center - Company Name & Invoice Title */}
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <span className="text-xl font-bold">FnF Pharmaceuticals Ltd.</span>
+              </div>
+              <div className="border-2 border-black px-6 py-1 inline-block">
+                <span className="text-xl font-bold">INVOICE</span>
+              </div>
             </div>
-            <div className="border-2 border-black px-6 py-1 inline-block">
-              <span className="text-xl font-bold">INVOICE</span>
+            
+            {/* Factory - Right */}
+            <div className="text-[9px] leading-tight text-right">
+              <p className="font-bold">Factory:</p>
+              <p>Rautail, Nagarbathan,</p>
+              <p>Jhenaidah, Bangladesh.</p>
+              <p>Phone: 0451-63297</p>
             </div>
           </div>
-          
-          {/* Factory - Right */}
-          <div className="text-[9px] leading-tight text-right">
-            <p className="font-bold">Factory:</p>
-            <p>Rautail, Nagarbathan,</p>
-            <p>Jhenaidah, Bangladesh.</p>
-            <p>Phone: 0451-63297</p>
-          </div>
-        </div>
         
         {/* Print Date & Page */}
         <div className="flex justify-between text-[9px] mb-2">
@@ -293,6 +310,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             <span className="font-semibold">CHECKED BY</span>
             <span className="font-semibold">CUSTOMER'S SIGNATURE</span>
           </div>
+        </div>
         </div>
       </div>
     );
