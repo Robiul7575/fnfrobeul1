@@ -6,10 +6,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Printer } from 'lucide-react';
+import { Printer, Download } from 'lucide-react';
 import { useRef } from 'react';
 import { InvoiceInfo } from './InvoiceInfoDialog';
 import { InvoicePreview } from './InvoicePreview';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 interface InvoiceModalProps {
   open: boolean;
@@ -169,6 +171,44 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
     printWindow.close();
   };
 
+  const handleDownloadPdf = async () => {
+    const element = printRef.current;
+    if (!element) return;
+
+    try {
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+      });
+
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgData = canvas.toDataURL('image/png');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = pdfWidth - 20;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let heightLeft = imgHeight;
+      let position = 10;
+
+      pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+      heightLeft -= pdfHeight;
+
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight + 10;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+      }
+
+      pdf.save(`Invoice-${invoiceNumber}.pdf`);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -192,6 +232,10 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
         <div className="flex justify-end gap-2 mt-4">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Close
+          </Button>
+          <Button variant="outline" onClick={handleDownloadPdf}>
+            <Download className="h-4 w-4 mr-2" />
+            Download PDF
           </Button>
           <Button onClick={handlePrint}>
             <Printer className="h-4 w-4 mr-2" />
