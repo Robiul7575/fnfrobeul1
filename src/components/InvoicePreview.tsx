@@ -282,34 +282,31 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         </div>
 
         {/* Footer */}
-        <div className="mt-8">
+        <div className="mt-auto pt-12">
           {/* Depot Info - Right aligned */}
-          <div className="text-right mb-6 text-[10px]">
+          <div className="text-right mb-8 text-[10px]">
             <p className="font-semibold">Cumilla Depot</p>
             <p>For FnF Pharmaceuticals Ltd.</p>
           </div>
-          
-          {/* Signature Lines */}
-          <div className="flex justify-between text-[9px] mb-6">
-            <div className="text-center">
-              <div className="border-t border-black w-28 pt-1 mt-10">Chemist's Signature</div>
+
+          {/* Signature Row */}
+          <div className="flex justify-between text-[9px] pt-2 border-t border-black">
+            <div className="text-center flex-1">
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Prepared By</div>
             </div>
-            <div className="text-center">
-              <div className="border-t border-black w-28 pt-1 mt-10">Checked By</div>
+            <div className="text-center flex-1">
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Checked By</div>
             </div>
-            <div className="text-center">
-              <div className="border-t border-black w-28 pt-1 mt-10">Authorized Signature</div>
+            <div className="text-center flex-1">
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Authorized Signature</div>
             </div>
-            <div className="text-center text-[9px]">
-              <p className="font-semibold mt-10">For FnF Pharmaceuticals Ltd.</p>
+            <div className="text-center flex-1">
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Customer's Signature</div>
             </div>
-          </div>
-          
-          {/* Bottom Signature Row */}
-          <div className="flex justify-between text-[9px] border-t border-black pt-2 mt-4">
-            <span className="font-semibold">PREPARED BY</span>
-            <span className="font-semibold">CHECKED BY</span>
-            <span className="font-semibold">CUSTOMER'S SIGNATURE</span>
           </div>
         </div>
         </div>
