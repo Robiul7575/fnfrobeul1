@@ -278,7 +278,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               <span>Add VAT on TP</span>
               <span>{vat.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between font-bold border-t border-black pt-1 mt-1">
+            <div className="flex justify-between font-bold border-t border-black pt-1 mt-1 text-black">
               <span>Net Payable</span>
               <span>{netPayable.toFixed(2)}</span>
             </div>
