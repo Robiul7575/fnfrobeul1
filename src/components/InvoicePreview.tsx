@@ -83,15 +83,6 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         
         {/* Content wrapper with higher z-index */}
         <div className="relative" style={{ zIndex: 1 }}>
-          {/* Centered Header Logo */}
-          <div className="flex justify-center mb-2">
-            <img 
-              src={fnfLogoColor} 
-              alt="FnF Pharmaceuticals Ltd." 
-              className="h-[45px] w-auto object-contain"
-            />
-          </div>
-          
           {/* Main Header */}
           <div className="flex justify-between items-start mb-1">
             {/* Corporate Office - Left */}
@@ -103,10 +94,15 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               <p>Phone: 9336001</p>
             </div>
             
-            {/* Center - Company Name & Invoice Title */}
+            {/* Center - Logo + Company Name on same line & Invoice Title */}
             <div className="text-center">
               <div className="flex items-center justify-center gap-2 mb-1">
-                <span className="text-xl font-bold">FnF Pharmaceuticals Ltd.</span>
+                <img 
+                  src={fnfLogoColor} 
+                  alt="FnF Pharmaceuticals Ltd." 
+                  className="h-[40px] w-auto object-contain"
+                />
+                <span className="text-xl font-bold text-blue-600">FnF Pharmaceuticals Ltd.</span>
               </div>
               <div className="border-2 border-black px-6 py-1 inline-block">
                 <span className="text-xl font-bold">INVOICE</span>
