@@ -147,7 +147,10 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <p className="text-2xl font-semibold mt-1">Invoice</p>
         </div>
 
+        {/* Customer & Invoice Info Grid */}
         <div className="grid grid-cols-2 gap-x-8 mb-4 text-[10px]" style={{ color: '#111' }}>
+          {/* Left Column - Customer Info */}
+          <div className="space-y-1">
             <div className="flex">
               <span className="font-semibold w-24">Chemist Code</span>
               <span>: {invoiceInfo.chemistCode}</span>
