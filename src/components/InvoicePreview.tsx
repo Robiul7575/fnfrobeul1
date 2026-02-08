@@ -67,7 +67,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
     const netPayable = grossTPAfterDiscount + vat;
 
     return (
-      <div ref={ref} className="bg-white text-black p-6 text-[11px] leading-tight relative rounded-[30%_/_4%] border border-gray-200 overflow-hidden" style={{ fontFamily: "'Segoe UI', Arial, sans-serif", minHeight: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div ref={ref} className="bg-white text-black p-4 text-[11px] font-sans leading-tight relative" style={{ fontFamily: 'Arial, sans-serif' }}>
         {/* Watermark Logo - Background */}
         <div 
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -77,41 +77,41 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             src={fnfLogoColor} 
             alt="" 
             className="w-[400px] h-[400px] object-contain"
-            style={{ opacity: 0.12 }}
+            style={{ opacity: 0.15 }}
           />
         </div>
         
         {/* Content wrapper with higher z-index */}
-        <div className="relative flex-1 flex flex-col" style={{ zIndex: 1 }}>
+        <div className="relative" style={{ zIndex: 1 }}>
           {/* Main Header */}
-          <div className="flex justify-between items-start mb-2">
+          <div className="flex justify-between items-start mb-1">
             {/* Corporate Office - Left */}
-            <div className="text-[9px] leading-snug" style={{ color: '#1a1a1a' }}>
-              <p className="font-bold text-[10px]">Corporate Office:</p>
+            <div className="text-[9px] leading-tight">
+              <p className="font-bold">Corporate Office:</p>
               <p>Urban Stream Commercial Complex</p>
               <p>Level # 03, 18 New Eskaton</p>
               <p>(R.K. Menon Road) Dhaka-1000.</p>
               <p>Phone: 9336001</p>
             </div>
             
-            {/* Center - Logo + Company Name centered */}
-            <div className="text-center flex-1 mx-4">
-              <div className="flex items-center justify-center gap-3 mb-1">
+            {/* Center - Logo + Company Name on same line & Invoice Title */}
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-1">
                 <img 
                   src={fnfLogoColor} 
                   alt="FnF Pharmaceuticals Ltd." 
-                  className="h-[44px] w-auto object-contain"
+                  className="h-[40px] w-auto object-contain"
                 />
-                <span className="text-xl font-bold" style={{ color: '#1e40af', letterSpacing: '0.02em' }}>FnF Pharmaceuticals Ltd.</span>
+                <span className="text-xl font-bold text-blue-600">FnF Pharmaceuticals Ltd.</span>
               </div>
               <div className="border-2 border-black px-6 py-1 inline-block">
-                <span className="text-xl font-bold tracking-wide">INVOICE</span>
+                <span className="text-xl font-bold">INVOICE</span>
               </div>
             </div>
             
             {/* Factory - Right */}
-            <div className="text-[9px] leading-snug text-right" style={{ color: '#1a1a1a' }}>
-              <p className="font-bold text-[10px]">Factory:</p>
+            <div className="text-[9px] leading-tight text-right">
+              <p className="font-bold">Factory:</p>
               <p>Rautail, Nagarbathan,</p>
               <p>Jhenaidah, Bangladesh.</p>
               <p>Phone: 0451-63297</p>
@@ -148,7 +148,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         </div>
 
         {/* Customer & Invoice Info Grid */}
-        <div className="grid grid-cols-2 gap-x-8 mb-4 text-[10px]" style={{ color: '#111' }}>
+        <div className="grid grid-cols-2 gap-x-8 mb-4 text-[10px]">
           {/* Left Column - Customer Info */}
           <div className="space-y-1">
             <div className="flex">
@@ -281,31 +281,31 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           </div>
         </div>
 
-        {/* Footer - pushed to bottom */}
-        <div className="mt-auto pt-16">
+        {/* Footer */}
+        <div className="mt-auto pt-12">
           {/* Depot Info - Right aligned */}
-          <div className="text-right mb-10 text-[10px]" style={{ color: '#111' }}>
+          <div className="text-right mb-8 text-[10px]">
             <p className="font-semibold">Cumilla Depot</p>
             <p>For FnF Pharmaceuticals Ltd.</p>
           </div>
 
           {/* Signature Row */}
-          <div className="flex justify-between text-[9px] pt-2 border-t border-black" style={{ color: '#111' }}>
+          <div className="flex justify-between text-[9px] pt-2 border-t border-black">
             <div className="text-center flex-1">
-              <div className="h-20"></div>
-              <div className="border-t border-black w-28 mx-auto pt-1 font-semibold">Prepared By</div>
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Prepared By</div>
             </div>
             <div className="text-center flex-1">
-              <div className="h-20"></div>
-              <div className="border-t border-black w-28 mx-auto pt-1 font-semibold">Checked By</div>
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Checked By</div>
             </div>
             <div className="text-center flex-1">
-              <div className="h-20"></div>
-              <div className="border-t border-black w-28 mx-auto pt-1 font-semibold">Authorized Signature</div>
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Authorized Signature</div>
             </div>
             <div className="text-center flex-1">
-              <div className="h-20"></div>
-              <div className="border-t border-black w-28 mx-auto pt-1 font-semibold">Customer's Signature</div>
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Customer's Signature</div>
             </div>
           </div>
         </div>
