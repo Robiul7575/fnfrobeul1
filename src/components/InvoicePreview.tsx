@@ -104,7 +104,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                 />
                 <span className="text-xl font-bold text-blue-600" style={{ lineHeight: '40px' }}>FnF Pharmaceuticals Ltd.</span>
               </div>
-              <div className="border-2 border-black px-6 py-1 inline-block" style={{ borderRadius: '50%' }}>
+              <div className="border-2 border-black px-6 py-1 inline-block" style={{ borderRadius: '15%' }}>
                 <span className="text-xl font-bold">INVOICE</span>
               </div>
             </div>
