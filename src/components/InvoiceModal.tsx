@@ -57,7 +57,7 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
           <title>Invoice ${invoiceNumber}</title>
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: Arial, sans-serif; padding: 10mm; font-size: 11px; line-height: 1.3; }
+            body { font-family: Arial, sans-serif; padding: 10mm; font-size: 11px; line-height: 1.3; display: flex; flex-direction: column; min-height: 100vh; }
             
             /* Layout utilities */
             .flex { display: flex; }
@@ -130,7 +130,8 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
             .border-gray-400 { border-color: #9ca3af; }
             .border-blue-600 { border-color: #2563eb; }
             .rounded-full { border-radius: 9999px; }
-            
+            .border-radius-50 { border-radius: 50%; }
+
             /* Colors */
             .text-blue-600 { color: #2563eb; }
             .bg-white { background-color: white; }
