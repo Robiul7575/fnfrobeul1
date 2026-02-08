@@ -67,7 +67,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
     const netPayable = grossTPAfterDiscount + vat;
 
     return (
-      <div ref={ref} className="bg-white text-black p-4 text-[11px] font-sans leading-normal relative" style={{ fontFamily: 'Arial, sans-serif', color: '#111', minHeight: '297mm' }}>
+      <div ref={ref} className="bg-white text-black p-4 text-[11px] font-sans leading-tight relative" style={{ fontFamily: 'Arial, sans-serif' }}>
         {/* Watermark Logo - Background */}
         <div 
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -95,17 +95,17 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </div>
             
             {/* Center - Logo + Company Name on same line & Invoice Title */}
-            <div className="text-center flex-1">
-              <div className="flex items-center justify-center gap-3 mb-2">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-1">
                 <img 
                   src={fnfLogoColor} 
                   alt="FnF Pharmaceuticals Ltd." 
-                  className="h-[45px] w-auto object-contain"
+                  className="h-[40px] w-auto object-contain"
                 />
-                <span className="text-xl font-bold" style={{ color: '#1e40af', letterSpacing: '0.5px' }}>FnF Pharmaceuticals Ltd.</span>
+                <span className="text-xl font-bold text-blue-600">FnF Pharmaceuticals Ltd.</span>
               </div>
-              <div className="inline-block px-8 py-1" style={{ border: '2px solid #000', borderRadius: '30%' }}>
-                <span className="text-xl font-bold" style={{ letterSpacing: '1px' }}>INVOICE</span>
+              <div className="border-2 border-black px-6 py-1 inline-block">
+                <span className="text-xl font-bold">INVOICE</span>
               </div>
             </div>
             
@@ -281,10 +281,10 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           </div>
         </div>
 
-        {/* Footer - pinned to bottom */}
-        <div style={{ position: 'absolute', bottom: '20px', left: '16px', right: '16px' }}>
-          {/* Depot Info */}
-          <div className="text-right mb-6 text-[10px]">
+        {/* Footer */}
+        <div className="mt-auto pt-12">
+          {/* Depot Info - Right aligned */}
+          <div className="text-right mb-8 text-[10px]">
             <p className="font-semibold">Cumilla Depot</p>
             <p>For FnF Pharmaceuticals Ltd.</p>
           </div>
@@ -292,20 +292,20 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           {/* Signature Row */}
           <div className="flex justify-between text-[9px] pt-2 border-t border-black">
             <div className="text-center flex-1">
-              <div style={{ height: '50px' }}></div>
-              <div className="border-t border-black mx-auto pt-1" style={{ width: '100px' }}>Prepared By</div>
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Prepared By</div>
             </div>
             <div className="text-center flex-1">
-              <div style={{ height: '50px' }}></div>
-              <div className="border-t border-black mx-auto pt-1" style={{ width: '100px' }}>Checked By</div>
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Checked By</div>
             </div>
             <div className="text-center flex-1">
-              <div style={{ height: '50px' }}></div>
-              <div className="border-t border-black mx-auto pt-1" style={{ width: '120px' }}>Authorized Signature</div>
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Authorized Signature</div>
             </div>
             <div className="text-center flex-1">
-              <div style={{ height: '50px' }}></div>
-              <div className="border-t border-black mx-auto pt-1" style={{ width: '120px' }}>Customer's Signature</div>
+              <div className="h-16"></div>
+              <div className="border-t border-black w-28 mx-auto pt-1">Customer's Signature</div>
             </div>
           </div>
         </div>
