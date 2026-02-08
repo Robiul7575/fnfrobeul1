@@ -67,7 +67,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
     const netPayable = grossTPAfterDiscount + vat;
 
     return (
-      <div ref={ref} className="bg-white text-black p-4 text-[11px] font-sans leading-tight relative" style={{ fontFamily: 'Arial, sans-serif' }}>
+      <div ref={ref} className="bg-white text-black p-4 text-[11px] font-sans leading-tight relative flex flex-col" style={{ fontFamily: 'Arial, sans-serif', minHeight: '297mm' }}>
         {/* Watermark Logo - Background */}
         <div 
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -96,15 +96,15 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             
             {/* Center - Logo + Company Name on same line & Invoice Title */}
             <div className="text-center">
-              <div className="flex items-center justify-center gap-2 mb-1">
+              <div className="flex items-center justify-center gap-3 mb-1">
                 <img 
                   src={fnfLogoColor} 
                   alt="FnF Pharmaceuticals Ltd." 
                   className="h-[40px] w-auto object-contain"
                 />
-                <span className="text-xl font-bold text-blue-600">FnF Pharmaceuticals Ltd.</span>
+                <span className="text-xl font-bold text-blue-600" style={{ lineHeight: '40px' }}>FnF Pharmaceuticals Ltd.</span>
               </div>
-              <div className="border-2 border-black px-6 py-1 inline-block">
+              <div className="border-2 border-black px-6 py-1 inline-block" style={{ borderRadius: '50%' }}>
                 <span className="text-xl font-bold">INVOICE</span>
               </div>
             </div>
@@ -281,8 +281,8 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-auto pt-12">
+        {/* Footer - always at bottom */}
+        <div style={{ marginTop: 'auto', paddingTop: '3rem' }}>
           {/* Depot Info - Right aligned */}
           <div className="text-right mb-8 text-[10px]">
             <p className="font-semibold">Cumilla Depot</p>
