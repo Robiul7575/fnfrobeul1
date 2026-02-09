@@ -48,6 +48,32 @@ function numberToWords(num: number): string {
   return convertLessThanThousand(crores) + ' Crore' + (remainder ? ' ' + numberToWords(remainder) : '');
 }
 
+// Parse bonus string like "8+1", "10+1", "5+1, 20+5" and calculate bonus qty
+function calculateBonus(bonusStr: string, quantity: number): number {
+  if (!bonusStr || bonusStr === 'N/A') return 0;
+  
+  // Handle flat rate bonuses like "100 (Flat Rate)"
+  if (bonusStr.includes('Flat Rate')) return 0;
+  
+  // Parse multiple bonus tiers like "5+1, 20+5"
+  const tiers = bonusStr.split(',').map(s => s.trim());
+  let bestBonus = 0;
+  
+  for (const tier of tiers) {
+    const match = tier.match(/(\d+)\+(\d+)/);
+    if (match) {
+      const buyQty = parseInt(match[1]);
+      const freeQty = parseInt(match[2]);
+      if (quantity >= buyQty) {
+        const bonus = Math.floor(quantity / buyQty) * freeQty;
+        if (bonus > bestBonus) bestBonus = bonus;
+      }
+    }
+  }
+  
+  return bestBonus;
+}
+
 export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
   ({ items, invoiceInfo, invoiceNumber, invoiceDate, orderDate, printDateTime, totals, discountPercent, getItemTp }, ref) => {
     // Calculate subtotal using custom TP values
@@ -67,7 +93,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
     const netPayable = grossTPAfterDiscount + vat;
 
     return (
-      <div ref={ref} className="bg-white text-black p-4 text-[11px] font-sans leading-tight relative flex flex-col" style={{ fontFamily: 'Arial, sans-serif', minHeight: '297mm' }}>
+      <div ref={ref} className="bg-white text-black p-4 text-[11px] font-sans leading-tight relative flex flex-col" style={{ fontFamily: 'Arial, sans-serif', minHeight: '297mm', width: '210mm', boxSizing: 'border-box' }}>
         {/* Watermark Logo - Background */}
         <div 
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -82,7 +108,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         </div>
         
         {/* Content wrapper with higher z-index */}
-        <div className="relative" style={{ zIndex: 1 }}>
+        <div className="relative flex-1 flex flex-col" style={{ zIndex: 1 }}>
           {/* Main Header */}
           <div className="flex justify-between items-start mb-1">
             {/* Corporate Office - Left */}
@@ -223,6 +249,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               const itemTp = getItemTp(item);
               const totalTP = itemTp * item.quantity;
               const tpWithVat = itemTp + item.product.vat;
+              const bonusQty = calculateBonus(item.product.bonus, item.quantity);
               return (
                 <tr key={item.product.id} className="border-b border-dotted border-gray-400">
                   <td className="py-1">{item.product.name}</td>
@@ -231,7 +258,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   <td className="text-right py-1">{itemTp.toFixed(2)}</td>
                   <td className="text-right py-1">{item.product.vat.toFixed(2)}</td>
                   <td className="text-right py-1">{tpWithVat.toFixed(2)}</td>
-                  <td className="text-center py-1">{item.product.bonus || '0'}</td>
+                  <td className="text-center py-1">{bonusQty > 0 ? bonusQty : '-'}</td>
                   <td className="text-center py-1">0</td>
                   <td className="text-center py-1">0</td>
                   <td className="text-right py-1">{totalTP.toFixed(2)}</td>
@@ -245,7 +272,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         <div className="border-t-2 border-dashed border-black mb-3"></div>
 
         {/* Totals Section */}
-        <div className="flex justify-between mb-6">
+        <div className="flex justify-between mb-4">
           {/* In Words - Left */}
           <div className="text-[10px] max-w-[50%]">
             <span className="font-semibold">In Words: </span>
@@ -281,31 +308,33 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           </div>
         </div>
 
-        {/* Footer - always at bottom */}
-        <div style={{ marginTop: 'auto', paddingTop: '3rem' }}>
-          {/* Depot Info - Right aligned */}
-          <div className="text-right mb-8 text-[10px]">
-            <p className="font-semibold">Cumilla Depot</p>
-            <p>For FnF Pharmaceuticals Ltd.</p>
+        {/* Footer - always at bottom of A4 */}
+        <div style={{ marginTop: 'auto' }}>
+          {/* Depot Info - Right aligned with separator */}
+          <div className="border-t-2 border-black pt-3">
+            <div className="text-right mb-12 text-[10px]">
+              <p className="font-bold">Cumilla Depot</p>
+              <p>For FnF Pharmaceuticals Ltd.</p>
+            </div>
           </div>
 
-          {/* Signature Row */}
-          <div className="flex justify-between text-[9px] pt-2 border-t border-black">
-            <div className="text-center flex-1">
-              <div className="h-16"></div>
-              <div className="border-t border-black w-28 mx-auto pt-1">Prepared By</div>
+          {/* Signature Row - evenly spaced */}
+          <div className="flex justify-between items-end px-4" style={{ paddingBottom: '10mm' }}>
+            <div className="text-center">
+              <div className="border-t border-black w-32 mx-auto mb-1"></div>
+              <span className="text-[9px] font-medium">Prepared By</span>
             </div>
-            <div className="text-center flex-1">
-              <div className="h-16"></div>
-              <div className="border-t border-black w-28 mx-auto pt-1">Checked By</div>
+            <div className="text-center">
+              <div className="border-t border-black w-32 mx-auto mb-1"></div>
+              <span className="text-[9px] font-medium">Checked By</span>
             </div>
-            <div className="text-center flex-1">
-              <div className="h-16"></div>
-              <div className="border-t border-black w-28 mx-auto pt-1">Authorized Signature</div>
+            <div className="text-center">
+              <div className="border-t border-black w-32 mx-auto mb-1"></div>
+              <span className="text-[9px] font-medium">Authorized Signature</span>
             </div>
-            <div className="text-center flex-1">
-              <div className="h-16"></div>
-              <div className="border-t border-black w-28 mx-auto pt-1">Customer's Signature</div>
+            <div className="text-center">
+              <div className="border-t border-black w-32 mx-auto mb-1"></div>
+              <span className="text-[9px] font-medium">Customer's Signature</span>
             </div>
           </div>
         </div>
