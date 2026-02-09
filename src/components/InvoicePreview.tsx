@@ -178,12 +178,12 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           {/* Left Column - Customer Info */}
           <div className="space-y-1">
             <div className="flex">
-              <span className="font-semibold w-24">Chemist Code</span>
-              <span>: {invoiceInfo.chemistCode}</span>
+              <span className="font-bold w-24">Chemist Code</span>
+              <span>: <strong>{invoiceInfo.chemistCode}</strong></span>
             </div>
             <div className="flex">
-              <span className="font-semibold w-24">Chemist Name</span>
-              <span>: {invoiceInfo.chemistName}</span>
+              <span className="font-bold w-24">Chemist Name</span>
+              <span>: <strong>{invoiceInfo.chemistName}</strong></span>
             </div>
             <div className="flex">
               <span className="font-semibold w-24">BIN No</span>
@@ -194,12 +194,12 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               <span>: {invoiceInfo.address}</span>
             </div>
             <div className="flex">
-              <span className="font-semibold w-24">Market</span>
-              <span>: {invoiceInfo.market}</span>
+              <span className="font-bold w-24">Market</span>
+              <span>: <strong>{invoiceInfo.market}</strong></span>
             </div>
             <div className="flex">
-              <span className="font-semibold w-24">Field Force</span>
-              <span>: {invoiceInfo.fieldForce}</span>
+              <span className="font-bold w-24">Field Force</span>
+              <span>: <strong>{invoiceInfo.fieldForce}</strong></span>
             </div>
           </div>
           
