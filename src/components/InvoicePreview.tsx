@@ -80,8 +80,12 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
     const subtotal = items.reduce((sum, item) => sum + getItemTp(item) * item.quantity, 0);
     const { vat } = totals;
     
-    // Calculate line item discount (sum of individual discounts based on product bonus/discount)
-    const lineItemDiscount = 0; // Can be calculated from item.product.discount if available
+    // Calculate line item discount (e.g., ND+IBD vaccines get 300 per unit)
+    const getItemDiscount = (item: CartItem): number => {
+      if (item.product.name.includes('ND+IBD')) return 300;
+      return 0;
+    };
+    const lineItemDiscount = items.reduce((sum, item) => sum + getItemDiscount(item) * item.quantity, 0);
     
     // Group discount (customizable percentage of subtotal)
     const groupDiscount = subtotal * (discountPercent / 100);
@@ -247,7 +251,8 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <tbody>
             {items.map((item) => {
               const itemTp = getItemTp(item);
-              const totalTP = itemTp * item.quantity;
+              const itemDiscount = getItemDiscount(item);
+              const totalTP = (itemTp - itemDiscount) * item.quantity;
               const tpWithVat = itemTp + item.product.vat;
               const bonusQty = calculateBonus(item.product.bonus, item.quantity);
               return (
@@ -260,7 +265,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   <td className="text-right py-1">{tpWithVat.toFixed(2)}</td>
                   <td className="text-center py-1">{bonusQty > 0 ? bonusQty : '-'}</td>
                   <td className="text-center py-1">0</td>
-                  <td className="text-center py-1">0</td>
+                  <td className="text-center py-1">{itemDiscount > 0 ? (itemDiscount * item.quantity).toFixed(2) : '0'}</td>
                   <td className="text-right py-1">{totalTP.toFixed(2)}</td>
                 </tr>
               );
