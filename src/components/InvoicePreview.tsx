@@ -178,12 +178,12 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           {/* Left Column - Customer Info */}
           <div className="space-y-1">
             <div className="flex">
-              <span className="font-semibold w-24">Chemist Code</span>
-              <span>: {invoiceInfo.chemistCode}</span>
+              <span className="font-bold w-24">Chemist Code</span>
+              <span>: <strong>{invoiceInfo.chemistCode}</strong></span>
             </div>
             <div className="flex">
-              <span className="font-semibold w-24">Chemist Name</span>
-              <span>: {invoiceInfo.chemistName}</span>
+              <span className="font-bold w-24">Chemist Name</span>
+              <span>: <strong>{invoiceInfo.chemistName}</strong></span>
             </div>
             <div className="flex">
               <span className="font-semibold w-24">BIN No</span>
@@ -194,12 +194,12 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               <span>: {invoiceInfo.address}</span>
             </div>
             <div className="flex">
-              <span className="font-semibold w-24">Market</span>
-              <span>: {invoiceInfo.market}</span>
+              <span className="font-bold w-24">Market</span>
+              <span>: <strong>{invoiceInfo.market}</strong></span>
             </div>
             <div className="flex">
-              <span className="font-semibold w-24">Field Force</span>
-              <span>: {invoiceInfo.fieldForce}</span>
+              <span className="font-bold w-24">Field Force</span>
+              <span>: <strong>{invoiceInfo.fieldForce}</strong></span>
             </div>
           </div>
           
@@ -233,7 +233,6 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <thead>
             <tr className="border-t border-b border-black">
               <th className="text-left py-1 font-semibold">Products Name</th>
-              <th className="text-center py-1 font-semibold">Pack Size</th>
               <th className="text-center py-1 font-semibold">Quantity</th>
               <th className="text-right py-1 font-semibold">Unit Price<br/>TP/SP</th>
               <th className="text-right py-1 font-semibold">Unit VAT</th>
@@ -252,8 +251,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               const bonusQty = calculateBonus(item.product.bonus, item.quantity);
               return (
                 <tr key={item.product.id} className="border-b border-dotted border-gray-400">
-                  <td className="py-1">{item.product.name}</td>
-                  <td className="text-center py-1">{item.product.packSize}</td>
+                  <td className="py-1">{item.product.name} ({item.product.packSize})</td>
                   <td className="text-center py-1">{item.quantity}</td>
                   <td className="text-right py-1">{itemTp.toFixed(2)}</td>
                   <td className="text-right py-1">{item.product.vat.toFixed(2)}</td>
