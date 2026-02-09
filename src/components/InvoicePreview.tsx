@@ -251,7 +251,8 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <tbody>
             {items.map((item) => {
               const itemTp = getItemTp(item);
-              const totalTP = itemTp * item.quantity;
+              const itemDiscount = getItemDiscount(item);
+              const totalTP = (itemTp - itemDiscount) * item.quantity;
               const tpWithVat = itemTp + item.product.vat;
               const bonusQty = calculateBonus(item.product.bonus, item.quantity);
               return (
@@ -264,7 +265,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   <td className="text-right py-1">{tpWithVat.toFixed(2)}</td>
                   <td className="text-center py-1">{bonusQty > 0 ? bonusQty : '-'}</td>
                   <td className="text-center py-1">0</td>
-                  <td className="text-center py-1">0</td>
+                  <td className="text-center py-1">{itemDiscount > 0 ? (itemDiscount * item.quantity).toFixed(2) : '0'}</td>
                   <td className="text-right py-1">{totalTP.toFixed(2)}</td>
                 </tr>
               );
