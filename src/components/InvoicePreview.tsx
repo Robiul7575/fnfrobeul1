@@ -233,7 +233,6 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <thead>
             <tr className="border-t border-b border-black">
               <th className="text-left py-1 font-semibold">Products Name</th>
-              <th className="text-center py-1 font-semibold">Pack Size</th>
               <th className="text-center py-1 font-semibold">Quantity</th>
               <th className="text-right py-1 font-semibold">Unit Price<br/>TP/SP</th>
               <th className="text-right py-1 font-semibold">Unit VAT</th>
