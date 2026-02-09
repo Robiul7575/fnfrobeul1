@@ -252,8 +252,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               const bonusQty = calculateBonus(item.product.bonus, item.quantity);
               return (
                 <tr key={item.product.id} className="border-b border-dotted border-gray-400">
-                  <td className="py-1">{item.product.name}</td>
-                  <td className="text-center py-1">{item.product.packSize}</td>
+                  <td className="py-1">{item.product.name} ({item.product.packSize})</td>
                   <td className="text-center py-1">{item.quantity}</td>
                   <td className="text-right py-1">{itemTp.toFixed(2)}</td>
                   <td className="text-right py-1">{item.product.vat.toFixed(2)}</td>
