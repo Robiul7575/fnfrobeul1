@@ -80,8 +80,12 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
     const subtotal = items.reduce((sum, item) => sum + getItemTp(item) * item.quantity, 0);
     const { vat } = totals;
     
-    // Calculate line item discount (sum of individual discounts based on product bonus/discount)
-    const lineItemDiscount = 0; // Can be calculated from item.product.discount if available
+    // Calculate line item discount (e.g., ND+IBD vaccines get 300 per unit)
+    const getItemDiscount = (item: CartItem): number => {
+      if (item.product.name.includes('ND+IBD')) return 300;
+      return 0;
+    };
+    const lineItemDiscount = items.reduce((sum, item) => sum + getItemDiscount(item) * item.quantity, 0);
     
     // Group discount (customizable percentage of subtotal)
     const groupDiscount = subtotal * (discountPercent / 100);
