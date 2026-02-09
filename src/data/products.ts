@@ -116,4 +116,5 @@ export const ALL_PRODUCTS: Product[] = [
   { id: 108, name: 'Bangla Avianza vac H9', category: ProductCategory.VACCINE, packSize: '500 ml', tp: 4100.00, vat: 0.00, tp_vat: 4100.00, mrp: 5500.00, bonus: 'N/A' },
   { id: 109, name: 'Bangla FMD Vac', category: ProductCategory.VACCINE, packSize: '10ml', tp: 501.83, vat: 0.00, tp_vat: 501.83, mrp: 570.00, bonus: 'N/A' },
   { id: 110, name: 'Dogen Vet', category: ProductCategory.BOLUS, packSize: '10x10gm', tp: 511.11, vat: 89.99, tp_vat: 601.10, mrp: 700.00, bonus: 'N/A' },
+  { id: 111, name: 'Dogen Vet 100gm', category: ProductCategory.BOLUS, packSize: '100gm', tp: 485.53, vat: 84.47, tp_vat: 570.00, mrp: 650.00, bonus: 'N/A' },
 ];
