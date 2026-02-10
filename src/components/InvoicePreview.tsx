@@ -82,7 +82,10 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
     
     // Calculate line item discount (e.g., ND+IBD vaccines get 300 per unit)
     const getItemDiscount = (item: CartItem): number => {
-      if (item.product.name.includes('ND+IBD')) return 300;
+      if (item.product.name.includes('ND+IBD')) {
+        if (item.product.packSize.includes('250')) return 100;
+        return 300;
+      }
       return 0;
     };
     const lineItemDiscount = items.reduce((sum, item) => sum + getItemDiscount(item) * item.quantity, 0);
