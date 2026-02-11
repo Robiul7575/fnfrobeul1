@@ -177,30 +177,51 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
     if (!element) return;
 
     try {
-      const canvas = await html2canvas(element, {
-        scale: 2,
+      // Clone the invoice element and render it off-screen at native A4 size
+      const clone = element.cloneNode(true) as HTMLElement;
+      clone.style.position = 'fixed';
+      clone.style.top = '-9999px';
+      clone.style.left = '-9999px';
+      clone.style.width = '210mm';
+      clone.style.minHeight = '297mm';
+      clone.style.padding = '4mm';
+      clone.style.boxSizing = 'border-box';
+      clone.style.backgroundColor = '#ffffff';
+      clone.style.zIndex = '-9999';
+      document.body.appendChild(clone);
+
+      // Wait for fonts and images to load in the clone
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+      const canvas = await html2canvas(clone, {
+        scale: 3,
         useCORS: true,
         logging: false,
         backgroundColor: '#ffffff',
+        width: clone.scrollWidth,
+        height: clone.scrollHeight,
       });
+
+      // Remove the clone
+      document.body.removeChild(clone);
 
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgData = canvas.toDataURL('image/png');
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pdfWidth - 20;
+      const imgWidth = pdfWidth;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       let heightLeft = imgHeight;
-      let position = 10;
+      let position = 0;
 
-      pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
       heightLeft -= pdfHeight;
 
       while (heightLeft > 0) {
-        position = heightLeft - imgHeight + 10;
+        position = heightLeft - imgHeight;
         pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
         heightLeft -= pdfHeight;
       }
 
