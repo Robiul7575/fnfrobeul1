@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { CartItem } from '@/context/CartContext';
 import { InvoiceInfo } from './InvoiceInfoDialog';
 import fnfLogo from '@/assets/fnf-logo.svg';
@@ -259,18 +259,34 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               const tpWithVat = itemTp + item.product.vat;
               const bonusQty = calculateBonus(item.product.bonus, item.quantity);
               return (
-                <tr key={item.product.id} className="border-b border-dotted border-gray-400">
-                  <td className="py-1">{item.product.name} ({item.product.packSize})</td>
-                  <td className="text-center py-1">{item.product.packSize}</td>
-                  <td className="text-center py-1">{item.quantity}</td>
-                  <td className="text-right py-1">{itemTp.toFixed(2)}</td>
-                  <td className="text-right py-1">{item.product.vat.toFixed(2)}</td>
-                  <td className="text-right py-1">{tpWithVat.toFixed(2)}</td>
-                  <td className="text-center py-1">{bonusQty > 0 ? bonusQty : '-'}</td>
-                  <td className="text-center py-1">0</td>
-                  <td className="text-center py-1">{itemDiscount > 0 ? (itemDiscount * item.quantity).toFixed(2) : '0'}</td>
-                  <td className="text-right py-1">{totalTP.toFixed(2)}</td>
-                </tr>
+                <React.Fragment key={item.product.id}>
+                  <tr className="border-b border-dotted border-gray-400">
+                    <td className="py-1">{item.product.name} ({item.product.packSize})</td>
+                    <td className="text-center py-1">{item.product.packSize}</td>
+                    <td className="text-center py-1">{item.quantity}</td>
+                    <td className="text-right py-1">{itemTp.toFixed(2)}</td>
+                    <td className="text-right py-1">{item.product.vat.toFixed(2)}</td>
+                    <td className="text-right py-1">{tpWithVat.toFixed(2)}</td>
+                    <td className="text-center py-1">{bonusQty > 0 ? bonusQty : '-'}</td>
+                    <td className="text-center py-1">0</td>
+                    <td className="text-center py-1">{itemDiscount > 0 ? (itemDiscount * item.quantity).toFixed(2) : '0'}</td>
+                    <td className="text-right py-1">{totalTP.toFixed(2)}</td>
+                  </tr>
+                  {bonusQty > 0 && (
+                    <tr className="border-b border-dotted border-gray-300 text-gray-600 italic">
+                      <td className="py-1">{item.product.name} ({item.product.packSize}) [Bonus]</td>
+                      <td className="text-center py-1">{item.product.packSize}</td>
+                      <td className="text-center py-1">{bonusQty}</td>
+                      <td className="text-right py-1">0.00</td>
+                      <td className="text-right py-1">0.00</td>
+                      <td className="text-right py-1">0.00</td>
+                      <td className="text-center py-1">-</td>
+                      <td className="text-center py-1">0</td>
+                      <td className="text-center py-1">0</td>
+                      <td className="text-right py-1">0.00</td>
+                    </tr>
+                  )}
+                </React.Fragment>
               );
             })}
           </tbody>
