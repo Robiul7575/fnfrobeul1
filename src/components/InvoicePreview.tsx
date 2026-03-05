@@ -234,20 +234,32 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </tbody>
           </table>
 
-          {/* Products Table */}
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '8.5px', marginBottom: '6px' }}>
+        {/* Products Table */}
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '8.5px', marginBottom: '6px', tableLayout: 'fixed' }}>
+            <colgroup>
+              <col style={{ width: '26%' }} />
+              <col style={{ width: '10%' }} />
+              <col style={{ width: '6%' }} />
+              <col style={{ width: '10%' }} />
+              <col style={{ width: '8%' }} />
+              <col style={{ width: '10%' }} />
+              <col style={{ width: '6%' }} />
+              <col style={{ width: '6%' }} />
+              <col style={{ width: '8%' }} />
+              <col style={{ width: '10%' }} />
+            </colgroup>
             <thead>
               <tr style={{ borderTop: '1.5px solid black', borderBottom: '1.5px solid black' }}>
-                <th style={{ textAlign: 'left', padding: '3px 2px', fontWeight: 600, width: '28%' }}>Products Name</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600, width: '10%' }}>Pack Size</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600, width: '6%' }}>Qty</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600, width: '10%' }}>Unit TP/SP</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600, width: '8%' }}>Unit VAT</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600, width: '10%' }}>TP+VAT</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600, width: '6%' }}>Bonus</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600, width: '6%' }}>VAT%</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600, width: '8%' }}>Dis. Amt</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600, width: '10%' }}>Total TP/SP</th>
+                <th style={{ textAlign: 'left', padding: '3px 2px', fontWeight: 600 }}>Products Name</th>
+                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>Pack Size</th>
+                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>Qty</th>
+                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Unit TP/SP</th>
+                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Unit VAT</th>
+                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>TP+VAT</th>
+                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>Bonus</th>
+                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>VAT%</th>
+                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Dis. Amt</th>
+                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Total TP/SP</th>
               </tr>
             </thead>
             <tbody>
