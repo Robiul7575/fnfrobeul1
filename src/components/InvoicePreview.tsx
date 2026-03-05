@@ -148,7 +148,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   </table>
                 </td>
                 {/* Right - Factory */}
-                <td style={{ verticalAlign: 'top', textAlign: 'right', fontSize: '8px', lineHeight: '1.4' }}>
+                <td style={{ verticalAlign: 'top', textAlign: 'right', fontSize: '9px', lineHeight: '1.5' }}>
                   <p style={{ fontWeight: 'bold', marginBottom: '1px' }}>Factory:</p>
                   <p>Rautail, Nagarbathan,</p>
                   <p>Jhenaidah, Bangladesh.</p>
