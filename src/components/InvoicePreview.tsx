@@ -348,8 +348,8 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <div style={{ marginTop: 'auto' }}>
             <div style={{ borderTop: '2px solid black', paddingTop: '8px' }}>
               <div style={{ textAlign: 'right', marginBottom: '40px', fontSize: '9px' }}>
-                <p style={{ fontWeight: 'bold' }}>Cumilla Depot</p>
-                <p>For FnF Pharmaceuticals Ltd.</p>
+                <p style={{ fontWeight: 'bold', fontSize: '10px' }}>Cumilla Depot</p>
+                <p style={{ fontSize: '10px' }}>For FnF Pharmaceuticals Ltd.</p>
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10mm' }}>
