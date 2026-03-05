@@ -185,8 +185,8 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
 
           {/* Contact & Invoice subtitle */}
           <div style={{ textAlign: 'center', marginBottom: '8px' }}>
-            <p style={{ fontSize: '9px' }}>Contact No: {invoiceInfo.contactNo}</p>
-            <p style={{ fontSize: '13px', fontWeight: 600, marginTop: '2px' }}>Invoice</p>
+            <p style={{ fontSize: '10px' }}>Contact No: {invoiceInfo.contactNo}</p>
+            <p style={{ fontSize: '14px', fontWeight: 700, marginTop: '2px' }}>Invoice</p>
           </div>
 
           {/* Customer & Invoice Info */}
