@@ -189,7 +189,8 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
       
       const clone = element.cloneNode(true) as HTMLElement;
       clone.style.width = '794px';
-      clone.style.minHeight = '1123px'; // A4 height at 96dpi
+      clone.style.minHeight = 'auto';
+      clone.style.height = 'auto';
       clone.style.padding = '30px 38px';
       clone.style.boxSizing = 'border-box';
       clone.style.overflow = 'visible';
@@ -218,17 +219,19 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
       const pdfWidth = 210;
       const pdfHeight = 297;
       const imgData = canvas.toDataURL('image/png');
-      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-      let position = 0;
-      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
-      let heightLeft = imgHeight - pdfHeight;
-
-      while (heightLeft > 0) {
-        pdf.addPage();
-        position -= pdfHeight;
-        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
-        heightLeft -= pdfHeight;
+      
+      // Scale the entire invoice to fit on exactly one A4 page
+      const naturalHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      if (naturalHeight <= pdfHeight) {
+        // Content fits on one page naturally
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, naturalHeight);
+      } else {
+        // Scale down to fit on one page
+        const scaleFactor = pdfHeight / naturalHeight;
+        const scaledWidth = pdfWidth * scaleFactor;
+        const xOffset = (pdfWidth - scaledWidth) / 2; // center horizontally
+        pdf.addImage(imgData, 'PNG', xOffset, 0, scaledWidth, pdfHeight);
       }
 
       pdf.save(`Invoice-${invoiceNumber}.pdf`);
