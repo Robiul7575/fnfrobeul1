@@ -189,12 +189,14 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
       
       const clone = element.cloneNode(true) as HTMLElement;
       clone.style.width = '794px';
-      clone.style.minHeight = 'auto';
+      clone.style.minHeight = '1123px'; // A4 height at 96dpi - needed for footer positioning
       clone.style.height = 'auto';
       clone.style.padding = '30px 38px';
       clone.style.boxSizing = 'border-box';
       clone.style.overflow = 'visible';
       clone.style.position = 'relative';
+      clone.style.display = 'flex';
+      clone.style.flexDirection = 'column';
       
       container.appendChild(clone);
       document.body.appendChild(container);
