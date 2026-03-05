@@ -112,12 +112,17 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         {/* Content */}
         <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
           
-          {/* === HEADER === */}
-          <table style={{ width: '100%', marginBottom: '4px' }}>
+        {/* === HEADER === */}
+          <table style={{ width: '100%', marginBottom: '4px', tableLayout: 'fixed' }}>
+            <colgroup>
+              <col style={{ width: '28%' }} />
+              <col style={{ width: '44%' }} />
+              <col style={{ width: '28%' }} />
+            </colgroup>
             <tbody>
               <tr>
                 {/* Left - Corporate Office */}
-                <td style={{ width: '28%', verticalAlign: 'top', fontSize: '8px', lineHeight: '1.4' }}>
+                <td style={{ verticalAlign: 'top', fontSize: '8px', lineHeight: '1.4' }}>
                   <p style={{ fontWeight: 'bold', marginBottom: '1px' }}>Corporate Office:</p>
                   <p>Urban Stream Commercial Complex</p>
                   <p>Level # 03, 18 New Eskaton</p>
@@ -125,17 +130,25 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   <p>Phone: 9336001</p>
                 </td>
                 {/* Center - Logo + Company */}
-                <td style={{ width: '44%', verticalAlign: 'top', textAlign: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <img src={fnfLogoColor} alt="FnF" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
-                    <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#2563eb' }}>FnF Pharmaceuticals Ltd.</span>
-                  </div>
-                  <div style={{ display: 'inline-block', border: '2px solid black', padding: '2px 20px', borderRadius: '6px' }}>
-                    <span style={{ fontSize: '16px', fontWeight: 'bold' }}>INVOICE</span>
-                  </div>
+                <td style={{ verticalAlign: 'top', textAlign: 'center' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <tbody>
+                      <tr>
+                        <td style={{ textAlign: 'center', paddingBottom: '4px' }}>
+                          <img src={fnfLogoColor} alt="FnF" style={{ height: '36px', width: 'auto', display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }} />
+                          <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#2563eb', verticalAlign: 'middle' }}>FnF Pharmaceuticals Ltd.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ textAlign: 'center' }}>
+                          <span style={{ display: 'inline-block', border: '2px solid black', padding: '2px 20px', borderRadius: '6px', fontSize: '16px', fontWeight: 'bold' }}>INVOICE</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </td>
                 {/* Right - Factory */}
-                <td style={{ width: '28%', verticalAlign: 'top', textAlign: 'right', fontSize: '8px', lineHeight: '1.4' }}>
+                <td style={{ verticalAlign: 'top', textAlign: 'right', fontSize: '8px', lineHeight: '1.4' }}>
                   <p style={{ fontWeight: 'bold', marginBottom: '1px' }}>Factory:</p>
                   <p>Rautail, Nagarbathan,</p>
                   <p>Jhenaidah, Bangladesh.</p>
