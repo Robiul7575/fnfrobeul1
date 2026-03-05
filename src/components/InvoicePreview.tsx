@@ -159,7 +159,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           </table>
 
           {/* Print Date & Page */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '8px', marginBottom: '6px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', marginBottom: '6px' }}>
             <span>Printed On: {printDateTime}</span>
             <span>Page 1 of 1</span>
           </div>
