@@ -172,7 +172,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   <td style={{ width: '25%' }}></td>
                   <td style={{ textAlign: 'center', width: '50%' }}>
                     <p style={{ fontWeight: 600 }}>FnF Pharmaceuticals Ltd.</p>
-                    <p style={{ fontSize: '8px' }}>[Clauses (c) and (f) of sub-Rule (1) of Rule 40]</p>
+                    <p style={{ fontSize: '9px' }}>[Clauses (c) and (f) of sub-Rule (1) of Rule 40]</p>
                   </td>
                   <td style={{ textAlign: 'right', width: '25%', fontWeight: 600 }}>MUSHAK-6.3</td>
                 </tr>
