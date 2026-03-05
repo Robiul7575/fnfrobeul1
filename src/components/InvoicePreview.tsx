@@ -307,30 +307,42 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <div style={{ borderTop: '2px dashed black', marginBottom: '8px' }}></div>
 
           {/* Totals */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <div style={{ fontSize: '9px', maxWidth: '50%' }}>
-              <span style={{ fontWeight: 600 }}>In Words: </span>
-              <span>{numberToWords(Math.round(netPayable))} Taka Only</span>
-            </div>
-            <div style={{ fontSize: '9px', minWidth: '180px' }}>
-              {[
-                ['Gross TP', subtotal.toFixed(2)],
-                ['Line Item Discount', `-${lineItemDiscount.toFixed(2)}`],
-                ['Group Discount', `-${groupDiscount.toFixed(2)}`],
-                ['Gross TP (After Disc.)', grossTPAfterDiscount.toFixed(2)],
-                ['Add VAT on TP', vat.toFixed(2)],
-              ].map(([label, val]) => (
-                <div key={label} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1px' }}>
-                  <span>{label}</span>
-                  <span>{val}</span>
-                </div>
-              ))}
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', borderTop: '1px solid black', paddingTop: '3px', marginTop: '3px' }}>
-                <span>Net Payable</span>
-                <span>{netPayable.toFixed(2)}</span>
-              </div>
-            </div>
-          </div>
+          <table style={{ width: '100%', marginBottom: '12px', tableLayout: 'fixed' }}>
+            <colgroup>
+              <col style={{ width: '55%' }} />
+              <col style={{ width: '45%' }} />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td style={{ verticalAlign: 'top', fontSize: '9px', paddingRight: '16px' }}>
+                  <span style={{ fontWeight: 600 }}>In Words: </span>
+                  <span>{numberToWords(Math.round(netPayable))} Taka Only</span>
+                </td>
+                <td style={{ verticalAlign: 'top', fontSize: '9px' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <tbody>
+                      {[
+                        ['Gross TP', subtotal.toFixed(2)],
+                        ['Line Item Discount', `-${lineItemDiscount.toFixed(2)}`],
+                        ['Group Discount', `-${groupDiscount.toFixed(2)}`],
+                        ['Gross TP (After Disc.)', grossTPAfterDiscount.toFixed(2)],
+                        ['Add VAT on TP', vat.toFixed(2)],
+                      ].map(([label, val]) => (
+                        <tr key={label}>
+                          <td style={{ padding: '1px 0', textAlign: 'left' }}>{label}</td>
+                          <td style={{ padding: '1px 0', textAlign: 'right' }}>{val}</td>
+                        </tr>
+                      ))}
+                      <tr style={{ borderTop: '1px solid black' }}>
+                        <td style={{ padding: '3px 0 0', textAlign: 'left', fontWeight: 'bold' }}>Net Payable</td>
+                        <td style={{ padding: '3px 0 0', textAlign: 'right', fontWeight: 'bold' }}>{netPayable.toFixed(2)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
           {/* Footer */}
           <div style={{ marginTop: 'auto' }}>

@@ -177,16 +177,29 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
     if (!element) return;
 
     try {
-      // Clone the element into a hidden off-screen container to avoid capturing UI artifacts
+      // Create a wrapper container with exact A4 pixel dimensions
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.left = '-9999px';
+      container.style.top = '0';
+      container.style.width = '794px'; // A4 width at 96dpi
+      container.style.background = 'white';
+      container.style.zIndex = '-1';
+      container.style.overflow = 'visible';
+      
       const clone = element.cloneNode(true) as HTMLElement;
-      clone.style.position = 'fixed';
-      clone.style.left = '-9999px';
-      clone.style.top = '0';
-      clone.style.width = '210mm';
-      clone.style.minHeight = '297mm';
+      clone.style.width = '794px';
+      clone.style.minHeight = '1123px'; // A4 height at 96dpi
+      clone.style.padding = '30px 38px';
+      clone.style.boxSizing = 'border-box';
       clone.style.overflow = 'visible';
-      clone.style.zIndex = '-1';
-      document.body.appendChild(clone);
+      clone.style.position = 'relative';
+      
+      container.appendChild(clone);
+      document.body.appendChild(container);
+
+      // Wait for images/fonts to render
+      await new Promise(resolve => setTimeout(resolve, 300));
 
       const canvas = await html2canvas(clone, {
         scale: 3,
@@ -195,28 +208,26 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
         backgroundColor: '#ffffff',
         scrollX: 0,
         scrollY: 0,
-        windowWidth: clone.scrollWidth,
-        windowHeight: clone.scrollHeight,
+        width: 794,
+        windowWidth: 794,
       });
 
-      document.body.removeChild(clone);
+      document.body.removeChild(container);
 
       const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pdfWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+      const imgData = canvas.toDataURL('image/png');
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-      let heightLeft = imgHeight;
       let position = 0;
-
-      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pdfHeight;
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
+      let heightLeft = imgHeight - pdfHeight;
 
       while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
         pdf.addPage();
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
+        position -= pdfHeight;
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
         heightLeft -= pdfHeight;
       }
 
