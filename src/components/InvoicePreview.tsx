@@ -314,8 +314,8 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </colgroup>
             <tbody>
               <tr>
-                <td style={{ verticalAlign: 'top', fontSize: '9px', paddingRight: '16px' }}>
-                  <span style={{ fontWeight: 600 }}>In Words: </span>
+                <td style={{ verticalAlign: 'top', fontSize: '10px', paddingRight: '16px' }}>
+                  <span style={{ fontWeight: 700 }}>In Words: </span>
                   <span>{numberToWords(Math.round(netPayable))} Taka Only</span>
                 </td>
                 <td style={{ verticalAlign: 'top', fontSize: '9px' }}>
