@@ -112,12 +112,17 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         {/* Content */}
         <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
           
-          {/* === HEADER === */}
-          <table style={{ width: '100%', marginBottom: '4px' }}>
+        {/* === HEADER === */}
+          <table style={{ width: '100%', marginBottom: '4px', tableLayout: 'fixed' }}>
+            <colgroup>
+              <col style={{ width: '28%' }} />
+              <col style={{ width: '44%' }} />
+              <col style={{ width: '28%' }} />
+            </colgroup>
             <tbody>
               <tr>
                 {/* Left - Corporate Office */}
-                <td style={{ width: '28%', verticalAlign: 'top', fontSize: '8px', lineHeight: '1.4' }}>
+                <td style={{ verticalAlign: 'top', fontSize: '8px', lineHeight: '1.4' }}>
                   <p style={{ fontWeight: 'bold', marginBottom: '1px' }}>Corporate Office:</p>
                   <p>Urban Stream Commercial Complex</p>
                   <p>Level # 03, 18 New Eskaton</p>
@@ -125,17 +130,25 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   <p>Phone: 9336001</p>
                 </td>
                 {/* Center - Logo + Company */}
-                <td style={{ width: '44%', verticalAlign: 'top', textAlign: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <img src={fnfLogoColor} alt="FnF" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
-                    <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#2563eb' }}>FnF Pharmaceuticals Ltd.</span>
-                  </div>
-                  <div style={{ display: 'inline-block', border: '2px solid black', padding: '2px 20px', borderRadius: '6px' }}>
-                    <span style={{ fontSize: '16px', fontWeight: 'bold' }}>INVOICE</span>
-                  </div>
+                <td style={{ verticalAlign: 'top', textAlign: 'center' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <tbody>
+                      <tr>
+                        <td style={{ textAlign: 'center', paddingBottom: '4px' }}>
+                          <img src={fnfLogoColor} alt="FnF" style={{ height: '36px', width: 'auto', display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }} />
+                          <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#2563eb', verticalAlign: 'middle' }}>FnF Pharmaceuticals Ltd.</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ textAlign: 'center' }}>
+                          <span style={{ display: 'inline-block', border: '2px solid black', padding: '2px 20px', borderRadius: '6px', fontSize: '16px', fontWeight: 'bold' }}>INVOICE</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </td>
                 {/* Right - Factory */}
-                <td style={{ width: '28%', verticalAlign: 'top', textAlign: 'right', fontSize: '8px', lineHeight: '1.4' }}>
+                <td style={{ verticalAlign: 'top', textAlign: 'right', fontSize: '8px', lineHeight: '1.4' }}>
                   <p style={{ fontWeight: 'bold', marginBottom: '1px' }}>Factory:</p>
                   <p>Rautail, Nagarbathan,</p>
                   <p>Jhenaidah, Bangladesh.</p>
@@ -221,20 +234,32 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </tbody>
           </table>
 
-          {/* Products Table */}
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '8.5px', marginBottom: '6px' }}>
+        {/* Products Table */}
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '8.5px', marginBottom: '6px', tableLayout: 'fixed' }}>
+            <colgroup>
+              <col style={{ width: '26%' }} />
+              <col style={{ width: '10%' }} />
+              <col style={{ width: '6%' }} />
+              <col style={{ width: '10%' }} />
+              <col style={{ width: '8%' }} />
+              <col style={{ width: '10%' }} />
+              <col style={{ width: '6%' }} />
+              <col style={{ width: '6%' }} />
+              <col style={{ width: '8%' }} />
+              <col style={{ width: '10%' }} />
+            </colgroup>
             <thead>
               <tr style={{ borderTop: '1.5px solid black', borderBottom: '1.5px solid black' }}>
-                <th style={{ textAlign: 'left', padding: '3px 2px', fontWeight: 600, width: '28%' }}>Products Name</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600, width: '10%' }}>Pack Size</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600, width: '6%' }}>Qty</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600, width: '10%' }}>Unit TP/SP</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600, width: '8%' }}>Unit VAT</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600, width: '10%' }}>TP+VAT</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600, width: '6%' }}>Bonus</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600, width: '6%' }}>VAT%</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600, width: '8%' }}>Dis. Amt</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600, width: '10%' }}>Total TP/SP</th>
+                <th style={{ textAlign: 'left', padding: '3px 2px', fontWeight: 600 }}>Products Name</th>
+                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>Pack Size</th>
+                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>Qty</th>
+                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Unit TP/SP</th>
+                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Unit VAT</th>
+                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>TP+VAT</th>
+                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>Bonus</th>
+                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>VAT%</th>
+                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Dis. Amt</th>
+                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Total TP/SP</th>
               </tr>
             </thead>
             <tbody>
@@ -282,30 +307,42 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <div style={{ borderTop: '2px dashed black', marginBottom: '8px' }}></div>
 
           {/* Totals */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <div style={{ fontSize: '9px', maxWidth: '50%' }}>
-              <span style={{ fontWeight: 600 }}>In Words: </span>
-              <span>{numberToWords(Math.round(netPayable))} Taka Only</span>
-            </div>
-            <div style={{ fontSize: '9px', minWidth: '180px' }}>
-              {[
-                ['Gross TP', subtotal.toFixed(2)],
-                ['Line Item Discount', `-${lineItemDiscount.toFixed(2)}`],
-                ['Group Discount', `-${groupDiscount.toFixed(2)}`],
-                ['Gross TP (After Disc.)', grossTPAfterDiscount.toFixed(2)],
-                ['Add VAT on TP', vat.toFixed(2)],
-              ].map(([label, val]) => (
-                <div key={label} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1px' }}>
-                  <span>{label}</span>
-                  <span>{val}</span>
-                </div>
-              ))}
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', borderTop: '1px solid black', paddingTop: '3px', marginTop: '3px' }}>
-                <span>Net Payable</span>
-                <span>{netPayable.toFixed(2)}</span>
-              </div>
-            </div>
-          </div>
+          <table style={{ width: '100%', marginBottom: '12px', tableLayout: 'fixed' }}>
+            <colgroup>
+              <col style={{ width: '55%' }} />
+              <col style={{ width: '45%' }} />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td style={{ verticalAlign: 'top', fontSize: '9px', paddingRight: '16px' }}>
+                  <span style={{ fontWeight: 600 }}>In Words: </span>
+                  <span>{numberToWords(Math.round(netPayable))} Taka Only</span>
+                </td>
+                <td style={{ verticalAlign: 'top', fontSize: '9px' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <tbody>
+                      {[
+                        ['Gross TP', subtotal.toFixed(2)],
+                        ['Line Item Discount', `-${lineItemDiscount.toFixed(2)}`],
+                        ['Group Discount', `-${groupDiscount.toFixed(2)}`],
+                        ['Gross TP (After Disc.)', grossTPAfterDiscount.toFixed(2)],
+                        ['Add VAT on TP', vat.toFixed(2)],
+                      ].map(([label, val]) => (
+                        <tr key={label}>
+                          <td style={{ padding: '1px 0', textAlign: 'left' }}>{label}</td>
+                          <td style={{ padding: '1px 0', textAlign: 'right' }}>{val}</td>
+                        </tr>
+                      ))}
+                      <tr style={{ borderTop: '1px solid black' }}>
+                        <td style={{ padding: '3px 0 0', textAlign: 'left', fontWeight: 'bold' }}>Net Payable</td>
+                        <td style={{ padding: '3px 0 0', textAlign: 'right', fontWeight: 'bold' }}>{netPayable.toFixed(2)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
           {/* Footer */}
           <div style={{ marginTop: 'auto' }}>
