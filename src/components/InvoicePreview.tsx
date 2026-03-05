@@ -122,7 +122,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             <tbody>
               <tr>
                 {/* Left - Corporate Office */}
-                <td style={{ verticalAlign: 'top', fontSize: '8px', lineHeight: '1.4' }}>
+                <td style={{ verticalAlign: 'top', fontSize: '9px', lineHeight: '1.5' }}>
                   <p style={{ fontWeight: 'bold', marginBottom: '1px' }}>Corporate Office:</p>
                   <p>Urban Stream Commercial Complex</p>
                   <p>Level # 03, 18 New Eskaton</p>
