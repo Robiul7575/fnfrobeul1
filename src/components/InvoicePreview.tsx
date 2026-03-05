@@ -284,8 +284,8 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                       <td style={{ textAlign: 'right', padding: '3px 2px' }}>{totalTP.toFixed(2)}</td>
                     </tr>
                     {bonusQty > 0 && (
-                      <tr style={{ borderBottom: '1px dotted #d1d5db', color: '#4b5563', fontStyle: 'italic' }}>
-                        <td style={{ padding: '3px 2px' }}>{item.product.name} ({item.product.packSize}) [Bonus]</td>
+                      <tr style={{ borderBottom: '1px dotted #9ca3af' }}>
+                        <td style={{ padding: '3px 2px' }}>{item.product.name} ({item.product.packSize})</td>
                         <td style={{ textAlign: 'center', padding: '3px 2px' }}>{item.product.packSize}</td>
                         <td style={{ textAlign: 'center', padding: '3px 2px' }}>{bonusQty}</td>
                         <td style={{ textAlign: 'right', padding: '3px 2px' }}>0.00</td>
