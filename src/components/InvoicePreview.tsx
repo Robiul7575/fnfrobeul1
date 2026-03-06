@@ -392,7 +392,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               <tbody>
                 <tr>
                   {['PREPARED BY', 'CHECKED BY', "CUSTOMER'S SIGNATURE"].map(label => (
-                    <td key={label} style={{ textAlign: 'center', width: '33.33%', fontSize: '9px', verticalAlign: 'bottom' }}>
+                    <td key={label} style={{ textAlign: 'center', width: '33.33%', fontSize: '10px', verticalAlign: 'bottom' }}>
                       <div style={{ borderTop: '1px solid black', width: '130px', margin: '0 auto 3px' }}></div>
                       <span style={{ fontWeight: 600, textTransform: 'uppercase' as const }}>{label}</span>
                     </td>
