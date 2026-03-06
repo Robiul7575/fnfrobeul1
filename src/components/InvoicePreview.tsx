@@ -248,7 +248,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <div style={s.dashedLine}></div>
 
           {/* ===== PRODUCT TABLE ===== */}
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10px', tableLayout: 'fixed' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px', tableLayout: 'fixed' }}>
             <colgroup>
               <col style={{ width: '22%' }} />
               <col style={{ width: '9%' }} />
