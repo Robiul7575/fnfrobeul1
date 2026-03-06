@@ -277,7 +277,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   ['DisAmt', 'right'],
                   ['Total TP/SP', 'right'],
                 ].map(([text, align]) => (
-                  <th key={text} style={{ textAlign: align as any, padding: '4px 2px', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>{text}</th>
+                  <th key={text} style={{ textAlign: align as any, padding: '4px 2px', fontWeight: 'bold', fontSize: '10px', lineHeight: '1.2' }}>{text}</th>
                 ))}
               </tr>
             </thead>
