@@ -93,8 +93,8 @@ const s = {
     position: 'relative' as const, zIndex: 1, flex: 1,
     display: 'flex', flexDirection: 'column' as const,
   },
-  thinLine: { borderTop: '1px solid black', margin: '4px 0' },
-  dashedLine: { borderTop: '1.5px dashed black', margin: '6px 0' },
+  thinLine: { borderTop: '1px solid black', margin: '2px 0' },
+  dashedLine: { borderTop: '1.5px dashed black', margin: '3px 0' },
 };
 
 export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
@@ -200,7 +200,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <div style={s.thinLine}></div>
 
           {/* ===== CUSTOMER & INVOICE INFO ===== */}
-          <table style={{ width: '100%', marginBottom: '0', fontSize: '10px' }}>
+          <table style={{ width: '100%', marginBottom: '0', fontSize: '11px' }}>
             <tbody>
               <tr>
                 <td style={{ width: '50%', verticalAlign: 'top', paddingRight: '12px' }}>
@@ -248,7 +248,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <div style={s.dashedLine}></div>
 
           {/* ===== PRODUCT TABLE ===== */}
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10px', tableLayout: 'fixed' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px', tableLayout: 'fixed' }}>
             <colgroup>
               <col style={{ width: '22%' }} />
               <col style={{ width: '9%' }} />
@@ -277,7 +277,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   ['DisAmt', 'right'],
                   ['Total TP/SP', 'right'],
                 ].map(([text, align]) => (
-                  <th key={text} style={{ textAlign: align as any, padding: '4px 2px', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>{text}</th>
+                  <th key={text} style={{ textAlign: align as any, padding: '4px 2px', fontWeight: 'bold', fontSize: '10px', lineHeight: '1.2' }}>{text}</th>
                 ))}
               </tr>
             </thead>
@@ -335,11 +335,11 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </colgroup>
             <tbody>
               <tr>
-                <td style={{ verticalAlign: 'top', fontSize: '10px', paddingRight: '16px' }}>
+                <td style={{ verticalAlign: 'top', fontSize: '11px', paddingRight: '16px' }}>
                   <span style={{ fontWeight: 700 }}>In Words: </span>
                   <span>{numberToWords(Math.round(netPayable))} Taka Only</span>
                 </td>
-                <td style={{ verticalAlign: 'top', fontSize: '10px' }}>
+                <td style={{ verticalAlign: 'top', fontSize: '11px' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <tbody>
                       {([
@@ -368,17 +368,17 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           {/* ===== FOOTER - pushed to bottom ===== */}
           <div style={{ marginTop: 'auto' }}>
             {/* Cumilla Depot - right aligned */}
-            <div style={{ textAlign: 'right', marginBottom: '30px', fontSize: '10px' }}>
+            <div style={{ textAlign: 'right', marginBottom: '8px', fontSize: '11px' }}>
               <p style={{ fontWeight: 'bold' }}>Cumilla Depot</p>
               <p>For FnF Pharmaceuticals Ltd.</p>
             </div>
 
             {/* Top signature row */}
-            <table style={{ width: '100%', marginBottom: '20px' }}>
+            <table style={{ width: '100%', marginBottom: '10px' }}>
               <tbody>
                 <tr>
                   {["Chemist's Signature", 'Checked By', 'Authorized Signature', 'For FnF Pharmaceuticals Ltd.'].map(label => (
-                    <td key={label} style={{ textAlign: 'center', width: '25%', fontSize: '9px', verticalAlign: 'bottom' }}>
+                    <td key={label} style={{ textAlign: 'center', width: '25%', fontSize: '10px', verticalAlign: 'bottom' }}>
                       <div style={{ borderTop: '1px solid black', width: '130px', margin: '0 auto 3px' }}></div>
                       <span style={{ fontWeight: 600 }}>{label}</span>
                     </td>
@@ -388,11 +388,11 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </table>
 
             {/* Bottom signature row */}
-            <table style={{ width: '100%', paddingBottom: '10mm' }}>
+            <table style={{ width: '100%', paddingBottom: '5mm' }}>
               <tbody>
                 <tr>
                   {['PREPARED BY', 'CHECKED BY', "CUSTOMER'S SIGNATURE"].map(label => (
-                    <td key={label} style={{ textAlign: 'center', width: '33.33%', fontSize: '9px', verticalAlign: 'bottom' }}>
+                    <td key={label} style={{ textAlign: 'center', width: '33.33%', fontSize: '10px', verticalAlign: 'bottom' }}>
                       <div style={{ borderTop: '1px solid black', width: '130px', margin: '0 auto 3px' }}></div>
                       <span style={{ fontWeight: 600, textTransform: 'uppercase' as const }}>{label}</span>
                     </td>
