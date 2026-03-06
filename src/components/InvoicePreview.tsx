@@ -93,8 +93,8 @@ const s = {
     position: 'relative' as const, zIndex: 1, flex: 1,
     display: 'flex', flexDirection: 'column' as const,
   },
-  thinLine: { borderTop: '1px solid black', margin: '4px 0' },
-  dashedLine: { borderTop: '1.5px dashed black', margin: '6px 0' },
+  thinLine: { borderTop: '1px solid black', margin: '2px 0' },
+  dashedLine: { borderTop: '1.5px dashed black', margin: '3px 0' },
 };
 
 export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
