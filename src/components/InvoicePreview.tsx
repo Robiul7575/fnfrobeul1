@@ -69,6 +69,34 @@ function calculateBonus(bonusStr: string, quantity: number): number {
   return bestBonus;
 }
 
+const s = {
+  page: {
+    background: 'white',
+    color: 'black',
+    fontFamily: 'Arial, Helvetica, sans-serif',
+    fontSize: '11px',
+    lineHeight: '1.4',
+    width: '210mm',
+    minHeight: '297mm',
+    padding: '20px 30px',
+    boxSizing: 'border-box' as const,
+    position: 'relative' as const,
+    display: 'flex',
+    flexDirection: 'column' as const,
+  },
+  watermark: {
+    position: 'absolute' as const, top: 0, left: 0, right: 0, bottom: 0,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    pointerEvents: 'none' as const, zIndex: 0,
+  },
+  content: {
+    position: 'relative' as const, zIndex: 1, flex: 1,
+    display: 'flex', flexDirection: 'column' as const,
+  },
+  thinLine: { borderTop: '1px solid black', margin: '4px 0' },
+  dashedLine: { borderTop: '1.5px dashed black', margin: '6px 0' },
+};
+
 export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
   ({ items, invoiceInfo, invoiceNumber, invoiceDate, orderDate, printDateTime, totals, discountPercent, getItemTp }, ref) => {
     const subtotal = items.reduce((sum, item) => sum + getItemTp(item) * item.quantity, 0);
@@ -87,69 +115,47 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
     const netPayable = grossTPAfterDiscount + vat;
 
     return (
-      <div
-        ref={ref}
-        style={{
-          background: 'white',
-          color: 'black',
-          fontFamily: 'Arial, sans-serif',
-          fontSize: '12px',
-          lineHeight: '1.5',
-          width: '210mm',
-          minHeight: '297mm',
-          padding: '8mm 10mm',
-          boxSizing: 'border-box',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      <div ref={ref} style={s.page}>
         {/* Watermark */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', zIndex: 0 }}>
-          <img src={fnfLogoColor} alt="" style={{ width: '350px', height: '350px', objectFit: 'contain', opacity: 0.12 }} />
+        <div style={s.watermark}>
+          <img src={fnfLogoColor} alt="" style={{ width: '320px', height: '320px', objectFit: 'contain', opacity: 0.12 }} />
         </div>
 
-        {/* Content */}
-        <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
-          
-        {/* === HEADER === */}
-          <table style={{ width: '100%', marginBottom: '4px', tableLayout: 'fixed' }}>
+        <div style={s.content}>
+          {/* ===== HEADER - 3 Column ===== */}
+          <table style={{ width: '100%', tableLayout: 'fixed', marginBottom: '0' }}>
             <colgroup>
-              <col style={{ width: '28%' }} />
-              <col style={{ width: '44%' }} />
-              <col style={{ width: '28%' }} />
+              <col style={{ width: '30%' }} />
+              <col style={{ width: '40%' }} />
+              <col style={{ width: '30%' }} />
             </colgroup>
             <tbody>
               <tr>
                 {/* Left - Corporate Office */}
-                <td style={{ verticalAlign: 'top', fontSize: '9px', lineHeight: '1.5' }}>
-                  <p style={{ fontWeight: 'bold', marginBottom: '1px' }}>Corporate Office:</p>
+                <td style={{ verticalAlign: 'top', fontSize: '9px', lineHeight: '1.6' }}>
+                  <p style={{ fontWeight: 'bold', marginBottom: '2px' }}>Corporate Office:</p>
                   <p>Urban Stream Commercial Complex</p>
                   <p>Level # 03, 18 New Eskaton</p>
                   <p>(R.K. Menon Road) Dhaka-1000.</p>
                   <p>Phone: 9336001</p>
                 </td>
-                {/* Center - Logo + Company */}
+                {/* Center - Logo + Company Name */}
                 <td style={{ verticalAlign: 'top', textAlign: 'center' }}>
-                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                    <tbody>
-                      <tr>
-                        <td style={{ textAlign: 'center', paddingBottom: '4px' }}>
-                          <img src={fnfLogoColor} alt="FnF" style={{ height: '36px', width: 'auto', display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }} />
-                          <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#2563eb', verticalAlign: 'middle' }}>FnF Pharmaceuticals Ltd.</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ textAlign: 'center' }}>
-                          <span style={{ display: 'inline-block', border: '2px solid black', padding: '2px 20px', borderRadius: '6px', fontSize: '16px', fontWeight: 'bold' }}>INVOICE</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '6px' }}>
+                    <img src={fnfLogoColor} alt="FnF" style={{ height: '40px', width: 'auto' }} />
+                    <span style={{ fontSize: '15px', fontWeight: 'bold', color: '#2563eb' }}>FnF Pharmaceuticals Ltd.</span>
+                  </div>
+                  <div style={{ marginBottom: '4px' }}>
+                    <span style={{
+                      display: 'inline-block', border: '2px solid black',
+                      padding: '3px 28px', borderRadius: '50px',
+                      fontSize: '16px', fontWeight: 'bold',
+                    }}>INVOICE</span>
+                  </div>
                 </td>
                 {/* Right - Factory */}
-                <td style={{ verticalAlign: 'top', textAlign: 'right', fontSize: '9px', lineHeight: '1.5' }}>
-                  <p style={{ fontWeight: 'bold', marginBottom: '1px' }}>Factory:</p>
+                <td style={{ verticalAlign: 'top', textAlign: 'right', fontSize: '9px', lineHeight: '1.6' }}>
+                  <p style={{ fontWeight: 'bold', marginBottom: '2px' }}>Factory:</p>
                   <p>Rautail, Nagarbathan,</p>
                   <p>Jhenaidah, Bangladesh.</p>
                   <p>Phone: 0451-63297</p>
@@ -158,55 +164,59 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </tbody>
           </table>
 
-          {/* Print Date & Page */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', marginBottom: '6px' }}>
-            <span>Printed On: {printDateTime}</span>
-            <span>Page 1 of 1</span>
+          {/* Page info row */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', margin: '2px 0 4px' }}>
+            <span>1 of 1</span>
+            <span>{printDateTime}</span>
           </div>
 
-          {/* MUSHAK */}
-          <div style={{ borderTop: '1px solid black', paddingTop: '4px', marginBottom: '4px' }}>
-            <table style={{ width: '100%' }}>
-              <tbody>
-                <tr>
-                  <td style={{ width: '25%' }}></td>
-                  <td style={{ textAlign: 'center', width: '50%' }}>
-                    <p style={{ fontWeight: 600 }}>FnF Pharmaceuticals Ltd.</p>
-                    <p style={{ fontSize: '9px' }}>[Clauses (c) and (f) of sub-Rule (1) of Rule 40]</p>
-                  </td>
-                  <td style={{ textAlign: 'right', width: '25%', fontWeight: 600 }}>MUSHAK-6.3</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          {/* Thin line */}
+          <div style={s.thinLine}></div>
 
-          {/* Depot */}
-          <div style={{ textAlign: 'center', marginBottom: '2px', fontWeight: 600 }}>Depot: CUMILLA</div>
-
-          {/* Contact & Invoice subtitle */}
-          <div style={{ textAlign: 'center', marginBottom: '8px' }}>
-            <p style={{ fontSize: '10px' }}>Contact No: {invoiceInfo.contactNo}</p>
-            <p style={{ fontSize: '14px', fontWeight: 700, marginTop: '2px' }}>Invoice</p>
-          </div>
-
-          {/* Customer & Invoice Info */}
-          <table style={{ width: '100%', marginBottom: '10px', fontSize: '10px' }}>
+          {/* MUSHAK section */}
+          <table style={{ width: '100%', margin: '4px 0' }}>
             <tbody>
               <tr>
-                <td style={{ width: '50%', verticalAlign: 'top', paddingRight: '16px' }}>
+                <td style={{ width: '25%' }}></td>
+                <td style={{ textAlign: 'center', width: '50%' }}>
+                  <p style={{ fontWeight: 600, fontSize: '11px' }}>FnF Pharmaceuticals Ltd.</p>
+                  <p style={{ fontSize: '9px' }}>[Clauses (c) and (f) of sub-Rule (1) of Rule 40]</p>
+                </td>
+                <td style={{ textAlign: 'right', width: '25%', fontWeight: 'bold', fontSize: '11px' }}>MUSHAK-6.3</td>
+              </tr>
+            </tbody>
+          </table>
+
+          {/* Depot */}
+          <div style={{ textAlign: 'center', fontWeight: 600, fontSize: '11px', marginBottom: '2px' }}>Depot : CUMILLA</div>
+
+          {/* Contact & Invoice title */}
+          <div style={{ textAlign: 'center', marginBottom: '8px' }}>
+            <p style={{ fontSize: '10px' }}>Contact No : {invoiceInfo.contactNo}</p>
+            <p style={{ fontSize: '13px', fontWeight: 700, marginTop: '4px' }}>Invoice</p>
+          </div>
+
+          {/* Thin line */}
+          <div style={s.thinLine}></div>
+
+          {/* ===== CUSTOMER & INVOICE INFO ===== */}
+          <table style={{ width: '100%', marginBottom: '0', fontSize: '10px' }}>
+            <tbody>
+              <tr>
+                <td style={{ width: '50%', verticalAlign: 'top', paddingRight: '12px' }}>
                   <table style={{ width: '100%' }}>
                     <tbody>
-                      {[
+                      {([
                         ['Chemist Code', invoiceInfo.chemistCode, true],
                         ['Chemist Name', invoiceInfo.chemistName, true],
                         ['BIN No', invoiceInfo.binNo, false],
                         ['Address', invoiceInfo.address, false],
                         ['Market', invoiceInfo.market, true],
                         ['Field Force', invoiceInfo.fieldForce, true],
-                      ].map(([label, value, bold]) => (
-                        <tr key={label as string}>
-                          <td style={{ width: '90px', fontWeight: bold ? 'bold' : 600, padding: '1px 0' }}>{label as string}</td>
-                          <td style={{ padding: '1px 0', fontWeight: bold ? 'bold' : 'normal' }}>: {value as string}</td>
+                      ] as [string, string, boolean][]).map(([label, value, bold]) => (
+                        <tr key={label}>
+                          <td style={{ width: '85px', fontWeight: bold ? 'bold' : 600, padding: '1px 0', whiteSpace: 'nowrap' }}>{label}</td>
+                          <td style={{ padding: '1px 0', fontWeight: bold ? 'bold' : 'normal' }}>: {value}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -215,15 +225,15 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                 <td style={{ width: '50%', verticalAlign: 'top' }}>
                   <table style={{ width: '100%' }}>
                     <tbody>
-                      {[
+                      {([
                         ['Invoice No', invoiceNumber],
                         ['Invoice Date', invoiceDate],
                         ['Order No', invoiceInfo.orderNo],
                         ['Order Date', orderDate],
                         ['Payment Mode', invoiceInfo.paymentMode],
-                      ].map(([label, value]) => (
+                      ]).map(([label, value]) => (
                         <tr key={label}>
-                          <td style={{ width: '90px', fontWeight: 600, padding: '1px 0' }}>{label}</td>
+                          <td style={{ width: '90px', fontWeight: 600, padding: '1px 0', whiteSpace: 'nowrap' }}>{label}</td>
                           <td style={{ padding: '1px 0' }}>: {value}</td>
                         </tr>
                       ))}
@@ -234,32 +244,41 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </tbody>
           </table>
 
-        {/* Products Table */}
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10px', marginBottom: '6px', tableLayout: 'fixed' }}>
+          {/* Dashed line separator */}
+          <div style={s.dashedLine}></div>
+
+          {/* ===== PRODUCT TABLE ===== */}
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10px', tableLayout: 'fixed' }}>
             <colgroup>
-              <col style={{ width: '26%' }} />
-              <col style={{ width: '10%' }} />
+              <col style={{ width: '22%' }} />
+              <col style={{ width: '9%' }} />
               <col style={{ width: '6%' }} />
-              <col style={{ width: '10%' }} />
+              <col style={{ width: '9%' }} />
               <col style={{ width: '8%' }} />
               <col style={{ width: '10%' }} />
-              <col style={{ width: '6%' }} />
-              <col style={{ width: '6%' }} />
-              <col style={{ width: '8%' }} />
+              <col style={{ width: '5%' }} />
+              <col style={{ width: '5%' }} />
+              <col style={{ width: '5%' }} />
+              <col style={{ width: '7%' }} />
               <col style={{ width: '10%' }} />
             </colgroup>
             <thead>
               <tr style={{ borderTop: '1.5px solid black', borderBottom: '1.5px solid black' }}>
-                <th style={{ textAlign: 'left', padding: '3px 2px', fontWeight: 600 }}>Products Name</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>Pack Size</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>Qty</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Unit TP/SP</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Unit VAT</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>TP+VAT</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>Bonus</th>
-                <th style={{ textAlign: 'center', padding: '3px 2px', fontWeight: 600 }}>VAT%</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Dis. Amt</th>
-                <th style={{ textAlign: 'right', padding: '3px 2px', fontWeight: 600 }}>Total TP/SP</th>
+                {[
+                  ['Products Name', 'left'],
+                  ['Pack Size', 'center'],
+                  ['Quantity', 'center'],
+                  ['Unit Price TP/SP', 'right'],
+                  ['Unit VAT', 'right'],
+                  ['Unit Price With VAT', 'right'],
+                  ['Bonus', 'center'],
+                  ['Dis.', 'center'],
+                  ['VAT%', 'center'],
+                  ['DisAmt', 'right'],
+                  ['Total TP/SP', 'right'],
+                ].map(([text, align]) => (
+                  <th key={text} style={{ textAlign: align as any, padding: '4px 2px', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>{text}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -271,29 +290,31 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                 const bonusQty = calculateBonus(item.product.bonus, item.quantity);
                 return (
                   <React.Fragment key={item.product.id}>
-                    <tr style={{ borderBottom: '1px dotted #9ca3af' }}>
-                      <td style={{ padding: '3px 2px' }}>{item.product.name} ({item.product.packSize})</td>
+                    <tr style={{ borderBottom: '1px dashed #aaa' }}>
+                      <td style={{ padding: '3px 2px', textAlign: 'left' }}>{item.product.name} {item.product.packSize}</td>
                       <td style={{ textAlign: 'center', padding: '3px 2px' }}>{item.product.packSize}</td>
                       <td style={{ textAlign: 'center', padding: '3px 2px' }}>{item.quantity}</td>
                       <td style={{ textAlign: 'right', padding: '3px 2px' }}>{itemTp.toFixed(2)}</td>
                       <td style={{ textAlign: 'right', padding: '3px 2px' }}>{item.product.vat.toFixed(2)}</td>
                       <td style={{ textAlign: 'right', padding: '3px 2px' }}>{tpWithVat.toFixed(2)}</td>
-                      <td style={{ textAlign: 'center', padding: '3px 2px' }}>-</td>
                       <td style={{ textAlign: 'center', padding: '3px 2px' }}>0</td>
-                      <td style={{ textAlign: 'right', padding: '3px 2px' }}>{itemDiscount > 0 ? (itemDiscount * item.quantity).toFixed(2) : '0'}</td>
+                      <td style={{ textAlign: 'center', padding: '3px 2px' }}>0</td>
+                      <td style={{ textAlign: 'center', padding: '3px 2px' }}>0</td>
+                      <td style={{ textAlign: 'right', padding: '3px 2px' }}>{itemDiscount > 0 ? (itemDiscount * item.quantity).toFixed(2) : '0.00'}</td>
                       <td style={{ textAlign: 'right', padding: '3px 2px' }}>{totalTP.toFixed(2)}</td>
                     </tr>
                     {bonusQty > 0 && (
-                      <tr style={{ borderBottom: '1px dotted #9ca3af' }}>
-                        <td style={{ padding: '3px 2px' }}>{item.product.name} ({item.product.packSize})</td>
+                      <tr style={{ borderBottom: '1px dashed #aaa' }}>
+                        <td style={{ padding: '3px 2px' }}>{item.product.name} {item.product.packSize}</td>
                         <td style={{ textAlign: 'center', padding: '3px 2px' }}>{item.product.packSize}</td>
                         <td style={{ textAlign: 'center', padding: '3px 2px' }}>{bonusQty}</td>
                         <td style={{ textAlign: 'right', padding: '3px 2px' }}>0.00</td>
                         <td style={{ textAlign: 'right', padding: '3px 2px' }}>0.00</td>
                         <td style={{ textAlign: 'right', padding: '3px 2px' }}>0.00</td>
-                        <td style={{ textAlign: 'center', padding: '3px 2px' }}>-</td>
                         <td style={{ textAlign: 'center', padding: '3px 2px' }}>0</td>
-                        <td style={{ textAlign: 'right', padding: '3px 2px' }}>0</td>
+                        <td style={{ textAlign: 'center', padding: '3px 2px' }}>0</td>
+                        <td style={{ textAlign: 'center', padding: '3px 2px' }}>0</td>
+                        <td style={{ textAlign: 'right', padding: '3px 2px' }}>0.00</td>
                         <td style={{ textAlign: 'right', padding: '3px 2px' }}>0.00</td>
                       </tr>
                     )}
@@ -303,14 +324,14 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </tbody>
           </table>
 
-          {/* Separator */}
-          <div style={{ borderTop: '2px dashed black', marginBottom: '8px' }}></div>
+          {/* Dashed separator */}
+          <div style={s.dashedLine}></div>
 
-          {/* Totals */}
-          <table style={{ width: '100%', marginBottom: '12px', tableLayout: 'fixed' }}>
+          {/* ===== TOTALS SECTION ===== */}
+          <table style={{ width: '100%', marginBottom: '8px', tableLayout: 'fixed' }}>
             <colgroup>
-              <col style={{ width: '55%' }} />
-              <col style={{ width: '45%' }} />
+              <col style={{ width: '50%' }} />
+              <col style={{ width: '50%' }} />
             </colgroup>
             <tbody>
               <tr>
@@ -321,21 +342,21 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                 <td style={{ verticalAlign: 'top', fontSize: '10px' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <tbody>
-                      {[
+                      {([
                         ['Gross TP', subtotal.toFixed(2)],
-                        ['Line Item Discount', `-${lineItemDiscount.toFixed(2)}`],
-                        ['Group Discount', `-${groupDiscount.toFixed(2)}`],
-                        ['Gross TP (After Disc.)', grossTPAfterDiscount.toFixed(2)],
+                        ['Line Item Discount', `- ${lineItemDiscount.toFixed(2)}`],
+                        ['SubTotal + Group Discount', `- ${groupDiscount.toFixed(2)}`],
+                        ['Gross TP(After Discount)', grossTPAfterDiscount.toFixed(2)],
                         ['Add VAT on TP', vat.toFixed(2)],
-                      ].map(([label, val]) => (
+                      ]).map(([label, val]) => (
                         <tr key={label}>
                           <td style={{ padding: '1px 0', textAlign: 'left' }}>{label}</td>
                           <td style={{ padding: '1px 0', textAlign: 'right' }}>{val}</td>
                         </tr>
                       ))}
-                      <tr style={{ borderTop: '1px solid black' }}>
-                        <td style={{ padding: '3px 0 0', textAlign: 'left', fontWeight: 'bold' }}>Net Payable</td>
-                        <td style={{ padding: '3px 0 0', textAlign: 'right', fontWeight: 'bold' }}>{netPayable.toFixed(2)}</td>
+                      <tr style={{ borderTop: '1.5px solid black' }}>
+                        <td style={{ padding: '4px 0 0', textAlign: 'left', fontWeight: 'bold', fontSize: '12px' }}>Net Payable</td>
+                        <td style={{ padding: '4px 0 0', textAlign: 'right', fontWeight: 'bold', fontSize: '12px' }}>{netPayable.toFixed(2)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -344,22 +365,41 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </tbody>
           </table>
 
-          {/* Footer */}
+          {/* ===== FOOTER - pushed to bottom ===== */}
           <div style={{ marginTop: 'auto' }}>
-            <div style={{ borderTop: '2px solid black', paddingTop: '8px' }}>
-              <div style={{ textAlign: 'right', marginBottom: '40px', fontSize: '9px' }}>
-                <p style={{ fontWeight: 'bold', fontSize: '10px' }}>Cumilla Depot</p>
-                <p style={{ fontSize: '10px' }}>For FnF Pharmaceuticals Ltd.</p>
-              </div>
+            {/* Cumilla Depot - right aligned */}
+            <div style={{ textAlign: 'right', marginBottom: '30px', fontSize: '10px' }}>
+              <p style={{ fontWeight: 'bold' }}>Cumilla Depot</p>
+              <p>For FnF Pharmaceuticals Ltd.</p>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10mm' }}>
-              {['Prepared By', 'Checked By', 'Authorized Signature', "Customer's Signature"].map(label => (
-                <div key={label} style={{ textAlign: 'center' }}>
-                  <div style={{ borderTop: '1px solid black', width: '120px', margin: '0 auto 3px' }}></div>
-                  <span style={{ fontSize: '9px', fontWeight: 600 }}>{label}</span>
-                </div>
-              ))}
-            </div>
+
+            {/* Top signature row */}
+            <table style={{ width: '100%', marginBottom: '20px' }}>
+              <tbody>
+                <tr>
+                  {["Chemist's Signature", 'Checked By', 'Authorized Signature', 'For FnF Pharmaceuticals Ltd.'].map(label => (
+                    <td key={label} style={{ textAlign: 'center', width: '25%', fontSize: '9px', verticalAlign: 'bottom' }}>
+                      <div style={{ borderTop: '1px solid black', width: '130px', margin: '0 auto 3px' }}></div>
+                      <span style={{ fontWeight: 600 }}>{label}</span>
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+
+            {/* Bottom signature row */}
+            <table style={{ width: '100%', paddingBottom: '10mm' }}>
+              <tbody>
+                <tr>
+                  {['PREPARED BY', 'CHECKED BY', "CUSTOMER'S SIGNATURE"].map(label => (
+                    <td key={label} style={{ textAlign: 'center', width: '33.33%', fontSize: '9px', verticalAlign: 'bottom' }}>
+                      <div style={{ borderTop: '1px solid black', width: '130px', margin: '0 auto 3px' }}></div>
+                      <span style={{ fontWeight: 600, textTransform: 'uppercase' as const }}>{label}</span>
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
