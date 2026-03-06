@@ -335,11 +335,11 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </colgroup>
             <tbody>
               <tr>
-                <td style={{ verticalAlign: 'top', fontSize: '10px', paddingRight: '16px' }}>
+                <td style={{ verticalAlign: 'top', fontSize: '11px', paddingRight: '16px' }}>
                   <span style={{ fontWeight: 700 }}>In Words: </span>
                   <span>{numberToWords(Math.round(netPayable))} Taka Only</span>
                 </td>
-                <td style={{ verticalAlign: 'top', fontSize: '10px' }}>
+                <td style={{ verticalAlign: 'top', fontSize: '11px' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <tbody>
                       {([
