@@ -200,7 +200,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <div style={s.thinLine}></div>
 
           {/* ===== CUSTOMER & INVOICE INFO ===== */}
-          <table style={{ width: '100%', marginBottom: '0', fontSize: '10px' }}>
+          <table style={{ width: '100%', marginBottom: '0', fontSize: '11px' }}>
             <tbody>
               <tr>
                 <td style={{ width: '50%', verticalAlign: 'top', paddingRight: '12px' }}>
