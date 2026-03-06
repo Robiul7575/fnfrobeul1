@@ -368,13 +368,13 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           {/* ===== FOOTER - pushed to bottom ===== */}
           <div style={{ marginTop: 'auto' }}>
             {/* Cumilla Depot - right aligned */}
-            <div style={{ textAlign: 'right', marginBottom: '30px', fontSize: '10px' }}>
+            <div style={{ textAlign: 'right', marginBottom: '8px', fontSize: '11px' }}>
               <p style={{ fontWeight: 'bold' }}>Cumilla Depot</p>
               <p>For FnF Pharmaceuticals Ltd.</p>
             </div>
 
             {/* Top signature row */}
-            <table style={{ width: '100%', marginBottom: '20px' }}>
+            <table style={{ width: '100%', marginBottom: '10px' }}>
               <tbody>
                 <tr>
                   {["Chemist's Signature", 'Checked By', 'Authorized Signature', 'For FnF Pharmaceuticals Ltd.'].map(label => (
