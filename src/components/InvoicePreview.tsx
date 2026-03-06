@@ -388,7 +388,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </table>
 
             {/* Bottom signature row */}
-            <table style={{ width: '100%', paddingBottom: '10mm' }}>
+            <table style={{ width: '100%', paddingBottom: '5mm' }}>
               <tbody>
                 <tr>
                   {['PREPARED BY', 'CHECKED BY', "CUSTOMER'S SIGNATURE"].map(label => (
