@@ -77,12 +77,9 @@ const s = {
     fontSize: '11px',
     lineHeight: '1.4',
     width: '210mm',
-    minHeight: '297mm',
     padding: '20px 30px',
     boxSizing: 'border-box' as const,
     position: 'relative' as const,
-    display: 'flex',
-    flexDirection: 'column' as const,
   },
   watermark: {
     position: 'absolute' as const, top: 0, left: 0, right: 0, bottom: 0,
@@ -90,8 +87,7 @@ const s = {
     pointerEvents: 'none' as const, zIndex: 0,
   },
   content: {
-    position: 'relative' as const, zIndex: 1, flex: 1,
-    display: 'flex', flexDirection: 'column' as const,
+    position: 'relative' as const, zIndex: 1,
   },
   thinLine: { borderTop: '1px solid black', margin: '2px 0' },
   dashedLine: { borderTop: '1.5px dashed black', margin: '3px 0' },
@@ -365,41 +361,29 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </tbody>
           </table>
 
-          {/* ===== FOOTER - pushed to bottom ===== */}
-          <div style={{ marginTop: 'auto' }}>
-            {/* Cumilla Depot - right aligned */}
-            <div style={{ textAlign: 'right', marginBottom: '8px', fontSize: '11px' }}>
-              <p style={{ fontWeight: 'bold' }}>Cumilla Depot</p>
-              <p>For FnF Pharmaceuticals Ltd.</p>
-            </div>
+          {/* ===== SIGNATURE SECTION - flows after content ===== */}
+          {/* Cumilla Depot - right aligned */}
+          <div style={{ textAlign: 'right', marginTop: '12px', marginBottom: '6px', fontSize: '11px' }}>
+            <p style={{ fontWeight: 'bold' }}>Cumilla Depot</p>
+            <p>For FnF Pharmaceuticals Ltd.</p>
+          </div>
 
-            {/* Top signature row */}
-            <table style={{ width: '100%', marginBottom: '10px' }}>
-              <tbody>
-                <tr>
-                  {["Chemist's Signature", 'Checked By', 'Authorized Signature', 'For FnF Pharmaceuticals Ltd.'].map(label => (
-                    <td key={label} style={{ textAlign: 'center', width: '25%', fontSize: '11px', verticalAlign: 'bottom' }}>
-                      <div style={{ borderTop: '1px solid black', width: '130px', margin: '0 auto 3px' }}></div>
-                      <span style={{ fontWeight: 600 }}>{label}</span>
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
+          {/* Signature row */}
+          <table style={{ width: '100%', marginTop: '8px' }}>
+            <tbody>
+              <tr>
+                {['PREPARED BY', 'CHECKED BY', 'AUTHORIZED SIGNATURE', "CUSTOMER'S SIGNATURE"].map(label => (
+                  <td key={label} style={{ textAlign: 'center', width: '25%', fontSize: '10px', verticalAlign: 'bottom', paddingTop: '30px' }}>
+                    <div style={{ borderTop: '1px solid black', width: '120px', margin: '0 auto 3px' }}></div>
+                    <span style={{ fontWeight: 600 }}>{label}</span>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
 
-            {/* Bottom signature row */}
-            <table style={{ width: '100%', paddingBottom: '5mm' }}>
-              <tbody>
-                <tr>
-                  {['PREPARED BY', 'CHECKED BY', "CUSTOMER'S SIGNATURE"].map(label => (
-                    <td key={label} style={{ textAlign: 'center', width: '33.33%', fontSize: '11px', verticalAlign: 'bottom' }}>
-                      <div style={{ borderTop: '1px solid black', width: '130px', margin: '0 auto 3px' }}></div>
-                      <span style={{ fontWeight: 600, textTransform: 'uppercase' as const }}>{label}</span>
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
+          <div style={{ textAlign: 'center', fontSize: '10px', marginTop: '8px' }}>
+            <p>For F n F Pharmaceuticals Ltd.</p>
           </div>
         </div>
       </div>
