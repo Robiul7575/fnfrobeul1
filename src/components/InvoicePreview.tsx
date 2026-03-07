@@ -77,12 +77,9 @@ const s = {
     fontSize: '11px',
     lineHeight: '1.4',
     width: '210mm',
-    minHeight: '297mm',
     padding: '20px 30px',
     boxSizing: 'border-box' as const,
     position: 'relative' as const,
-    display: 'flex',
-    flexDirection: 'column' as const,
   },
   watermark: {
     position: 'absolute' as const, top: 0, left: 0, right: 0, bottom: 0,
@@ -90,8 +87,7 @@ const s = {
     pointerEvents: 'none' as const, zIndex: 0,
   },
   content: {
-    position: 'relative' as const, zIndex: 1, flex: 1,
-    display: 'flex', flexDirection: 'column' as const,
+    position: 'relative' as const, zIndex: 1,
   },
   thinLine: { borderTop: '1px solid black', margin: '2px 0' },
   dashedLine: { borderTop: '1.5px dashed black', margin: '3px 0' },
