@@ -199,10 +199,10 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
       document.body.appendChild(container);
 
       // Wait for images/fonts to render
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await new Promise(resolve => setTimeout(resolve, 200));
 
       const canvas = await html2canvas(clone, {
-        scale: 2,
+        scale: 1.5,
         useCORS: true,
         logging: false,
         backgroundColor: '#ffffff',
@@ -214,23 +214,20 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
 
       document.body.removeChild(container);
 
-      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', compress: true });
       const pdfWidth = 210;
       const pdfHeight = 297;
-      const imgData = canvas.toDataURL('image/jpeg', 0.85);
+      const imgData = canvas.toDataURL('image/jpeg', 0.65);
       
-      // Scale the entire invoice to fit on exactly one A4 page
       const naturalHeight = (canvas.height * pdfWidth) / canvas.width;
       
       if (naturalHeight <= pdfHeight) {
-        // Content fits on one page naturally
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, naturalHeight);
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, naturalHeight, undefined, 'FAST');
       } else {
-        // Scale down to fit on one page
         const scaleFactor = pdfHeight / naturalHeight;
         const scaledWidth = pdfWidth * scaleFactor;
-        const xOffset = (pdfWidth - scaledWidth) / 2; // center horizontally
-        pdf.addImage(imgData, 'PNG', xOffset, 0, scaledWidth, pdfHeight);
+        const xOffset = (pdfWidth - scaledWidth) / 2;
+        pdf.addImage(imgData, 'JPEG', xOffset, 0, scaledWidth, pdfHeight, undefined, 'FAST');
       }
 
       pdf.save(`Invoice-${invoiceNumber}.pdf`);
