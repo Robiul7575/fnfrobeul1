@@ -202,7 +202,7 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
       await new Promise(resolve => setTimeout(resolve, 300));
 
       const canvas = await html2canvas(clone, {
-        scale: 3,
+        scale: 2,
         useCORS: true,
         logging: false,
         backgroundColor: '#ffffff',
@@ -217,7 +217,7 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = 210;
       const pdfHeight = 297;
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/jpeg', 0.85);
       
       // Scale the entire invoice to fit on exactly one A4 page
       const naturalHeight = (canvas.height * pdfWidth) / canvas.width;
