@@ -124,19 +124,19 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   <p>(R.K. Menon Road) Dhaka-1000.</p>
                   <p>Phone: 9336001</p>
                 </td>
-                <td style={{ verticalAlign: 'top', textAlign: 'center' }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '6px' }}>
-                    <img src={fnfLogoColor} alt="FnF" style={{ height: '38px', width: 'auto' }} />
-                    <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#2563eb' }}>FnF Pharmaceuticals Ltd.</span>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>
+                <td style={{ verticalAlign: 'middle', textAlign: 'center' }}>
+                  <table style={{ width: '100%' }}><tbody><tr><td style={{ textAlign: 'center' }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                      <img src={fnfLogoColor} alt="FnF" style={{ height: '38px', width: 'auto' }} />
+                      <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#2563eb', whiteSpace: 'nowrap' }}>FnF Pharmaceuticals Ltd.</span>
+                    </div>
+                    <br />
                     <span style={{
                       display: 'inline-block', border: '2.5px solid black',
-                      padding: '3px 32px', borderRadius: '50px',
+                      padding: '3px 36px', borderRadius: '50px',
                       fontSize: '18px', fontWeight: 'bold',
-                      textAlign: 'center',
                     }}>INVOICE</span>
-                  </div>
+                  </td></tr></tbody></table>
                 </td>
                 <td style={{ verticalAlign: 'top', textAlign: 'right', fontSize: '11px', lineHeight: '1.5' }}>
                   <p style={{ fontWeight: 'bold', marginBottom: '2px', fontSize: '11px' }}>Factory:</p>
