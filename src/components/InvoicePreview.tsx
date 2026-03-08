@@ -222,11 +222,11 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', tableLayout: 'fixed' }}>
               <colgroup>
-                <col style={{ width: '20%' }} />
-                <col style={{ width: '9%' }} />
+                <col style={{ width: '18%' }} />
+                <col style={{ width: '10%' }} />
                 <col style={{ width: '5%' }} />
                 <col style={{ width: '10%' }} />
-                <col style={{ width: '9%' }} />
+                <col style={{ width: '10%' }} />
                 <col style={{ width: '10%' }} />
                 <col style={{ width: '6%' }} />
                 <col style={{ width: '5%' }} />
@@ -251,10 +251,11 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   ].map(([text, align]) => (
                     <th key={text} style={{
                       textAlign: align as any,
-                      padding: '8px 5px',
+                      padding: '6px 4px',
                       fontWeight: 'bold',
-                      fontSize: '14px',
-                      lineHeight: '1.3',
+                      fontSize: '12px',
+                      lineHeight: '1.2',
+                      whiteSpace: 'nowrap',
                     }}>{text}</th>
                   ))}
                 </tr>
