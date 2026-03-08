@@ -230,6 +230,7 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
                 placeholder="Enter chemist name"
                 suggestions={nameSuggestions}
                 onSelect={handleSelectCustomer}
+                onRemove={handleRemoveCustomer}
                 displayField="chemistName"
                 secondaryField="chemistCode"
               />
