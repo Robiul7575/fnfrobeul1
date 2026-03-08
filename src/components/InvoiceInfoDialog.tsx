@@ -171,8 +171,13 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
     }));
   }, []);
 
+  const [refreshKey, setRefreshKey] = useState(0);
+  const handleRemoveCustomer = useCallback((customer: SavedCustomer) => {
+    removeCustomer(customer.chemistCode, customer.chemistName);
+    setRefreshKey(k => k + 1);
+  }, []);
+
   const handleSubmit = () => {
-    // Save customer to history
     saveCustomer({
       chemistName: info.chemistName,
       chemistCode: info.chemistCode,
@@ -187,6 +192,8 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
     onOpenChange(false);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _refresh = refreshKey;
   const nameSuggestions = searchCustomers(info.chemistName, 'chemistName');
   const codeSuggestions = searchCustomers(info.chemistCode, 'chemistCode');
 
