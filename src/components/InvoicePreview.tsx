@@ -125,15 +125,16 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   <p>Phone: 9336001</p>
                 </td>
                 <td style={{ verticalAlign: 'top', textAlign: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '6px' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '6px' }}>
                     <img src={fnfLogoColor} alt="FnF" style={{ height: '38px', width: 'auto' }} />
                     <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#2563eb' }}>FnF Pharmaceuticals Ltd.</span>
                   </div>
-                  <div>
+                  <div style={{ textAlign: 'center' }}>
                     <span style={{
                       display: 'inline-block', border: '2.5px solid black',
                       padding: '3px 32px', borderRadius: '50px',
                       fontSize: '18px', fontWeight: 'bold',
+                      textAlign: 'center',
                     }}>INVOICE</span>
                   </div>
                 </td>
@@ -146,12 +147,6 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               </tr>
             </tbody>
           </table>
-
-          {/* Page info */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', margin: '4px 0' }}>
-            <span>1 of 1</span>
-            <span>{printDateTime}</span>
-          </div>
 
           <div style={{ borderTop: '1px solid black', margin: '2px 0' }} />
 
