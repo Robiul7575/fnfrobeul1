@@ -340,7 +340,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                             <td style={{ padding: '4px 0', textAlign: 'right', fontSize: '14px', fontVariantNumeric: 'tabular-nums' }}>{val}</td>
                           </tr>
                         ))}
-                        <tr style={{ borderTop: '4px double black' }}>
+                        <tr style={{ borderTop: '2px solid black' }}>
                           <td style={{ padding: '8px 0 0', textAlign: 'left', fontWeight: 'bold', fontSize: '20px' }}>Net Payable</td>
                           <td style={{ padding: '8px 0 0', textAlign: 'right', fontWeight: 'bold', fontSize: '20px', fontVariantNumeric: 'tabular-nums' }}>{netPayable.toFixed(2)}</td>
                         </tr>
