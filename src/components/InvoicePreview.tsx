@@ -104,7 +104,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           pointerEvents: 'none', zIndex: 0,
         }}>
-          <img src={fnfLogoColor} alt="" style={{ width: '320px', height: '320px', objectFit: 'contain', <img src={fnfLogoColor} alt="" style={{ width: '320px', height: '320px', objectFit: 'contain', opacity: 0.10 }} /> }} />
+          <img src={fnfLogoColor} alt="" style={{ width: '320px', height: '320px', objectFit: 'contain', opacity: 0.10 }} />
         </div>
 
         <div style={{ position: 'relative', zIndex: 1, flex: '1 1 auto', display: 'flex', flexDirection: 'column' }}>
