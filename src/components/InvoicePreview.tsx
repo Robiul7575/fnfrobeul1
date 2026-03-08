@@ -126,16 +126,17 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   <p>Phone: 9336001</p>
                 </td>
                 <td style={{ verticalAlign: 'middle', textAlign: 'center' }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                    <img src={fnfLogoColor} alt="FnF" style={{ height: '42px', width: 'auto' }} />
-                    <span style={{ fontSize: '22px', fontWeight: 'bold', color: '#2563eb', whiteSpace: 'nowrap' }}>FnF Pharmaceuticals Ltd.</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                      <img src={fnfLogoColor} alt="FnF" style={{ height: '42px', width: 'auto' }} />
+                      <span style={{ fontSize: '22px', fontWeight: 'bold', color: '#2563eb', whiteSpace: 'nowrap' }}>FnF Pharmaceuticals Ltd.</span>
+                    </div>
+                    <span style={{
+                      display: 'inline-block', border: '3px solid black',
+                      padding: '4px 40px', borderRadius: '50px',
+                      fontSize: '18px', fontWeight: 'bold', textAlign: 'center',
+                    }}>INVOICE</span>
                   </div>
-                  <br />
-                  <span style={{
-                    display: 'inline-block', border: '3px solid black',
-                    padding: '4px 40px', borderRadius: '50px',
-                    fontSize: '18px', fontWeight: 'bold',
-                  }}>INVOICE</span>
                 </td>
                 <td style={{ verticalAlign: 'top', textAlign: 'right', fontSize: '11px', lineHeight: '1.5' }}>
                   <p style={{ fontWeight: 'bold', marginBottom: '2px', fontSize: '11px' }}>Factory:</p>
@@ -339,7 +340,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                             <td style={{ padding: '4px 0', textAlign: 'right', fontSize: '14px', fontVariantNumeric: 'tabular-nums' }}>{val}</td>
                           </tr>
                         ))}
-                        <tr style={{ borderTop: '4px double black' }}>
+                        <tr style={{ borderTop: '2px solid black' }}>
                           <td style={{ padding: '8px 0 0', textAlign: 'left', fontWeight: 'bold', fontSize: '20px' }}>Net Payable</td>
                           <td style={{ padding: '8px 0 0', textAlign: 'right', fontWeight: 'bold', fontSize: '20px', fontVariantNumeric: 'tabular-nums' }}>{netPayable.toFixed(2)}</td>
                         </tr>
