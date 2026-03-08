@@ -88,7 +88,8 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         fontFamily: 'Arial, Helvetica, sans-serif',
         fontSize: '13px',
         lineHeight: '1.4',
-        width: '210mm',
+        width: '100%',
+        maxWidth: '210mm',
         minHeight: '297mm',
         margin: '0 auto',
         padding: '20px 30px 14px',
@@ -96,6 +97,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
+        overflow: 'hidden',
       }}>
         {/* Watermark */}
         <div style={{
