@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,6 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { searchCustomers, SavedCustomer, saveCustomer } from '@/lib/customerHistory';
+import { cn } from '@/lib/utils';
 
 export interface InvoiceInfo {
   chemistName: string;
@@ -35,6 +37,79 @@ interface InvoiceInfoDialogProps {
   onSubmit: (info: InvoiceInfo) => void;
 }
 
+function AutocompleteInput({
+  id,
+  value,
+  onChange,
+  placeholder,
+  suggestions,
+  onSelect,
+  displayField,
+  secondaryField,
+}: {
+  id: string;
+  value: string;
+  onChange: (val: string) => void;
+  placeholder: string;
+  suggestions: SavedCustomer[];
+  onSelect: (customer: SavedCustomer) => void;
+  displayField: keyof SavedCustomer;
+  secondaryField?: keyof SavedCustomer;
+}) {
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={wrapperRef} className="relative">
+      <Input
+        id={id}
+        value={value}
+        onChange={(e) => {
+          onChange(e.target.value);
+          setShowSuggestions(true);
+        }}
+        onFocus={() => setShowSuggestions(true)}
+        placeholder={placeholder}
+        autoComplete="off"
+      />
+      {showSuggestions && suggestions.length > 0 && (
+        <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-popover border border-border rounded-md shadow-md max-h-48 overflow-auto">
+          {suggestions.map((customer, i) => (
+            <button
+              key={i}
+              type="button"
+              className={cn(
+                "w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors",
+                "border-b border-border last:border-0"
+              )}
+              onMouseDown={(e) => {
+                e.preventDefault();
+                onSelect(customer);
+                setShowSuggestions(false);
+              }}
+            >
+              <div className="font-medium">{String(customer[displayField])}</div>
+              {secondaryField && (
+                <div className="text-xs text-muted-foreground">{String(customer[secondaryField])}</div>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoDialogProps) {
   const [info, setInfo] = useState<InvoiceInfo>({
     chemistName: '',
@@ -48,16 +123,6 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
     paymentMode: 'Cash',
   });
 
-  const handleSubmit = () => {
-    onSubmit(info);
-    onOpenChange(false);
-  };
-
-  const updateField = (field: keyof InvoiceInfo, value: string) => {
-    setInfo((prev) => ({ ...prev, [field]: value }));
-  };
-
-  // Generate order number based on current date
   const generateOrderNo = () => {
     const now = new Date();
     const dateStr = now.toISOString().slice(2, 10).replace(/-/g, '');
@@ -65,12 +130,49 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
     return `${dateStr}CUM${randomNum}`;
   };
 
-  // Auto-generate order number if empty when dialog opens
-  useState(() => {
-    if (!info.orderNo) {
-      setInfo(prev => ({ ...prev, orderNo: generateOrderNo() }));
+  // Reset and generate new order number when dialog opens
+  useEffect(() => {
+    if (open) {
+      setInfo(prev => ({ ...prev, orderNo: prev.orderNo || generateOrderNo() }));
     }
-  });
+  }, [open]);
+
+  const updateField = (field: keyof InvoiceInfo, value: string) => {
+    setInfo((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSelectCustomer = useCallback((customer: SavedCustomer) => {
+    setInfo(prev => ({
+      ...prev,
+      chemistName: customer.chemistName,
+      chemistCode: customer.chemistCode,
+      binNo: customer.binNo,
+      address: customer.address,
+      market: customer.market,
+      fieldForce: customer.fieldForce,
+      contactNo: customer.contactNo,
+      paymentMode: customer.paymentMode,
+    }));
+  }, []);
+
+  const handleSubmit = () => {
+    // Save customer to history
+    saveCustomer({
+      chemistName: info.chemistName,
+      chemistCode: info.chemistCode,
+      binNo: info.binNo,
+      address: info.address,
+      market: info.market,
+      fieldForce: info.fieldForce,
+      contactNo: info.contactNo,
+      paymentMode: info.paymentMode,
+    });
+    onSubmit(info);
+    onOpenChange(false);
+  };
+
+  const nameSuggestions = searchCustomers(info.chemistName, 'chemistName');
+  const codeSuggestions = searchCustomers(info.chemistCode, 'chemistCode');
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -84,20 +186,28 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="chemistCode">Chemist Code</Label>
-              <Input
+              <AutocompleteInput
                 id="chemistCode"
                 value={info.chemistCode}
-                onChange={(e) => updateField('chemistCode', e.target.value)}
+                onChange={(val) => updateField('chemistCode', val)}
                 placeholder="e.g., CR13000021"
+                suggestions={codeSuggestions}
+                onSelect={handleSelectCustomer}
+                displayField="chemistCode"
+                secondaryField="chemistName"
               />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="chemistName">Chemist Name *</Label>
-              <Input
+              <AutocompleteInput
                 id="chemistName"
                 value={info.chemistName}
-                onChange={(e) => updateField('chemistName', e.target.value)}
+                onChange={(val) => updateField('chemistName', val)}
                 placeholder="Enter chemist name"
+                suggestions={nameSuggestions}
+                onSelect={handleSelectCustomer}
+                displayField="chemistName"
+                secondaryField="chemistCode"
               />
             </div>
           </div>
