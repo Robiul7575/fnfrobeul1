@@ -216,6 +216,7 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
                 placeholder="e.g., CR13000021"
                 suggestions={codeSuggestions}
                 onSelect={handleSelectCustomer}
+                onRemove={handleRemoveCustomer}
                 displayField="chemistCode"
                 secondaryField="chemistName"
               />
