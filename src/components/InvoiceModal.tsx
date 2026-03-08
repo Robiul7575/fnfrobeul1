@@ -238,35 +238,37 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-2 sm:p-6">
         <DialogHeader>
-          <DialogTitle>Invoice Preview</DialogTitle>
+          <DialogTitle className="text-sm sm:text-base">Invoice Preview</DialogTitle>
         </DialogHeader>
 
-        <InvoicePreview
-          ref={printRef}
-          items={items}
-          invoiceInfo={invoiceInfo}
-          invoiceNumber={invoiceNumber}
-          invoiceDate={invoiceDate}
-          orderDate={orderDate}
-          printDateTime={printDateTime}
-          totals={totals}
-          discountPercent={discountPercent}
-          getItemTp={getItemTp}
-        />
+        <div className="origin-top-left scale-[0.45] sm:scale-[0.65] md:scale-75 lg:scale-100" style={{ width: '210mm', transformOrigin: 'top left' }}>
+          <InvoicePreview
+            ref={printRef}
+            items={items}
+            invoiceInfo={invoiceInfo}
+            invoiceNumber={invoiceNumber}
+            invoiceDate={invoiceDate}
+            orderDate={orderDate}
+            printDateTime={printDateTime}
+            totals={totals}
+            discountPercent={discountPercent}
+            getItemTp={getItemTp}
+          />
+        </div>
 
-        <div className="flex justify-end gap-2 mt-4">
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+        <div className="flex flex-wrap justify-end gap-2 mt-4">
+          <Button variant="outline" size="sm" onClick={() => onOpenChange(false)}>
             Close
           </Button>
-          <Button variant="outline" onClick={handleDownloadPdf}>
-            <Download className="h-4 w-4 mr-2" />
-            Download PDF
+          <Button variant="outline" size="sm" onClick={handleDownloadPdf}>
+            <Download className="h-4 w-4 mr-1" />
+            PDF
           </Button>
-          <Button onClick={handlePrint}>
-            <Printer className="h-4 w-4 mr-2" />
-            Print Invoice
+          <Button size="sm" onClick={handlePrint}>
+            <Printer className="h-4 w-4 mr-1" />
+            Print
           </Button>
         </div>
       </DialogContent>
