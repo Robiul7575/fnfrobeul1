@@ -16,7 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { searchCustomers, SavedCustomer, saveCustomer } from '@/lib/customerHistory';
+import { searchCustomers, SavedCustomer, saveCustomer, removeCustomer } from '@/lib/customerHistory';
+import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface InvoiceInfo {
@@ -44,6 +45,7 @@ function AutocompleteInput({
   placeholder,
   suggestions,
   onSelect,
+  onRemove,
   displayField,
   secondaryField,
 }: {
@@ -53,6 +55,7 @@ function AutocompleteInput({
   placeholder: string;
   suggestions: SavedCustomer[];
   onSelect: (customer: SavedCustomer) => void;
+  onRemove: (customer: SavedCustomer) => void;
   displayField: keyof SavedCustomer;
   secondaryField?: keyof SavedCustomer;
 }) {
@@ -85,24 +88,37 @@ function AutocompleteInput({
       {showSuggestions && suggestions.length > 0 && (
         <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-popover border border-border rounded-md shadow-md max-h-48 overflow-auto">
           {suggestions.map((customer, i) => (
-            <button
+            <div
               key={i}
-              type="button"
-              className={cn(
-                "w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors",
-                "border-b border-border last:border-0"
-              )}
-              onMouseDown={(e) => {
-                e.preventDefault();
-                onSelect(customer);
-                setShowSuggestions(false);
-              }}
+              className="flex items-center border-b border-border last:border-0"
             >
-              <div className="font-medium">{String(customer[displayField])}</div>
-              {secondaryField && (
-                <div className="text-xs text-muted-foreground">{String(customer[secondaryField])}</div>
-              )}
-            </button>
+              <button
+                type="button"
+                className="flex-1 text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  onSelect(customer);
+                  setShowSuggestions(false);
+                }}
+              >
+                <div className="font-medium">{String(customer[displayField])}</div>
+                {secondaryField && (
+                  <div className="text-xs text-muted-foreground">{String(customer[secondaryField])}</div>
+                )}
+              </button>
+              <button
+                type="button"
+                className="px-2 py-2 text-muted-foreground hover:text-destructive transition-colors"
+                title="Remove from history"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onRemove(customer);
+                }}
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
           ))}
         </div>
       )}
@@ -155,8 +171,13 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
     }));
   }, []);
 
+  const [refreshKey, setRefreshKey] = useState(0);
+  const handleRemoveCustomer = useCallback((customer: SavedCustomer) => {
+    removeCustomer(customer.chemistCode, customer.chemistName);
+    setRefreshKey(k => k + 1);
+  }, []);
+
   const handleSubmit = () => {
-    // Save customer to history
     saveCustomer({
       chemistName: info.chemistName,
       chemistCode: info.chemistCode,
@@ -171,6 +192,8 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
     onOpenChange(false);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _refresh = refreshKey;
   const nameSuggestions = searchCustomers(info.chemistName, 'chemistName');
   const codeSuggestions = searchCustomers(info.chemistCode, 'chemistCode');
 
@@ -193,6 +216,7 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
                 placeholder="e.g., CR13000021"
                 suggestions={codeSuggestions}
                 onSelect={handleSelectCustomer}
+                onRemove={handleRemoveCustomer}
                 displayField="chemistCode"
                 secondaryField="chemistName"
               />
@@ -206,6 +230,7 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
                 placeholder="Enter chemist name"
                 suggestions={nameSuggestions}
                 onSelect={handleSelectCustomer}
+                onRemove={handleRemoveCustomer}
                 displayField="chemistName"
                 secondaryField="chemistCode"
               />
