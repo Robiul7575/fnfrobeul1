@@ -89,9 +89,10 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         fontSize: '14px',
         lineHeight: '1.5',
         width: '210mm',
+        maxWidth: '210mm',
         minHeight: '297mm',
         margin: '0 auto',
-        padding: '24px 40px 16px',
+        padding: '20px 36px 16px',
         boxSizing: 'border-box',
         position: 'relative',
         display: 'flex',
@@ -103,7 +104,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           pointerEvents: 'none', zIndex: 0,
         }}>
-          <img src={fnfLogoColor} alt="" style={{ width: '280px', height: '280px', objectFit: 'contain', opacity: 0.08 }} />
+          <img src={fnfLogoColor} alt="" style={{ width: '320px', height: '320px', objectFit: 'contain', opacity: 0.05 }} />
         </div>
 
         <div style={{ position: 'relative', zIndex: 1, flex: '1 1 auto', display: 'flex', flexDirection: 'column' }}>
@@ -111,9 +112,9 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           {/* ===== HEADER - 3 columns ===== */}
           <table style={{ width: '100%', tableLayout: 'fixed', marginBottom: '0' }}>
             <colgroup>
-              <col style={{ width: '27%' }} />
-              <col style={{ width: '46%' }} />
-              <col style={{ width: '27%' }} />
+              <col style={{ width: '25%' }} />
+              <col style={{ width: '50%' }} />
+              <col style={{ width: '25%' }} />
             </colgroup>
             <tbody>
               <tr>
@@ -125,18 +126,16 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   <p>Phone: 9336001</p>
                 </td>
                 <td style={{ verticalAlign: 'middle', textAlign: 'center' }}>
-                  <table style={{ width: '100%' }}><tbody><tr><td style={{ textAlign: 'center' }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
-                      <img src={fnfLogoColor} alt="FnF" style={{ height: '38px', width: 'auto' }} />
-                      <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#2563eb', whiteSpace: 'nowrap' }}>FnF Pharmaceuticals Ltd.</span>
-                    </div>
-                    <br />
-                    <span style={{
-                      display: 'inline-block', border: '2.5px solid black',
-                      padding: '3px 36px', borderRadius: '50px',
-                      fontSize: '18px', fontWeight: 'bold',
-                    }}>INVOICE</span>
-                  </td></tr></tbody></table>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                    <img src={fnfLogoColor} alt="FnF" style={{ height: '42px', width: 'auto' }} />
+                    <span style={{ fontSize: '22px', fontWeight: 'bold', color: '#2563eb', whiteSpace: 'nowrap' }}>FnF Pharmaceuticals Ltd.</span>
+                  </div>
+                  <br />
+                  <span style={{
+                    display: 'inline-block', border: '3px solid black',
+                    padding: '4px 40px', borderRadius: '50px',
+                    fontSize: '18px', fontWeight: 'bold',
+                  }}>INVOICE</span>
                 </td>
                 <td style={{ verticalAlign: 'top', textAlign: 'right', fontSize: '11px', lineHeight: '1.5' }}>
                   <p style={{ fontWeight: 'bold', marginBottom: '2px', fontSize: '11px' }}>Factory:</p>
@@ -148,10 +147,10 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </tbody>
           </table>
 
-          <div style={{ borderTop: '1px solid black', margin: '4px 0' }} />
+          <div style={{ borderTop: '1.5px solid black', margin: '6px 0' }} />
 
           {/* ===== MUSHAK ===== */}
-          <table style={{ width: '100%', margin: '6px 0 0' }}>
+          <table style={{ width: '100%', margin: '4px 0 0' }}>
             <tbody>
               <tr>
                 <td style={{ width: '25%' }} />
@@ -164,16 +163,16 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </tbody>
           </table>
 
-          <div style={{ textAlign: 'center', marginBottom: '8px' }}>
-            <p style={{ fontWeight: 'bold', fontSize: '14px', marginBottom: '2px' }}>Depot : CUMILLA</p>
-            <p style={{ fontSize: '12px' }}>Contact No : {invoiceInfo.contactNo}</p>
+          <div style={{ textAlign: 'center', marginBottom: '6px' }}>
+            <p style={{ fontWeight: 'bold', fontSize: '15px', marginBottom: '2px' }}>Depot : CUMILLA</p>
+            <p style={{ fontSize: '13px' }}>Contact No : {invoiceInfo.contactNo}</p>
             <p style={{ fontSize: '16px', fontWeight: 'bold', marginTop: '4px' }}>Invoice</p>
           </div>
 
-          <div style={{ borderTop: '1px solid black', margin: '4px 0' }} />
+          <div style={{ borderTop: '1.5px solid black', margin: '4px 0' }} />
 
           {/* ===== CUSTOMER & INVOICE INFO ===== */}
-          <table style={{ width: '100%', fontSize: '13px', marginBottom: '8px', marginTop: '6px' }}>
+          <table style={{ width: '100%', fontSize: '14px', marginBottom: '8px', marginTop: '6px' }}>
             <tbody>
               <tr>
                 <td style={{ width: '50%', verticalAlign: 'top', paddingRight: '16px' }}>
@@ -188,8 +187,8 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                         ['Field Force', invoiceInfo.fieldForce, true],
                       ] as [string, string, boolean][]).map(([label, value, bold]) => (
                         <tr key={label}>
-                          <td style={{ width: '100px', fontWeight: 'bold', padding: '4px 0', whiteSpace: 'nowrap', fontSize: '13px' }}>{label}</td>
-                          <td style={{ padding: '4px 0', fontWeight: bold ? 'bold' : 'normal', fontSize: '13px' }}>: {value}</td>
+                          <td style={{ width: '110px', fontWeight: 'bold', padding: '4px 0', whiteSpace: 'nowrap', fontSize: '14px' }}>{label}</td>
+                          <td style={{ padding: '4px 0', fontWeight: bold ? 'bold' : 'normal', fontSize: '14px' }}>: {value}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -206,8 +205,8 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                         ['Payment Mode', invoiceInfo.paymentMode],
                       ]).map(([label, value]) => (
                         <tr key={label}>
-                          <td style={{ width: '105px', fontWeight: 'bold', padding: '4px 0', whiteSpace: 'nowrap', fontSize: '13px' }}>{label}</td>
-                          <td style={{ padding: '4px 0', fontSize: '13px' }}>: {value}</td>
+                          <td style={{ width: '115px', fontWeight: 'bold', padding: '4px 0', whiteSpace: 'nowrap', fontSize: '14px' }}>{label}</td>
+                          <td style={{ padding: '4px 0', fontSize: '14px' }}>: {value}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -217,26 +216,26 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
             </tbody>
           </table>
 
-          <div style={{ borderTop: '1.5px dashed black', margin: '6px 0' }} />
+          <div style={{ borderTop: '2px dashed black', margin: '6px 0' }} />
 
           {/* ===== PRODUCT TABLE ===== */}
           <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', tableLayout: 'fixed' }}>
               <colgroup>
-                <col style={{ width: '21%' }} />
+                <col style={{ width: '20%' }} />
                 <col style={{ width: '9%' }} />
                 <col style={{ width: '5%' }} />
+                <col style={{ width: '10%' }} />
                 <col style={{ width: '9%' }} />
-                <col style={{ width: '8%' }} />
                 <col style={{ width: '10%' }} />
                 <col style={{ width: '6%' }} />
                 <col style={{ width: '5%' }} />
                 <col style={{ width: '5%' }} />
-                <col style={{ width: '8%' }} />
+                <col style={{ width: '9%' }} />
                 <col style={{ width: '10%' }} />
               </colgroup>
               <thead>
-                <tr style={{ borderTop: '2px solid black', borderBottom: '2px solid black' }}>
+                <tr style={{ borderTop: '2.5px solid black', borderBottom: '2.5px solid black' }}>
                   {[
                     ['Products Name', 'left'],
                     ['Pack Size', 'center'],
@@ -252,9 +251,9 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   ].map(([text, align]) => (
                     <th key={text} style={{
                       textAlign: align as any,
-                      padding: '8px 4px',
+                      padding: '8px 5px',
                       fontWeight: 'bold',
-                      fontSize: '12px',
+                      fontSize: '14px',
                       lineHeight: '1.3',
                     }}>{text}</th>
                   ))}
@@ -267,13 +266,13 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   const totalTP = (itemTp - itemDiscount) * item.quantity;
                   const tpWithVat = itemTp + item.product.vat;
                   const bonusQty = calculateBonus(item.product.bonus, item.quantity);
-                  const rowStyle: React.CSSProperties = { padding: '7px 4px', fontSize: '13px', lineHeight: '1.4' };
+                  const rowStyle: React.CSSProperties = { padding: '8px 5px', fontSize: '13px', lineHeight: '1.4' };
                   return (
                     <React.Fragment key={item.product.id}>
-                      <tr style={{ borderBottom: '1px dashed #bbb', height: '30px' }}>
+                      <tr style={{ borderBottom: '1px dashed #bbb', height: '32px' }}>
                         <td style={{ ...rowStyle, textAlign: 'left' }}>{item.product.name} {item.product.packSize}</td>
                         <td style={{ ...rowStyle, textAlign: 'center' }}>{item.product.packSize}</td>
-                        <td style={{ ...rowStyle, textAlign: 'center' }}>{item.quantity}</td>
+                        <td style={{ ...rowStyle, textAlign: 'right' }}>{item.quantity}</td>
                         <td style={{ ...rowStyle, textAlign: 'right' }}>{itemTp.toFixed(2)}</td>
                         <td style={{ ...rowStyle, textAlign: 'right' }}>{item.product.vat.toFixed(2)}</td>
                         <td style={{ ...rowStyle, textAlign: 'right' }}>{tpWithVat.toFixed(2)}</td>
@@ -284,10 +283,10 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                         <td style={{ ...rowStyle, textAlign: 'right' }}>{totalTP.toFixed(2)}</td>
                       </tr>
                       {bonusQty > 0 && (
-                        <tr style={{ borderBottom: '1px dashed #bbb', height: '30px' }}>
+                        <tr style={{ borderBottom: '1px dashed #bbb', height: '32px' }}>
                           <td style={{ ...rowStyle, textAlign: 'left' }}>{item.product.name} {item.product.packSize}</td>
                           <td style={{ ...rowStyle, textAlign: 'center' }}>{item.product.packSize}</td>
-                          <td style={{ ...rowStyle, textAlign: 'center' }}>{bonusQty}</td>
+                          <td style={{ ...rowStyle, textAlign: 'right' }}>{bonusQty}</td>
                           <td style={{ ...rowStyle, textAlign: 'right' }}>0.00</td>
                           <td style={{ ...rowStyle, textAlign: 'right' }}>0.00</td>
                           <td style={{ ...rowStyle, textAlign: 'right' }}>0.00</td>
@@ -301,26 +300,26 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                     </React.Fragment>
                   );
                 })}
-                <tr style={{ borderTop: '1.5px solid black', height: '30px' }}>
-                  <td style={{ padding: '7px 4px', fontSize: '13px', fontWeight: 'bold' }}>Total</td>
+                <tr style={{ borderTop: '2px solid black', height: '32px' }}>
+                  <td style={{ padding: '8px 5px', fontSize: '14px', fontWeight: 'bold' }}>Total</td>
                   <td />
-                  <td style={{ textAlign: 'center', padding: '7px 4px', fontSize: '13px', fontWeight: 'bold' }}>{totalQty}</td>
+                  <td style={{ textAlign: 'right', padding: '8px 5px', fontSize: '14px', fontWeight: 'bold' }}>{totalQty}</td>
                   <td colSpan={8} />
                 </tr>
               </tbody>
             </table>
 
-            <div style={{ borderTop: '1.5px dashed black', margin: '8px 0' }} />
+            <div style={{ borderTop: '2px dashed black', margin: '10px 0' }} />
 
             {/* ===== TOTALS ===== */}
-            <table style={{ width: '100%', marginBottom: '8px', tableLayout: 'fixed' }}>
+            <table style={{ width: '100%', marginBottom: '4px', tableLayout: 'fixed' }}>
               <colgroup>
-                <col style={{ width: '46%' }} />
-                <col style={{ width: '54%' }} />
+                <col style={{ width: '44%' }} />
+                <col style={{ width: '56%' }} />
               </colgroup>
               <tbody>
                 <tr>
-                  <td style={{ verticalAlign: 'top', fontSize: '13px', paddingRight: '16px', paddingTop: '4px' }}>
+                  <td style={{ verticalAlign: 'top', fontSize: '14px', paddingRight: '16px', paddingTop: '4px' }}>
                     <span style={{ fontWeight: 'bold' }}>In Words: </span>
                     <span>{numberToWords(Math.round(netPayable))} Taka Only</span>
                   </td>
@@ -335,13 +334,13 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                           ['Add VAT on TP', vat.toFixed(2)],
                         ]).map(([label, val]) => (
                           <tr key={label}>
-                            <td style={{ padding: '3px 0', textAlign: 'left', fontSize: '14px' }}>{label}</td>
-                            <td style={{ padding: '3px 0', textAlign: 'right', fontSize: '14px' }}>{val}</td>
+                            <td style={{ padding: '4px 0', textAlign: 'left', fontSize: '14px' }}>{label}</td>
+                            <td style={{ padding: '4px 0', textAlign: 'right', fontSize: '14px', fontVariantNumeric: 'tabular-nums' }}>{val}</td>
                           </tr>
                         ))}
-                        <tr style={{ borderTop: '3px solid black' }}>
-                          <td style={{ padding: '6px 0 0', textAlign: 'left', fontWeight: 'bold', fontSize: '18px' }}>Net Payable</td>
-                          <td style={{ padding: '6px 0 0', textAlign: 'right', fontWeight: 'bold', fontSize: '18px' }}>{netPayable.toFixed(2)}</td>
+                        <tr style={{ borderTop: '4px double black' }}>
+                          <td style={{ padding: '8px 0 0', textAlign: 'left', fontWeight: 'bold', fontSize: '20px' }}>Net Payable</td>
+                          <td style={{ padding: '8px 0 0', textAlign: 'right', fontWeight: 'bold', fontSize: '20px', fontVariantNumeric: 'tabular-nums' }}>{netPayable.toFixed(2)}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -352,28 +351,28 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           </div>
 
           {/* ===== FOOTER ===== */}
-          <div style={{ marginTop: 'auto' }}>
-            <div style={{ textAlign: 'right', marginBottom: '6px', fontSize: '13px' }}>
+          <div style={{ marginTop: '16px' }}>
+            <div style={{ textAlign: 'right', marginBottom: '8px', fontSize: '14px' }}>
               <p style={{ fontWeight: 'bold' }}>Cumilla Depot</p>
               <p>For FnF Pharmaceuticals Ltd.</p>
             </div>
 
-            <div style={{ borderTop: '1px solid black', margin: '2px 0' }} />
+            <div style={{ borderTop: '1.5px solid black', margin: '4px 0' }} />
 
-            <table style={{ width: '100%', marginTop: '6px' }}>
+            <table style={{ width: '100%', marginTop: '8px' }}>
               <tbody>
                 <tr>
                   {['PREPARED BY', 'CHECKED BY', 'AUTHORIZED SIGNATURE', "CUSTOMER'S SIGNATURE"].map(label => (
-                    <td key={label} style={{ textAlign: 'center', width: '25%', fontSize: '11px', verticalAlign: 'bottom', paddingTop: '30px' }}>
-                      <div style={{ borderTop: '1px solid black', width: '120px', margin: '0 auto 3px' }} />
-                      <span style={{ fontWeight: 600 }}>{label}</span>
+                    <td key={label} style={{ textAlign: 'center', width: '25%', fontSize: '11px', verticalAlign: 'bottom', paddingTop: '40px' }}>
+                      <div style={{ borderTop: '1.5px solid black', width: '130px', margin: '0 auto 4px' }} />
+                      <span style={{ fontWeight: 700, fontSize: '11px' }}>{label}</span>
                     </td>
                   ))}
                 </tr>
               </tbody>
             </table>
 
-            <div style={{ textAlign: 'center', fontSize: '10px', marginTop: '6px' }}>
+            <div style={{ textAlign: 'center', fontSize: '10px', marginTop: '8px' }}>
               <p>For F n F Pharmaceuticals Ltd.</p>
             </div>
           </div>
