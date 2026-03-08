@@ -45,6 +45,7 @@ function AutocompleteInput({
   placeholder,
   suggestions,
   onSelect,
+  onRemove,
   displayField,
   secondaryField,
 }: {
@@ -54,6 +55,7 @@ function AutocompleteInput({
   placeholder: string;
   suggestions: SavedCustomer[];
   onSelect: (customer: SavedCustomer) => void;
+  onRemove: (customer: SavedCustomer) => void;
   displayField: keyof SavedCustomer;
   secondaryField?: keyof SavedCustomer;
 }) {
@@ -86,24 +88,37 @@ function AutocompleteInput({
       {showSuggestions && suggestions.length > 0 && (
         <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-popover border border-border rounded-md shadow-md max-h-48 overflow-auto">
           {suggestions.map((customer, i) => (
-            <button
+            <div
               key={i}
-              type="button"
-              className={cn(
-                "w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors",
-                "border-b border-border last:border-0"
-              )}
-              onMouseDown={(e) => {
-                e.preventDefault();
-                onSelect(customer);
-                setShowSuggestions(false);
-              }}
+              className="flex items-center border-b border-border last:border-0"
             >
-              <div className="font-medium">{String(customer[displayField])}</div>
-              {secondaryField && (
-                <div className="text-xs text-muted-foreground">{String(customer[secondaryField])}</div>
-              )}
-            </button>
+              <button
+                type="button"
+                className="flex-1 text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  onSelect(customer);
+                  setShowSuggestions(false);
+                }}
+              >
+                <div className="font-medium">{String(customer[displayField])}</div>
+                {secondaryField && (
+                  <div className="text-xs text-muted-foreground">{String(customer[secondaryField])}</div>
+                )}
+              </button>
+              <button
+                type="button"
+                className="px-2 py-2 text-muted-foreground hover:text-destructive transition-colors"
+                title="Remove from history"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onRemove(customer);
+                }}
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
           ))}
         </div>
       )}
