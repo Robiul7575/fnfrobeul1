@@ -16,7 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { searchCustomers, SavedCustomer, saveCustomer } from '@/lib/customerHistory';
+import { searchCustomers, SavedCustomer, saveCustomer, removeCustomer } from '@/lib/customerHistory';
+import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface InvoiceInfo {

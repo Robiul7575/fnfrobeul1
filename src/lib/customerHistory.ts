@@ -62,3 +62,10 @@ export function searchCustomers(query: string, field?: keyof SavedCustomer): Sav
     })
     .slice(0, 8);
 }
+
+export function removeCustomer(chemistCode: string, chemistName: string): void {
+  const customers = getSavedCustomers().filter(
+    (c) => !(c.chemistCode === chemistCode && c.chemistName === chemistName)
+  );
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(customers));
+}
