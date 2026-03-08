@@ -238,27 +238,45 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-2 sm:p-6">
+      <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col p-2 sm:p-6">
         <DialogHeader>
           <DialogTitle className="text-sm sm:text-base">Invoice Preview</DialogTitle>
         </DialogHeader>
 
-        <div className="origin-top-left scale-[0.45] sm:scale-[0.65] md:scale-75 lg:scale-100" style={{ width: '210mm', transformOrigin: 'top left' }}>
-          <InvoicePreview
-            ref={printRef}
-            items={items}
-            invoiceInfo={invoiceInfo}
-            invoiceNumber={invoiceNumber}
-            invoiceDate={invoiceDate}
-            orderDate={orderDate}
-            printDateTime={printDateTime}
-            totals={totals}
-            discountPercent={discountPercent}
-            getItemTp={getItemTp}
-          />
+        {/* Buttons FIRST on mobile so they're always visible */}
+        <div className="flex flex-wrap justify-end gap-2 mb-2 sm:hidden">
+          <Button variant="outline" size="sm" onClick={() => onOpenChange(false)}>
+            Close
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleDownloadPdf}>
+            <Download className="h-4 w-4 mr-1" />
+            PDF
+          </Button>
+          <Button size="sm" onClick={handlePrint}>
+            <Printer className="h-4 w-4 mr-1" />
+            Print
+          </Button>
         </div>
 
-        <div className="flex flex-wrap justify-end gap-2 mt-4">
+        <div className="overflow-auto flex-1">
+          <div style={{ width: '210mm', transformOrigin: 'top left' }} className="scale-[0.42] sm:scale-[0.65] md:scale-75 lg:scale-100">
+            <InvoicePreview
+              ref={printRef}
+              items={items}
+              invoiceInfo={invoiceInfo}
+              invoiceNumber={invoiceNumber}
+              invoiceDate={invoiceDate}
+              orderDate={orderDate}
+              printDateTime={printDateTime}
+              totals={totals}
+              discountPercent={discountPercent}
+              getItemTp={getItemTp}
+            />
+          </div>
+        </div>
+
+        {/* Buttons at bottom on desktop */}
+        <div className="hidden sm:flex flex-wrap justify-end gap-2 mt-4">
           <Button variant="outline" size="sm" onClick={() => onOpenChange(false)}>
             Close
           </Button>
