@@ -262,12 +262,14 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => {
+              {items.map((item) => {
                   const itemTp = getItemTp(item);
                   const itemDiscount = getItemDiscount(item);
                   const totalTP = (itemTp - itemDiscount) * item.quantity;
                   const tpWithVat = itemTp + item.product.vat;
                   const bonusQty = calculateBonus(item.product.bonus, item.quantity);
+                  const isSeparateBonusRow = (item.product.name === 'Thiavin Powder' && item.product.packSize === '10X100gm') ||
+                    (item.product.name === 'Rumenal Powder' && item.product.packSize === '10X100gm');
                   const rowStyle: React.CSSProperties = { padding: '8px 5px', fontSize: '13px', lineHeight: '1.4' };
                   return (
                     <React.Fragment key={item.product.id}>
@@ -278,13 +280,13 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                         <td style={{ ...rowStyle, textAlign: 'right' }}>{itemTp.toFixed(2)}</td>
                         <td style={{ ...rowStyle, textAlign: 'right' }}>{item.product.vat.toFixed(2)}</td>
                         <td style={{ ...rowStyle, textAlign: 'right' }}>{tpWithVat.toFixed(2)}</td>
-                        <td style={{ ...rowStyle, textAlign: 'center' }}>0</td>
+                        <td style={{ ...rowStyle, textAlign: 'center' }}>{isSeparateBonusRow ? '-' : bonusQty > 0 ? bonusQty : 0}</td>
                         <td style={{ ...rowStyle, textAlign: 'center' }}>0</td>
                         <td style={{ ...rowStyle, textAlign: 'center' }}>0</td>
                         <td style={{ ...rowStyle, textAlign: 'right' }}>{itemDiscount > 0 ? (itemDiscount * item.quantity).toFixed(2) : '0.00'}</td>
                         <td style={{ ...rowStyle, textAlign: 'right' }}>{totalTP.toFixed(2)}</td>
                       </tr>
-                      {bonusQty > 0 && (
+                      {isSeparateBonusRow && bonusQty > 0 && (
                         <tr style={{ borderBottom: '1px dashed #bbb', height: '32px' }}>
                           <td style={{ ...rowStyle, textAlign: 'left' }}>{item.product.name} {item.product.packSize}</td>
                           <td style={{ ...rowStyle, textAlign: 'center' }}>{item.product.packSize}</td>
