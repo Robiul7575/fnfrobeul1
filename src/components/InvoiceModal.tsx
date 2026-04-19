@@ -12,6 +12,7 @@ import { InvoiceInfo } from './InvoiceInfoDialog';
 import { InvoicePreview } from './InvoicePreview';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { saveInvoice } from '@/lib/invoiceHistory';
 
 interface InvoiceModalProps {
   open: boolean;
@@ -170,6 +171,16 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
     printWindow.focus();
     printWindow.print();
     printWindow.close();
+
+    saveInvoice({
+      invoiceNumber,
+      chemistName: invoiceInfo.chemistName,
+      chemistCode: invoiceInfo.chemistCode,
+      total: totals.total,
+      itemCount: items.reduce((s, i) => s + i.quantity, 0),
+      paymentMode: invoiceInfo.paymentMode,
+      action: 'printed',
+    });
   };
 
   const handleDownloadPdf = async () => {
@@ -231,6 +242,16 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
       }
 
       pdf.save(`Invoice-${invoiceNumber}.pdf`);
+
+      saveInvoice({
+        invoiceNumber,
+        chemistName: invoiceInfo.chemistName,
+        chemistCode: invoiceInfo.chemistCode,
+        total: totals.total,
+        itemCount: items.reduce((s, i) => s + i.quantity, 0),
+        paymentMode: invoiceInfo.paymentMode,
+        action: 'downloaded',
+      });
     } catch (error) {
       console.error('Error generating PDF:', error);
     }

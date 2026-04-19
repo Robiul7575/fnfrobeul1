@@ -3,6 +3,7 @@ import { ALL_PRODUCTS } from '@/data/products';
 import { ProductCategory } from '@/types/product';
 import { ProductCard } from '@/components/ProductCard';
 import { CartSheet } from '@/components/CartSheet';
+import { InvoiceHistorySheet } from '@/components/InvoiceHistorySheet';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
@@ -33,7 +34,10 @@ const Index = () => {
             <h1 className="text-2xl md:text-3xl font-bold text-primary">
               FnF Pharmaceuticals
             </h1>
-            <CartSheet />
+            <div className="flex items-center gap-2">
+              <InvoiceHistorySheet />
+              <CartSheet />
+            </div>
           </div>
           
           {/* Search */}
