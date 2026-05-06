@@ -3,13 +3,14 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { History, Trash2, Download, Printer, LogOut, Lock } from 'lucide-react';
+import { History, Trash2, Download, Printer, LogOut, Lock, Eye } from 'lucide-react';
 import {
   getSavedInvoices,
   removeInvoice,
   clearInvoiceHistory,
   SavedInvoice,
 } from '@/lib/invoiceHistory';
+import { SavedInvoicePreviewDialog } from './SavedInvoicePreviewDialog';
 
 const AUTH_KEY = 'fnf-history-auth';
 const VALID_USER = 'Robeul';
@@ -18,6 +19,7 @@ const VALID_PASS = 'Robeul1';
 export function InvoiceHistorySheet() {
   const [invoices, setInvoices] = useState<SavedInvoice[]>([]);
   const [open, setOpen] = useState(false);
+  const [previewInvoice, setPreviewInvoice] = useState<SavedInvoice | null>(null);
   const [authed, setAuthed] = useState<boolean>(() => localStorage.getItem(AUTH_KEY) === '1');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -202,6 +204,17 @@ export function InvoiceHistorySheet() {
                       <Trash2 className="h-3.5 w-3.5" />
                     </Button>
                   </div>
+                  <div className="mt-2 flex justify-end">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-7 text-xs"
+                      onClick={() => setPreviewInvoice(inv)}
+                    >
+                      <Eye className="h-3.5 w-3.5 mr-1" />
+                      Preview
+                    </Button>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -210,6 +223,10 @@ export function InvoiceHistorySheet() {
         </>
         )}
       </SheetContent>
+      <SavedInvoicePreviewDialog
+        invoice={previewInvoice}
+        onOpenChange={(o) => !o && setPreviewInvoice(null)}
+      />
     </Sheet>
   );
 }
