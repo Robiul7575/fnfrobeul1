@@ -180,6 +180,14 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
       itemCount: items.reduce((s, i) => s + i.quantity, 0),
       paymentMode: invoiceInfo.paymentMode,
       action: 'printed',
+      snapshot: {
+        items,
+        invoiceInfo,
+        invoiceDate,
+        orderDate,
+        printDateTime,
+        discountPercent,
+      },
     });
   };
 
@@ -251,6 +259,14 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
         itemCount: items.reduce((s, i) => s + i.quantity, 0),
         paymentMode: invoiceInfo.paymentMode,
         action: 'downloaded',
+        snapshot: {
+          items,
+          invoiceInfo,
+          invoiceDate,
+          orderDate,
+          printDateTime,
+          discountPercent,
+        },
       });
     } catch (error) {
       console.error('Error generating PDF:', error);
