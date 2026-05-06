@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { History, Trash2, Download, Printer } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { History, Trash2, Download, Printer, LogOut, Lock } from 'lucide-react';
 import {
   getSavedInvoices,
   removeInvoice,
@@ -9,9 +11,17 @@ import {
   SavedInvoice,
 } from '@/lib/invoiceHistory';
 
+const AUTH_KEY = 'fnf-history-auth';
+const VALID_USER = 'Robeul';
+const VALID_PASS = 'Robeul1';
+
 export function InvoiceHistorySheet() {
   const [invoices, setInvoices] = useState<SavedInvoice[]>([]);
   const [open, setOpen] = useState(false);
+  const [authed, setAuthed] = useState<boolean>(() => localStorage.getItem(AUTH_KEY) === '1');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
 
   const refresh = () => setInvoices(getSavedInvoices());
 
@@ -21,6 +31,25 @@ export function InvoiceHistorySheet() {
     window.addEventListener('fnf-invoice-history-updated', handler);
     return () => window.removeEventListener('fnf-invoice-history-updated', handler);
   }, []);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (username === VALID_USER && password === VALID_PASS) {
+      localStorage.setItem(AUTH_KEY, '1');
+      setAuthed(true);
+      setAuthError('');
+      setPassword('');
+    } else {
+      setAuthError('Invalid username or password');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem(AUTH_KEY);
+    setAuthed(false);
+    setUsername('');
+    setPassword('');
+  };
 
   const formatDate = (ts: number) =>
     new Date(ts).toLocaleString('en-GB', {
@@ -38,7 +67,7 @@ export function InvoiceHistorySheet() {
         <Button variant="outline" size="sm" className="relative">
           <History className="h-4 w-4 mr-1" />
           History
-          {invoices.length > 0 && (
+          {authed && invoices.length > 0 && (
             <span className="ml-1 inline-flex items-center justify-center text-[10px] font-bold bg-primary text-primary-foreground rounded-full h-5 min-w-5 px-1">
               {invoices.length}
             </span>
@@ -47,25 +76,68 @@ export function InvoiceHistorySheet() {
       </SheetTrigger>
       <SheetContent side="right" className="w-full sm:max-w-md flex flex-col">
         <SheetHeader>
-          <SheetTitle>Invoice History</SheetTitle>
+          <SheetTitle className="flex items-center gap-2">
+            <Lock className="h-4 w-4" />
+            Invoice History
+          </SheetTitle>
         </SheetHeader>
 
+        {!authed ? (
+          <form onSubmit={handleLogin} className="mt-8 space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Sign in to view saved invoice history.
+            </p>
+            <div className="space-y-2">
+              <Label htmlFor="hist-user">Username</Label>
+              <Input
+                id="hist-user"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                autoComplete="username"
+                autoFocus
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="hist-pass">Password</Label>
+              <Input
+                id="hist-pass"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+              />
+            </div>
+            {authError && (
+              <p className="text-sm text-destructive">{authError}</p>
+            )}
+            <Button type="submit" className="w-full">
+              Sign In
+            </Button>
+          </form>
+        ) : (
+        <>
         <div className="flex justify-between items-center mt-4 mb-2">
           <p className="text-xs text-muted-foreground">
             {invoices.length} saved invoice{invoices.length === 1 ? '' : 's'}
           </p>
-          {invoices.length > 0 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                if (confirm('Clear all invoice history?')) clearInvoiceHistory();
-              }}
-            >
-              <Trash2 className="h-4 w-4 mr-1" />
-              Clear All
+          <div className="flex gap-1">
+            {invoices.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  if (confirm('Clear all invoice history?')) clearInvoiceHistory();
+                }}
+              >
+                <Trash2 className="h-4 w-4 mr-1" />
+                Clear
+              </Button>
+            )}
+            <Button variant="ghost" size="sm" onClick={handleLogout}>
+              <LogOut className="h-4 w-4 mr-1" />
+              Logout
             </Button>
-          )}
+          </div>
         </div>
 
         <div className="flex-1 overflow-auto -mx-2 px-2">
@@ -135,6 +207,8 @@ export function InvoiceHistorySheet() {
             </ul>
           )}
         </div>
+        </>
+        )}
       </SheetContent>
     </Sheet>
   );
