@@ -1,3 +1,15 @@
+import type { CartItem } from '@/context/CartContext';
+import type { InvoiceInfo } from '@/components/InvoiceInfoDialog';
+
+export interface InvoiceSnapshot {
+  items: CartItem[];
+  invoiceInfo: InvoiceInfo;
+  invoiceDate: string;
+  orderDate: string;
+  printDateTime: string;
+  discountPercent: number;
+}
+
 export interface SavedInvoice {
   invoiceNumber: string;
   chemistName: string;
@@ -7,6 +19,7 @@ export interface SavedInvoice {
   paymentMode: 'Cash' | 'Credit';
   action: 'downloaded' | 'printed';
   savedAt: number;
+  snapshot?: InvoiceSnapshot;
 }
 
 const STORAGE_KEY = 'fnf-invoice-history';
