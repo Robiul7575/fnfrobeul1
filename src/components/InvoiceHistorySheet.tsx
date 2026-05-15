@@ -9,6 +9,7 @@ import {
   removeInvoice,
   clearInvoiceHistory,
   SavedInvoice,
+  subscribeInvoiceHistory,
 } from '@/lib/invoiceHistory';
 import { SavedInvoicePreviewDialog } from './SavedInvoicePreviewDialog';
 
@@ -28,10 +29,8 @@ export function InvoiceHistorySheet() {
   const refresh = () => setInvoices(getSavedInvoices());
 
   useEffect(() => {
-    refresh();
-    const handler = () => refresh();
-    window.addEventListener('fnf-invoice-history-updated', handler);
-    return () => window.removeEventListener('fnf-invoice-history-updated', handler);
+    const unsub = subscribeInvoiceHistory(refresh);
+    return () => unsub();
   }, []);
 
   const handleLogin = (e: React.FormEvent) => {
