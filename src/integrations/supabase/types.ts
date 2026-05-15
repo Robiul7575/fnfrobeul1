@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      invoices: {
+        Row: {
+          action: string
+          chemist_code: string | null
+          chemist_name: string | null
+          id: string
+          invoice_number: string
+          item_count: number
+          payment_mode: string | null
+          saved_at: string
+          snapshot: Json | null
+          total: number
+        }
+        Insert: {
+          action: string
+          chemist_code?: string | null
+          chemist_name?: string | null
+          id?: string
+          invoice_number: string
+          item_count?: number
+          payment_mode?: string | null
+          saved_at?: string
+          snapshot?: Json | null
+          total?: number
+        }
+        Update: {
+          action?: string
+          chemist_code?: string | null
+          chemist_name?: string | null
+          id?: string
+          invoice_number?: string
+          item_count?: number
+          payment_mode?: string | null
+          saved_at?: string
+          snapshot?: Json | null
+          total?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
