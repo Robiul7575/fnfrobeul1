@@ -79,7 +79,7 @@ export async function saveInvoice(invoice: Omit<SavedInvoice, 'savedAt'>): Promi
     total: invoice.total,
     item_count: invoice.itemCount,
     payment_mode: invoice.paymentMode,
-    snapshot: invoice.snapshot ?? null,
+    snapshot: (invoice.snapshot ?? null) as any,
     saved_at: new Date().toISOString(),
   };
   const { error } = await supabase
