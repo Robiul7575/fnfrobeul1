@@ -32,9 +32,10 @@ export function InvoiceHistorySheet() {
   const refresh = () => setInvoices(getSavedInvoices());
 
   useEffect(() => {
+    if (authed) setHistoryCredentials(VALID_USER, VALID_PASS);
     const unsub = subscribeInvoiceHistory(refresh);
     return () => unsub();
-  }, []);
+  }, [authed]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
