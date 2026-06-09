@@ -117,4 +117,7 @@ export const ALL_PRODUCTS: Product[] = [
   { id: 109, name: 'Bangla FMD Vac', category: ProductCategory.VACCINE, packSize: '10ml', tp: 501.83, vat: 0.00, tp_vat: 501.83, mrp: 570.00, bonus: 'N/A' },
   { id: 110, name: 'Dogen Vet', category: ProductCategory.BOLUS, packSize: '10x10gm', tp: 511.11, vat: 89.99, tp_vat: 601.10, mrp: 700.00, bonus: 'N/A' },
   { id: 111, name: 'Dogen Vet 100gm', category: ProductCategory.BOLUS, packSize: '100gm', tp: 485.53, vat: 84.47, tp_vat: 570.00, mrp: 650.00, bonus: '8+1' },
+  { id: 112, name: 'Solvent', category: ProductCategory.VACCINE, packSize: '1000 Dose', tp: 30.00, vat: 0.00, tp_vat: 30.00, mrp: 30.00, bonus: 'N/A' },
+  { id: 113, name: 'Solvent', category: ProductCategory.VACCINE, packSize: '500 Dose', tp: 20.00, vat: 0.00, tp_vat: 20.00, mrp: 20.00, bonus: 'N/A' },
+  { id: 114, name: 'Solvent', category: ProductCategory.VACCINE, packSize: '300 Dose', tp: 15.00, vat: 0.00, tp_vat: 15.00, mrp: 15.00, bonus: 'N/A' },
 ];
