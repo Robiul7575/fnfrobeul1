@@ -50,57 +50,65 @@ const rowToInvoice = (r: Row): SavedInvoice => ({
 });
 
 let cache: SavedInvoice[] = [];
+let creds: { username: string; password: string } | null = null;
+
+const CREDS_KEY = 'fnf-history-creds';
+try {
+  const raw = localStorage.getItem(CREDS_KEY);
+  if (raw) creds = JSON.parse(raw);
+} catch {}
+
+export function setHistoryCredentials(username: string, password: string) {
+  creds = { username, password };
+  localStorage.setItem(CREDS_KEY, JSON.stringify(creds));
+}
+export function clearHistoryCredentials() {
+  creds = null;
+  localStorage.removeItem(CREDS_KEY);
+}
 
 export function getSavedInvoices(): SavedInvoice[] {
   return cache;
 }
 
 export async function fetchSavedInvoices(): Promise<SavedInvoice[]> {
-  const { data, error } = await supabase
-    .from('invoices')
-    .select('*')
-    .order('saved_at', { ascending: false })
-    .limit(500);
+  if (!creds) return cache;
+  const { data, error } = await supabase.functions.invoke('history-admin', {
+    body: { op: 'list', ...creds },
+  });
   if (error) {
     console.error('fetchSavedInvoices', error);
     return cache;
   }
-  cache = (data as Row[]).map(rowToInvoice);
+  const rows = (data as any)?.data as Row[] | undefined;
+  if (!rows) return cache;
+  cache = rows.map(rowToInvoice);
   window.dispatchEvent(new CustomEvent(EVENT));
   return cache;
 }
 
 export async function saveInvoice(invoice: Omit<SavedInvoice, 'savedAt'>): Promise<void> {
-  const payload = {
-    invoice_number: invoice.invoiceNumber,
-    action: invoice.action,
-    chemist_name: invoice.chemistName,
-    chemist_code: invoice.chemistCode,
-    total: invoice.total,
-    item_count: invoice.itemCount,
-    payment_mode: invoice.paymentMode,
-    snapshot: (invoice.snapshot ?? null) as any,
-    saved_at: new Date().toISOString(),
-  };
-  const { error } = await supabase
-    .from('invoices')
-    .upsert(payload, { onConflict: 'invoice_number,action' });
+  const { error } = await supabase.functions.invoke('save-invoice', {
+    body: invoice,
+  });
   if (error) console.error('saveInvoice', error);
-  await fetchSavedInvoices();
+  if (creds) await fetchSavedInvoices();
 }
 
 export async function removeInvoice(invoiceNumber: string, action: SavedInvoice['action']): Promise<void> {
-  const { error } = await supabase
-    .from('invoices')
-    .delete()
-    .eq('invoice_number', invoiceNumber)
-    .eq('action', action);
+  if (!creds) return;
+  const { error } = await supabase.functions.invoke('history-admin', {
+    body: { op: 'delete', invoiceNumber, action, ...creds },
+  });
   if (error) console.error('removeInvoice', error);
   await fetchSavedInvoices();
 }
 
 export async function clearInvoiceHistory(): Promise<void> {
-  const { error } = await supabase.from('invoices').delete().neq('invoice_number', '');
+  if (!creds) return;
+  const { error } = await supabase.functions.invoke('history-admin', {
+    body: { op: 'clear', ...creds },
+  });
   if (error) console.error('clearInvoiceHistory', error);
   await fetchSavedInvoices();
 }
@@ -108,16 +116,12 @@ export async function clearInvoiceHistory(): Promise<void> {
 export function subscribeInvoiceHistory(cb: () => void): () => void {
   const handler = () => cb();
   window.addEventListener(EVENT, handler);
-  const channel = supabase
-    .channel('invoices-changes')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'invoices' }, () => {
-      fetchSavedInvoices();
-    })
-    .subscribe();
-  // initial fetch
+  // initial fetch (only works if creds are set)
   fetchSavedInvoices();
+  // poll every 20s while subscribed so multiple devices stay roughly in sync
+  const interval = window.setInterval(() => fetchSavedInvoices(), 20_000);
   return () => {
     window.removeEventListener(EVENT, handler);
-    supabase.removeChannel(channel);
+    window.clearInterval(interval);
   };
 }
