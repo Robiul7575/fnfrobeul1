@@ -10,6 +10,9 @@ import {
   clearInvoiceHistory,
   SavedInvoice,
   subscribeInvoiceHistory,
+  setHistoryCredentials,
+  clearHistoryCredentials,
+  fetchSavedInvoices,
 } from '@/lib/invoiceHistory';
 import { SavedInvoicePreviewDialog } from './SavedInvoicePreviewDialog';
 
@@ -37,9 +40,11 @@ export function InvoiceHistorySheet() {
     e.preventDefault();
     if (username === VALID_USER && password === VALID_PASS) {
       localStorage.setItem(AUTH_KEY, '1');
+      setHistoryCredentials(username, password);
       setAuthed(true);
       setAuthError('');
       setPassword('');
+      fetchSavedInvoices();
     } else {
       setAuthError('Invalid username or password');
     }
@@ -47,6 +52,7 @@ export function InvoiceHistorySheet() {
 
   const handleLogout = () => {
     localStorage.removeItem(AUTH_KEY);
+    clearHistoryCredentials();
     setAuthed(false);
     setUsername('');
     setPassword('');
