@@ -20,6 +20,13 @@ import { searchCustomers, SavedCustomer, saveCustomer, removeCustomer } from '@/
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const MARKET_FIELD_FORCE_MAP: Record<string, string> = {
+  'CR150-MOTLAB': 'V00718-Md. Rakibul Hasan',
+  'CR130-CHANDPUR': 'V01198-Md. Yousuf Ali Ridoy',
+};
+const MARKET_OPTIONS = Object.keys(MARKET_FIELD_FORCE_MAP);
+const FIELD_FORCE_OPTIONS = Object.values(MARKET_FIELD_FORCE_MAP);
+
 export interface InvoiceInfo {
   chemistName: string;
   chemistCode: string;
@@ -154,7 +161,13 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
   }, [open]);
 
   const updateField = (field: keyof InvoiceInfo, value: string) => {
-    setInfo((prev) => ({ ...prev, [field]: value }));
+    setInfo((prev) => {
+      const next = { ...prev, [field]: value };
+      if (field === 'market' && MARKET_FIELD_FORCE_MAP[value]) {
+        next.fieldForce = MARKET_FIELD_FORCE_MAP[value];
+      }
+      return next;
+    });
   };
 
   const handleSelectCustomer = useCallback((customer: SavedCustomer) => {
@@ -279,7 +292,13 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
                 value={info.market}
                 onChange={(e) => updateField('market', e.target.value)}
                 placeholder="e.g., CR130-CHANDPUR"
+                list="market-options"
               />
+              <datalist id="market-options">
+                {MARKET_OPTIONS.map((m) => (
+                  <option key={m} value={m} />
+                ))}
+              </datalist>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="fieldForce">Field Force</Label>
@@ -288,7 +307,13 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
                 value={info.fieldForce}
                 onChange={(e) => updateField('fieldForce', e.target.value)}
                 placeholder="e.g., V00718-Md.Yousuf Ali Ridoy"
+                list="fieldforce-options"
               />
+              <datalist id="fieldforce-options">
+                {FIELD_FORCE_OPTIONS.map((f) => (
+                  <option key={f} value={f} />
+                ))}
+              </datalist>
             </div>
           </div>
 
