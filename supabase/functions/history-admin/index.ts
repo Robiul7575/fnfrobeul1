@@ -24,6 +24,10 @@ Deno.serve(async (req) => {
       return json({ error: 'unauthorized' }, 401);
     }
 
+    // Auto-purge invoices older than 15 days on every authenticated request.
+    const cutoff = new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString();
+    await supabase.from('invoices').delete().lt('saved_at', cutoff);
+
     if (op === 'list') {
       const { data, error } = await supabase
         .from('invoices')
