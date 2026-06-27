@@ -208,8 +208,10 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
       
       const clone = element.cloneNode(true) as HTMLElement;
       clone.style.width = '794px';
+      clone.style.maxWidth = '794px';
+      clone.style.minHeight = '1123px'; // A4 height at 96dpi
       clone.style.height = 'auto';
-      clone.style.padding = '30px 38px';
+      clone.style.margin = '0';
       clone.style.boxSizing = 'border-box';
       clone.style.overflow = 'visible';
       clone.style.position = 'relative';
@@ -221,7 +223,7 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
       await new Promise(resolve => setTimeout(resolve, 200));
 
       const canvas = await html2canvas(clone, {
-        scale: 1.5,
+        scale: 2.5,
         useCORS: true,
         logging: false,
         backgroundColor: '#ffffff',
@@ -229,6 +231,7 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
         scrollY: 0,
         width: 794,
         windowWidth: 794,
+        imageTimeout: 0,
       });
 
       document.body.removeChild(container);
@@ -236,17 +239,17 @@ export function InvoiceModal({ open, onOpenChange, invoiceInfo }: InvoiceModalPr
       const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', compress: true });
       const pdfWidth = 210;
       const pdfHeight = 297;
-      const imgData = canvas.toDataURL('image/jpeg', 0.65);
-      
+      const imgData = canvas.toDataURL('image/png');
+
       const naturalHeight = (canvas.height * pdfWidth) / canvas.width;
-      
+
       if (naturalHeight <= pdfHeight) {
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, naturalHeight, undefined, 'FAST');
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, naturalHeight, undefined, 'SLOW');
       } else {
         const scaleFactor = pdfHeight / naturalHeight;
         const scaledWidth = pdfWidth * scaleFactor;
         const xOffset = (pdfWidth - scaledWidth) / 2;
-        pdf.addImage(imgData, 'JPEG', xOffset, 0, scaledWidth, pdfHeight, undefined, 'FAST');
+        pdf.addImage(imgData, 'PNG', xOffset, 0, scaledWidth, pdfHeight, undefined, 'SLOW');
       }
 
       pdf.save(`Invoice-${invoiceNumber}.pdf`);
