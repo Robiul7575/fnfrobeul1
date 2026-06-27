@@ -127,9 +127,19 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                 </td>
                 <td style={{ verticalAlign: 'middle', textAlign: 'center' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                      <img src={fnfLogoColor} alt="FnF" style={{ height: '42px', width: 'auto' }} />
-                      <span style={{ fontSize: '22px', fontWeight: 'bold', color: '#2563eb', whiteSpace: 'nowrap' }}>FnF Pharmaceuticals Ltd.</span>
+                    <div style={{ position: 'relative', display: 'inline-block', marginBottom: '10px' }}>
+                      <img
+                        src={fnfLogoColor}
+                        alt="FnF"
+                        style={{
+                          height: '42px', width: 'auto',
+                          position: 'absolute', right: '100%', top: '50%',
+                          transform: 'translateY(-50%)', marginRight: '10px',
+                        }}
+                      />
+                      <span style={{ fontSize: '22px', fontWeight: 'bold', color: '#2563eb', whiteSpace: 'nowrap' }}>
+                        F<span style={{ color: '#e11d8a' }}>n</span>F Pharmaceuticals Ltd.
+                      </span>
                     </div>
                     <span style={{
                       display: 'inline-block', border: '3px solid black',
