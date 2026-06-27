@@ -126,26 +126,22 @@ export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                   <p>Phone: 9336001</p>
                 </td>
                 <td style={{ verticalAlign: 'middle', textAlign: 'center' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div style={{ position: 'relative', display: 'inline-block', marginBottom: '10px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>
                       <img
                         src={fnfLogoColor}
                         alt="FnF"
-                        style={{
-                          height: '42px', width: 'auto',
-                          position: 'absolute', right: '100%', top: '50%',
-                          transform: 'translateY(-50%)', marginRight: '10px',
-                        }}
+                        style={{ height: '42px', width: 'auto', marginRight: '10px' }}
                       />
                       <span style={{ fontSize: '22px', fontWeight: 'bold', color: '#2563eb', whiteSpace: 'nowrap' }}>
                         F<span style={{ color: '#e11d8a' }}>n</span>F Pharmaceuticals Ltd.
                       </span>
                     </div>
-                    <span style={{
-                      display: 'inline-block', border: '3px solid black',
-                      padding: '4px 40px', borderRadius: '50px',
+                    <div style={{
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      border: '3px solid black', padding: '4px 40px', borderRadius: '50px',
                       fontSize: '18px', fontWeight: 'bold', textAlign: 'center',
-                    }}>INVOICE</span>
+                    }}>INVOICE</div>
                   </div>
                 </td>
                 <td style={{ verticalAlign: 'top', textAlign: 'right', fontSize: '11px', lineHeight: '1.5' }}>
