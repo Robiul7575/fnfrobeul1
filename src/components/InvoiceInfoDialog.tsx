@@ -287,33 +287,35 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="market">Market</Label>
-              <Input
-                id="market"
+              <Select
                 value={info.market}
-                onChange={(e) => updateField('market', e.target.value)}
-                placeholder="e.g., CR130-CHANDPUR"
-                list="market-options"
-              />
-              <datalist id="market-options">
-                {MARKET_OPTIONS.map((m) => (
-                  <option key={m} value={m} />
-                ))}
-              </datalist>
+                onValueChange={(value) => updateField('market', value)}
+              >
+                <SelectTrigger id="market">
+                  <SelectValue placeholder="Select market" />
+                </SelectTrigger>
+                <SelectContent>
+                  {MARKET_OPTIONS.map((m) => (
+                    <SelectItem key={m} value={m}>{m}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="fieldForce">Field Force</Label>
-              <Input
-                id="fieldForce"
+              <Select
                 value={info.fieldForce}
-                onChange={(e) => updateField('fieldForce', e.target.value)}
-                placeholder="e.g., V00718-Md.Yousuf Ali Ridoy"
-                list="fieldforce-options"
-              />
-              <datalist id="fieldforce-options">
-                {FIELD_FORCE_OPTIONS.map((f) => (
-                  <option key={f} value={f} />
-                ))}
-              </datalist>
+                onValueChange={(value) => updateField('fieldForce', value)}
+              >
+                <SelectTrigger id="fieldForce">
+                  <SelectValue placeholder="Select field force" />
+                </SelectTrigger>
+                <SelectContent>
+                  {FIELD_FORCE_OPTIONS.map((f) => (
+                    <SelectItem key={f} value={f}>{f}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
