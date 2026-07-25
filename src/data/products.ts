@@ -120,4 +120,6 @@ export const ALL_PRODUCTS: Product[] = [
   { id: 112, name: 'Solvent', category: ProductCategory.VACCINE, packSize: '1000 Dose', tp: 30.00, vat: 0.00, tp_vat: 30.00, mrp: 30.00, bonus: 'N/A' },
   { id: 113, name: 'Solvent', category: ProductCategory.VACCINE, packSize: '500 Dose', tp: 20.00, vat: 0.00, tp_vat: 20.00, mrp: 20.00, bonus: 'N/A' },
   { id: 114, name: 'Solvent', category: ProductCategory.VACCINE, packSize: '300 Dose', tp: 15.00, vat: 0.00, tp_vat: 15.00, mrp: 15.00, bonus: 'N/A' },
+  { id: 115, name: 'Flugenvet', category: ProductCategory.LIQUID, packSize: '20ml', tp: 112.44, vat: 19.56, tp_vat: 132.00, mrp: 150.00, bonus: 'N/A' },
+  { id: 116, name: 'Flugenvet', category: ProductCategory.LIQUID, packSize: '100ml', tp: 539.73, vat: 93.91, tp_vat: 633.64, mrp: 720.00, bonus: 'N/A' },
 ];
