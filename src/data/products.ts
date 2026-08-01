@@ -122,4 +122,7 @@ export const ALL_PRODUCTS: Product[] = [
   { id: 114, name: 'Solvent', category: ProductCategory.VACCINE, packSize: '300 Dose', tp: 15.00, vat: 0.00, tp_vat: 15.00, mrp: 15.00, bonus: 'N/A' },
   { id: 115, name: 'Flugenvet', category: ProductCategory.LIQUID, packSize: '20ml', tp: 112.44, vat: 19.56, tp_vat: 132.00, mrp: 150.00, bonus: 'N/A' },
   { id: 116, name: 'Flugenvet', category: ProductCategory.LIQUID, packSize: '100ml', tp: 539.73, vat: 93.91, tp_vat: 633.64, mrp: 720.00, bonus: 'N/A' },
+  { id: 117, name: 'Flocol Vet', category: ProductCategory.LIQUID, packSize: '20 ml', tp: 119.94, vat: 20.86, tp_vat: 140.80, mrp: 170.00, bonus: '10+1' },
+  { id: 118, name: 'Flocol Vet', category: ProductCategory.LIQUID, packSize: '100 ml', tp: 562.20, vat: 97.80, tp_vat: 660.00, mrp: 720.00, bonus: '10+1' },
+  { id: 119, name: 'Flocol Vet', category: ProductCategory.LIQUID, packSize: '500 ml', tp: 2361.30, vat: 410.80, tp_vat: 2772.10, mrp: 3300.00, bonus: '10+1' },
 ];
