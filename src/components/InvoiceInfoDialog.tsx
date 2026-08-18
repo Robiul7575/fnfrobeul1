@@ -163,12 +163,8 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
   const updateField = (field: keyof InvoiceInfo, value: string) => {
     setInfo((prev) => {
       const next = { ...prev, [field]: value };
-      if (field === 'market') {
-        if (MARKET_FIELD_FORCE_MAP[value]) {
-          next.fieldForce = MARKET_FIELD_FORCE_MAP[value];
-        } else if (value === 'Custom') {
-          next.fieldForce = '';
-        }
+      if (field === 'market' && MARKET_FIELD_FORCE_MAP[value]) {
+        next.fieldForce = MARKET_FIELD_FORCE_MAP[value];
       }
       return next;
     });
