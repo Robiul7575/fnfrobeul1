@@ -287,35 +287,35 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="market">Market</Label>
-              <Select
+              <Input
+                id="market"
+                list="market-options"
                 value={info.market}
-                onValueChange={(value) => updateField('market', value)}
-              >
-                <SelectTrigger id="market">
-                  <SelectValue placeholder="Select market" />
-                </SelectTrigger>
-                <SelectContent>
-                  {MARKET_OPTIONS.map((m) => (
-                    <SelectItem key={m} value={m}>{m}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                onChange={(e) => updateField('market', e.target.value)}
+                placeholder="Select or type market"
+                autoComplete="off"
+              />
+              <datalist id="market-options">
+                {MARKET_OPTIONS.map((m) => (
+                  <option key={m} value={m} />
+                ))}
+              </datalist>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="fieldForce">Field Force</Label>
-              <Select
+              <Input
+                id="fieldForce"
+                list="field-force-options"
                 value={info.fieldForce}
-                onValueChange={(value) => updateField('fieldForce', value)}
-              >
-                <SelectTrigger id="fieldForce">
-                  <SelectValue placeholder="Select field force" />
-                </SelectTrigger>
-                <SelectContent>
-                  {FIELD_FORCE_OPTIONS.map((f) => (
-                    <SelectItem key={f} value={f}>{f}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                onChange={(e) => updateField('fieldForce', e.target.value)}
+                placeholder="Select or type field force"
+                autoComplete="off"
+              />
+              <datalist id="field-force-options">
+                {FIELD_FORCE_OPTIONS.map((f) => (
+                  <option key={f} value={f} />
+                ))}
+              </datalist>
             </div>
           </div>
 
