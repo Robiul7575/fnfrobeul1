@@ -346,19 +346,10 @@ export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoD
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="market">Market</Label>
-              <Input
-                id="market"
-                list="market-options"
+              <MarketInput
                 value={info.market}
-                onChange={(e) => updateField('market', e.target.value)}
-                placeholder="Type or select market"
-                autoComplete="off"
+                onChange={(val) => updateField('market', val)}
               />
-              <datalist id="market-options">
-                {MARKET_OPTIONS.map((m) => (
-                  <option key={m} value={m} />
-                ))}
-              </datalist>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="fieldForce">Field Force</Label>
