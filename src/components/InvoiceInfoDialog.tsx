@@ -133,6 +133,65 @@ function AutocompleteInput({
   );
 }
 
+function MarketInput({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (val: string) => void;
+}) {
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const suggestions = MARKET_OPTIONS.filter((m) =>
+    m.toLowerCase().includes(value.toLowerCase())
+  );
+
+  return (
+    <div ref={wrapperRef} className="relative">
+      <Input
+        id="market"
+        value={value}
+        onChange={(e) => {
+          onChange(e.target.value);
+          setShowSuggestions(true);
+        }}
+        onFocus={() => setShowSuggestions(true)}
+        placeholder="Type or select market"
+        autoComplete="off"
+      />
+      {showSuggestions && suggestions.length > 0 && (
+        <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-popover border border-border rounded-md shadow-md max-h-48 overflow-auto">
+          {suggestions.map((m) => (
+            <button
+              key={m}
+              type="button"
+              className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+              onMouseDown={(e) => {
+                e.preventDefault();
+                onChange(m);
+                setShowSuggestions(false);
+              }}
+            >
+              {m}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function InvoiceInfoDialog({ open, onOpenChange, onSubmit }: InvoiceInfoDialogProps) {
   const [info, setInfo] = useState<InvoiceInfo>({
     chemistName: '',
