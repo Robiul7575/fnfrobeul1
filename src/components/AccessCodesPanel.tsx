@@ -23,11 +23,12 @@ export function AccessCodesPanel() {
   const create = async () => {
     setBusy(true);
     const { data, error } = await supabase.functions.invoke('history-admin', {
-      body: { op: 'create_code', label: label.trim() || null, ...CREDS },
+      body: { op: 'create_code', label: label.trim() || null, code: customCode.trim() || undefined, ...CREDS },
     });
     setBusy(false);
     if (error || !data?.data) return toast.error('Could not create password');
     setLabel('');
+    setCustomCode('');
     navigator.clipboard?.writeText(data.data.code).catch(() => {});
     toast.success(`Password ${data.data.code} created and copied`);
     load();
@@ -51,7 +52,8 @@ export function AccessCodesPanel() {
       </div>
       <div className="flex gap-2">
         <Input placeholder="Person's name (optional)" value={label} onChange={(e) => setLabel(e.target.value)} />
-        <Button onClick={create} disabled={busy}><KeyRound className="h-4 w-4 mr-1" />Generate</Button>
+        <Input placeholder="Your own password (optional)" value={customCode} onChange={(e) => setCustomCode(e.target.value)} />
+        <Button onClick={create} disabled={busy}><KeyRound className="h-4 w-4 mr-1" />Create</Button>
       </div>
       <p className="text-[11px] text-muted-foreground">Each password works for 1 month.</p>
       <ul className="space-y-2">
