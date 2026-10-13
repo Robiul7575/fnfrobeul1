@@ -10,7 +10,7 @@ import {
   SheetFooter,
 } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ShoppingCart, Trash2, Plus, Minus, FileText, Percent } from 'lucide-react';
+import { ShoppingCart, Trash2, Plus, Minus, FileText, Percent, Crown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useState } from 'react';
@@ -241,9 +241,15 @@ export function CartSheet() {
                 <Button variant="outline" onClick={clearCart} className="flex-1">
                   Clear Cart
                 </Button>
-                <Button onClick={() => setShowInfoDialog(true)} className="flex-1">
-                  <FileText className="h-4 w-4 mr-2" />
+                <Button
+                  onClick={() => setShowInfoDialog(true)}
+                  className="flex-1 relative bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-700 text-white shadow-lg shadow-amber-500/30"
+                >
+                  <Crown className="h-4 w-4 mr-2 fill-current" />
                   Generate Invoice
+                  <Badge className="absolute -top-2.5 -right-2 h-5 px-1.5 text-[10px] font-bold uppercase tracking-wide bg-foreground text-background">
+                    Premium
+                  </Badge>
                 </Button>
               </SheetFooter>
             </>
