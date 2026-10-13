@@ -11,6 +11,7 @@ const CREDS = { username: 'Robeul', password: 'Robeul1' };
 export function AccessCodesPanel() {
   const [codes, setCodes] = useState<Code[]>([]);
   const [label, setLabel] = useState('');
+  const [customCode, setCustomCode] = useState('');
   const [busy, setBusy] = useState(false);
 
   const load = async () => {
