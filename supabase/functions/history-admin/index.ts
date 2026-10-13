@@ -68,9 +68,14 @@ Deno.serve(async (req) => {
 
     if (op === 'create_code') {
       const label = typeof body.label === 'string' ? body.label.slice(0, 100) : null;
-      const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-      const bytes = crypto.getRandomValues(new Uint8Array(8));
-      const code = Array.from(bytes, (b) => alphabet[b % alphabet.length]).join('');
+      let code: string;
+      if (typeof body.code === 'string' && body.code.trim().length >= 4) {
+        code = body.code.trim().slice(0, 64);
+      } else {
+        const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        const bytes = crypto.getRandomValues(new Uint8Array(8));
+        code = Array.from(bytes, (b) => alphabet[b % alphabet.length]).join('');
+      }
       const expires = new Date();
       expires.setMonth(expires.getMonth() + 1);
       const { data, error } = await supabase
