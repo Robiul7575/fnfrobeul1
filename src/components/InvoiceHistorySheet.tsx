@@ -15,6 +15,7 @@ import {
   fetchSavedInvoices,
 } from '@/lib/invoiceHistory';
 import { SavedInvoicePreviewDialog } from './SavedInvoicePreviewDialog';
+import { AccessCodesPanel } from './AccessCodesPanel';
 
 const AUTH_KEY = 'fnf-history-auth';
 const VALID_USER = 'Robeul';
@@ -28,6 +29,7 @@ export function InvoiceHistorySheet() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState('');
+  const [tab, setTab] = useState<'invoices' | 'access'>('invoices');
 
   const refresh = () => setInvoices(getSavedInvoices());
 
@@ -124,6 +126,13 @@ export function InvoiceHistorySheet() {
           </form>
         ) : (
         <>
+        <div className="grid grid-cols-2 gap-1 mt-4 p-1 bg-muted rounded-md">
+          <Button size="sm" variant={tab === 'invoices' ? 'default' : 'ghost'} onClick={() => setTab('invoices')}>Invoices</Button>
+          <Button size="sm" variant={tab === 'access' ? 'default' : 'ghost'} onClick={() => setTab('access')}>Access Passwords</Button>
+        </div>
+        {tab === 'access' ? (
+          <div className="flex-1 overflow-auto -mx-2 px-2 mt-2"><AccessCodesPanel /></div>
+        ) : (<>
         <div className="flex justify-between items-center mt-4 mb-2">
           <p className="text-xs text-muted-foreground">
             {invoices.length} saved invoice{invoices.length === 1 ? '' : 's'}
@@ -226,6 +235,7 @@ export function InvoiceHistorySheet() {
             </ul>
           )}
         </div>
+        </>)}
         </>
         )}
       </SheetContent>
