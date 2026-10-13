@@ -57,6 +57,38 @@ Deno.serve(async (req) => {
       return json({ ok: true });
     }
 
+    if (op === 'list_codes') {
+      const { data, error } = await supabase
+        .from('access_codes')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) return json({ error: error.message }, 500);
+      return json({ data });
+    }
+
+    if (op === 'create_code') {
+      const label = typeof body.label === 'string' ? body.label.slice(0, 100) : null;
+      const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      const bytes = crypto.getRandomValues(new Uint8Array(8));
+      const code = Array.from(bytes, (b) => alphabet[b % alphabet.length]).join('');
+      const expires = new Date();
+      expires.setMonth(expires.getMonth() + 1);
+      const { data, error } = await supabase
+        .from('access_codes')
+        .insert({ code, label, expires_at: expires.toISOString() })
+        .select()
+        .single();
+      if (error) return json({ error: error.message }, 500);
+      return json({ data });
+    }
+
+    if (op === 'delete_code') {
+      if (typeof body.id !== 'string') return json({ error: 'invalid params' }, 400);
+      const { error } = await supabase.from('access_codes').delete().eq('id', body.id);
+      if (error) return json({ error: error.message }, 500);
+      return json({ ok: true });
+    }
+
     return json({ error: 'unknown op' }, 400);
   } catch (e) {
     return json({ error: String(e) }, 500);
