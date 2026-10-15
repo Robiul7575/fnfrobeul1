@@ -119,7 +119,7 @@ export function CartSheet() {
                                   updateCustomTp(item.product.id, undefined);
                                 }
                               }}
-                              className="w-20 h-6 text-xs"
+                              className="w-20 h-8 sm:h-6 text-xs"
                             />
                             {item.customTp !== undefined && item.customTp !== item.product.tp && (
                               <Button
@@ -146,16 +146,16 @@ export function CartSheet() {
                           >
                             <Trash2 className="h-4 w-4 text-destructive" />
                           </Button>
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1.5">
                             <Button
                               variant="outline"
                               size="icon"
-                              className="h-7 w-7"
+                              className="h-9 w-9 sm:h-7 sm:w-7"
                               onClick={() =>
                                 updateQuantity(item.product.id, item.quantity - 1)
                               }
                             >
-                              <Minus className="h-3 w-3" />
+                              <Minus className="h-4 w-4 sm:h-3 sm:w-3" />
                             </Button>
                             <Input
                               type="number"
@@ -167,17 +167,17 @@ export function CartSheet() {
                                   parseInt(e.target.value) || 1
                                 )
                               }
-                              className="w-14 h-7 text-center text-sm"
+                              className="w-14 h-9 sm:h-7 text-center text-sm"
                             />
                             <Button
                               variant="outline"
                               size="icon"
-                              className="h-7 w-7"
+                              className="h-9 w-9 sm:h-7 sm:w-7"
                               onClick={() =>
                                 updateQuantity(item.product.id, item.quantity + 1)
                               }
                             >
-                              <Plus className="h-3 w-3" />
+                              <Plus className="h-4 w-4 sm:h-3 sm:w-3" />
                             </Button>
                           </div>
                           <p className="text-sm font-semibold">
@@ -213,7 +213,7 @@ export function CartSheet() {
                             setDiscountPercent(value);
                           }
                         }}
-                        className="w-14 h-6 text-xs text-center"
+                        className="w-14 h-8 sm:h-6 text-xs text-center"
                       />
                       <Percent className="h-3 w-3 text-muted-foreground" />
                     </div>
@@ -237,13 +237,13 @@ export function CartSheet() {
                 </div>
               </div>
 
-              <SheetFooter className="gap-2 sm:gap-2">
-                <Button variant="outline" onClick={clearCart} className="flex-1">
+              <SheetFooter className="gap-2 sm:gap-2 flex-col sm:flex-row">
+                <Button variant="outline" onClick={clearCart} className="flex-1 h-11 sm:h-10">
                   Clear Cart
                 </Button>
                 <Button
                   onClick={() => setShowInfoDialog(true)}
-                  className="flex-1 relative bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-700 text-white shadow-lg shadow-amber-500/30"
+                  className="flex-1 h-11 sm:h-10 relative bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-700 text-white shadow-lg shadow-amber-500/30"
                 >
                   <Crown className="h-4 w-4 mr-2 fill-current" />
                   Generate Invoice

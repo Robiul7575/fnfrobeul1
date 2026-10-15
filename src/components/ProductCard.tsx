@@ -30,16 +30,16 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Card className="hover:shadow-lg transition-shadow flex flex-col">
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-2 p-4 sm:p-6 sm:pb-2">
         <div className="flex items-start justify-between gap-2">
-          <CardTitle className="text-lg leading-tight">{product.name}</CardTitle>
+          <CardTitle className="text-base sm:text-lg leading-tight">{product.name}</CardTitle>
           <Badge className={`${categoryColors[product.category]} text-white shrink-0`}>
             {product.category}
           </Badge>
         </div>
         <p className="text-sm text-muted-foreground">{product.packSize}</p>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col">
+      <CardContent className="flex-1 flex flex-col p-4 pt-0 sm:p-6 sm:pt-0">
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div>
             <span className="text-muted-foreground">TP:</span>
@@ -68,9 +68,8 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="mt-auto pt-3">
           <Button
             onClick={handleAddToCart}
-            className="w-full"
+            className="w-full h-10 sm:h-9 text-sm"
             variant={added ? 'secondary' : 'default'}
-            size="sm"
           >
             {added ? (
               <>
