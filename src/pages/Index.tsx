@@ -29,19 +29,19 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background border-b">
-        <div className="container py-4">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl md:text-3xl font-bold text-primary">
+        <div className="container px-3 sm:px-8 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
+            <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-primary truncate">
               FnF Pharmaceuticals
             </h1>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <InvoiceHistorySheet />
               <CartSheet />
             </div>
           </div>
           
           {/* Search */}
-          <div className="relative mb-4">
+          <div className="relative mb-3 sm:mb-4">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="text"
@@ -53,7 +53,7 @@ const Index = () => {
           </div>
 
           {/* Category Filter */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex gap-2 overflow-x-auto pb-1 -mx-3 px-3 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible [scrollbar-width:none]">
             {categories.map((category) => (
               <Button
                 key={category}
@@ -69,7 +69,7 @@ const Index = () => {
       </header>
 
       {/* Products Grid */}
-      <main className="container py-6">
+      <main className="container px-3 sm:px-8 py-4 sm:py-6">
         <p className="text-sm text-muted-foreground mb-4">
           Showing {filteredProducts.length} of {ALL_PRODUCTS.length} products
         </p>
