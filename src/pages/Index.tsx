@@ -48,7 +48,7 @@ const Index = () => {
               placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
+              className="pl-10 h-11 sm:h-10 text-base sm:text-sm"
             />
           </div>
 
@@ -59,6 +59,7 @@ const Index = () => {
                 key={category}
                 variant={selectedCategory === category ? 'default' : 'outline'}
                 size="sm"
+                className="h-9 px-4 shrink-0"
                 onClick={() => setSelectedCategory(category)}
               >
                 {category}
@@ -74,7 +75,7 @@ const Index = () => {
           Showing {filteredProducts.length} of {ALL_PRODUCTS.length} products
         </p>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
