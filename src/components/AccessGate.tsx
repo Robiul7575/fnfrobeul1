@@ -47,12 +47,11 @@ export function AccessGate({ children }: { children: ReactNode }) {
     if (ok) {
       localStorage.setItem(KEY, code.trim());
       setState('open');
-    } else setError('Wrong or expired password');
+    } else if (ok === null) setError('No internet connection. Please try again.');
+    else setError('Wrong or expired password');
   };
 
   if (state === 'open') return <>{children}</>;
-  if (state === 'checking')
-    return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading…</div>;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
