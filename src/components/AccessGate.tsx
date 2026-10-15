@@ -6,23 +6,35 @@ import { Lock } from 'lucide-react';
 
 const KEY = 'fnf-access-code';
 
-async function verify(code: string): Promise<boolean> {
-  const { data, error } = await supabase.functions.invoke('verify-access', { body: { code } });
-  return !error && data?.ok === true;
+// Returns true/false when the server answered, null on network failure.
+async function verify(code: string): Promise<boolean | null> {
+  try {
+    const { data, error } = await supabase.functions.invoke('verify-access', { body: { code } });
+    if (error) return (error as { name?: string }).name === 'FunctionsFetchError' ? null : false;
+    return data?.ok === true;
+  } catch {
+    return null;
+  }
 }
 
 export function AccessGate({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<'checking' | 'locked' | 'open'>('checking');
+  // Open instantly on reload if a password was saved; re-check quietly in background.
+  const [state, setState] = useState<'locked' | 'open'>(() =>
+    localStorage.getItem(KEY) ? 'open' : 'locked'
+  );
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem(KEY);
-    if (!saved) return setState('locked');
+    if (!saved) return;
     verify(saved).then((ok) => {
-      if (!ok) localStorage.removeItem(KEY);
-      setState(ok ? 'open' : 'locked');
+      if (ok === false) {
+        localStorage.removeItem(KEY);
+        setError('Your password has expired. Please enter a new one.');
+        setState('locked');
+      }
     });
   }, []);
 
